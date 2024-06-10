@@ -1,0 +1,42 @@
+/**
+ * Set CSS variables
+ */
+
+@include set-css-vars($extra-vars);
+@include set-css-vars($shadows);
+@include set-css-vars($sizes, true);
+@include set-css-vars($default-font-weight);
+@include set-css-vars($colors);
+
+/**
+ * Set CSS variables for section padding
+ */
+@at-root {
+  :root {
+    @include media('<phone-lg') {
+      --section-x-offset: #{rem(16)};
+      --top-offset: #{rem(72)};
+    }
+
+    @include media('>=phone-lg', '<tablet-lg') {
+      --section-x-offset: #{rem(24)};
+      --top-offset: #{rem(80)};
+    }
+
+    @include media('>=tablet-lg') {
+      --top-offset: #{rem(96)};
+    }
+
+    @include media('>=tablet-lg', '<tablet-xl') {
+      --section-x-offset: #{rem(32)};
+    }
+
+    @include media('>=tablet-xl', '<desktop-md') {
+      --section-x-offset: #{rem(48)};
+    }
+
+    @include media('>=desktop-md') {
+      --section-x-offset: #{rem(80)};
+    }
+  }
+}

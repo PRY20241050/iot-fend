@@ -1,0 +1,15 @@
+/**
+ * Include Media
+ * https://eduardoboucas.github.io/include-media/
+ */
+@import '/node_modules/~include-media/dist/_include-media';
+
+/**
+ * Core includes (variables, mixins, functions, etc.)
+ */
+@import 'core/includes';
+
+/**
+ * Custom includes (variables, mixins, functions, etc.)
+ */
+@import 'custom/includes';

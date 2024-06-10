@@ -1,0 +1,15 @@
+@use 'sass:map';
+
+$transitions: map.merge(
+  $default-transitions,
+  (
+    --def-transition-300ms: 0.3s var(--easeInOutCubic),
+    --a: cubic-bezier(0.77, 0.2, 0.05, 1),
+    --b: cubic-bezier(0.165, 0.84, 0.44, 1),
+    --c: cubic-bezier(0.42, 0, 0.58, 1),
+    --d: cubic-bezier(0.165, 0.84, 0.44, 1),
+    --e: cubic-bezier(0.68, 0, 0.265, 1),
+    --f: cubic-bezier(1, 0, 0.25, 1),
+    --g: cubic-bezier(0.445, 0.05, 0.55, 0.95)
+  )
+);

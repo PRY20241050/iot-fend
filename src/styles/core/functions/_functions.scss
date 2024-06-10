@@ -1,0 +1,49 @@
+@use 'sass:math';
+
+@function rem($size) {
+  @return #{math.div($size, map-get($sizes, 'base-font-size-unit-none'))}rem;
+}
+
+@function vw($width, $target) {
+  $vw-context: ($width * 0.01) * 1px;
+  @return math.div($target, $vw-context) * 1vw;
+}
+
+@function vh($height, $target) {
+  $vh-context: ($height * 0.01) * 1px;
+  @return math.div($target, $vh-context) * 1vh;
+}
+
+@function line-height($size, $height) {
+  @return #{math.div($height, $size)}em;
+}
+
+@function set-color($color-name, $alpha: 1, $mix: false, $percentage: 8) {
+  $color: map-get($colors, $color-name);
+
+  @if $mix == false {
+    @return rgba($color, $alpha);
+  } @else {
+    @if $mix == lighten {
+      @return lighten($color, $percentage);
+    }
+
+    @if $mix == darken {
+      @return darken($color, $percentage);
+    }
+  }
+}
+
+@function calc-view($size: 0, $screen: 'mobile') {
+  $screen-size: 'base-mobile-screen-size';
+
+  @if $screen == 'tablet' {
+    $screen-size: 'base-tablet-screen-size';
+  }
+
+  @if $screen == 'desktop' {
+    $screen-size: 'base-desktop-screen-size';
+  }
+
+  @return #{math.div($size * 100, map-get($sizes, $screen-size))}vw;
+}

@@ -1,0 +1,187 @@
+* {
+  -o-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -webkit-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: antialiased;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* This will work on Firefox */
+@-moz-document url-prefix() {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-neutral-300);
+  }
+}
+
+html {
+  text-size-adjust: 100%;
+  // TODO: Choise the font-size for the root element (16px or 10px)
+  font-size: 62.5%;
+}
+
+#__next {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  font-family: var(--font-base);
+  font-weight: var(--regular);
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+}
+
+body,
+main,
+section {
+  width: 100%;
+}
+
+input,
+select,
+textarea {
+  appearance: none;
+}
+
+input,
+select,
+textarea,
+button {
+  border-radius: 0;
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+button {
+  padding: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+li {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+svg,
+img {
+  display: block;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+figure {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  margin: 0;
+}
+
+.clearfix {
+  *zoom: 1;
+
+  &::before {
+    content: '';
+    display: table;
+    line-height: 0;
+    clear: both;
+  }
+
+  &::after {
+    content: '';
+    display: table;
+    line-height: 0;
+    clear: both;
+  }
+}
+
+[style^='background-image'] {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+[data-sonner-toaster] {
+  @include media('<phone-sm') {
+    --width: calc(100% - 32px) !important;
+  }
+}
+
+[data-sonner-toast] [data-title] {
+  font-size: 1.4rem;
+}

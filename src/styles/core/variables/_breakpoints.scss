@@ -1,0 +1,32 @@
+$default-breakpoints: (
+  // phone extra small
+  phone-xs: 320px,
+  // phone small
+  phone-sm: 420px,
+  // phone medium
+  phone-md: 528px,
+  // phone large
+  phone-lg: 648px,
+  // phone extra large
+  phone-xl: 768px,
+  // tablet extra small
+  tablet-xs: 832px,
+  // tablet small
+  tablet-sm: 896px,
+  // tablet medium
+  tablet-md: 960px,
+  // tablet large
+  tablet-lg: 1024px,
+  // tablet extra large
+  tablet-xl: 1200px,
+  // desktop extra small
+  desktop-xs: 1280px,
+  // desktop small
+  desktop-sm: 1366px,
+  // desktop medium
+  desktop-md: 1440px,
+  // desktop large
+  desktop-lg: 1680px,
+  // desktop extra large
+  desktop-xl: 1920px
+) !default;

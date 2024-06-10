@@ -1,0 +1,29 @@
+@mixin position($position, $z-index: 1) {
+  position: $position;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index;
+}
+
+@mixin position-abs-center() {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+@mixin set-css-vars($vars, $transform: false) {
+  @at-root {
+    :root {
+      @each $name, $value in $vars {
+        @if $transform == false {
+          #{$name}: #{$value};
+        } @else {
+          --#{$name}: #{$value};
+        }
+      }
+    }
+  }
+}

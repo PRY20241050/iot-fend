@@ -1,0 +1,46 @@
+@use 'sass:map';
+
+$colors: map.merge(
+  $default-colors,
+  (
+    // Primary colors
+    --color-primary: #f74548,
+    --color-secondary: #000,
+
+    // Status colors
+    --color-warning: #eeab28,
+    --color-success: #30c97a,
+    --color-error: #f74548,
+    --color-info: #4588f5,
+
+    // Text colors
+    --color-text-title: #000,
+    --color-text-p1: #000,
+
+    // Opacity colors
+    --color-opacity-0: rgba(0, 0, 0, 0),
+    --color-opacity-10: rgba(0, 0, 0, 0.1),
+    --color-opacity-30: rgba(0, 0, 0, 0.3),
+    --color-opacity-50: rgba(0, 0, 0, 0.5),
+    --color-opacity-80: rgba(0, 0, 0, 0.8),
+    
+    // Neutral colors
+    --color-neutral-100: #f6f7f9,
+    --color-neutral-200: #eceeee,
+    --color-neutral-300: #dee1e2,
+    --color-neutral-400: #cfd4d5,
+    --color-neutral-500: #bfc5c7,
+    --color-neutral-600: #adb4b6,
+    --color-neutral-700: #98a1a4,
+    --color-neutral-800: #808b8f,
+    --color-neutral-900: #58656a,
+    --color-neutral-950: #323b3f,
+    --color-neutral-1000: #050504,
+
+    // Disabled
+    --color-disabled: #bfbfbf,
+
+    //Shadow
+    --color-shadow: rgba(20, 20, 43, 0.1),
+  )
+);

@@ -1,0 +1,24 @@
+// %heading-h2 {
+//   line-height: 1.3;
+
+//   @include media('<phone-lg') {
+//     font-size: rem(24);
+//   }
+
+//   @include media('>=phone-lg', '<tablet-lg') {
+//     font-size: rem(24);
+//   }
+
+//   @include media('>=tablet-lg', '<desktop-md') {
+//     font-size: calc-view(36, 'desktop');
+//   }
+
+//   @include media('>=desktop-md') {
+//     font-size: rem(36);
+//   }
+// }
+
+// %heading-h2-medium {
+//   @extend %heading-h2;
+//   font-weight: var(--medium);
+// }

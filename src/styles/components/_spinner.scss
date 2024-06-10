@@ -1,0 +1,31 @@
+.spinner {
+  position: relative;
+  margin: 0 auto;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 50%;
+  border-width: 3px;
+  border-style: solid;
+  animation: spin 1s linear infinite;
+
+  &[data-color='white'] {
+    border-color: rgb(255 255 255 / 28%);
+    border-left-color: var(--color-white);
+  }
+
+  &[data-color='black'] {
+    border-color: rgb(0 0 0 / 28%);
+    border-left-color: var(--color-black);
+  }
+
+  &[data-color='primary'] {
+    border-color: var(--color-neutral-300);
+    border-left-color: var(--rgb-color-primary);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
