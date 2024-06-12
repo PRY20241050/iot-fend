@@ -2,14 +2,22 @@
 
 import { RestorePassword } from "@/components/auth/restorePassword";
 import { redirect, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function RestablecerContrasenaPage() {
+function RestablecerContrasenaPage() {
   const searchParams = useSearchParams();
 
   if (searchParams.has("token") && searchParams.has("uid")) {
     return <RestorePassword />;
-  }
-  else {
+  } else {
     redirect("/auth/iniciar-sesion");
   }
+}
+
+export default function RestablecerContrasenaPageWrapper() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <RestablecerContrasenaPage />
+    </Suspense>
+  );
 }
