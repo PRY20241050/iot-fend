@@ -5,7 +5,6 @@ import {
 } from "@/components/ui/card";
 import { TypographyH4 } from "@/components/ui/typography";
 import LoginForm from "./LoginForm";
-import { API_URL } from "@/lib/api/consts";
 
 export default function Login() {
   return (

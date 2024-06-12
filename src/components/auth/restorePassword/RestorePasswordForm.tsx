@@ -40,8 +40,6 @@ export default function RestorePasswordForm() {
     reValidateMode: "onBlur",
   });
 
-  const { formState } = form;
-
   const { push } = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {

@@ -1,9 +1,7 @@
 export default function Home() {
   return (
     <main>
-      <p>
-        Instantly deploy your Next.js site to a shareable URL with Vercel.
-      </p>
+      <p>No se supone que deberías estar aquí. Por favor, inicia sesión.</p>
     </main>
   );
 }

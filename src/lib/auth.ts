@@ -7,8 +7,8 @@ import { DateTime } from "luxon";
 
 import { type AuthToken, type Token } from "@/types/auth";
 
-export const ACCESS_TOKEN_KEY = "up_access_token";
-export const REFRESH_TOKEN_KEY = "up_refresh_token";
+export const ACCESS_TOKEN_KEY = "iot_access_token";
+export const REFRESH_TOKEN_KEY = "iot_refresh_token";
 
 export const setAuthTokenToCookie = ({ access, refresh }: Token): void => {
   const accessExpirationTime = Number(

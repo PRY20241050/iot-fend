@@ -2,7 +2,6 @@ import axios from "axios";
 
 import { getAuthTokenFromCookie } from "@/lib/auth";
 import { DEFAULT_MESSAGE, getError, isBrowser } from "@/lib/utils";
-import { useToast } from "@/components/ui/use-toast";
 
 import { API_URL } from "./consts";
 
@@ -43,22 +42,17 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { message } = getError(error, DEFAULT_MESSAGE);
-    const { toast } = useToast();
 
-    const data = error?.config?.data || "";
-
-    if (
-      message &&
-      (typeof data !== "string" || !data.includes("disableErrorMessage"))
-    ) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: message,
-      });
+    if (isBrowser) {
+      const data = error?.config?.data || "";
+      if (
+        message &&
+        (typeof data !== "string" || !data.includes("disableErrorMessage"))
+      ) {
+        console.log('Error', message)
+      }
     }
-
-    return null;
+    return Promise.reject(error);
   }
 );
 

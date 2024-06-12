@@ -1,3 +1,39 @@
-export default function middleware() {
-    
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { ACCESS_TOKEN_KEY } from "./lib/auth";
+
+export function middleware(req: NextRequest) {
+  const next = req.nextUrl.searchParams.get("next");
+
+  const url = req.nextUrl.clone();
+  const iotAccessToken = req.cookies.get(ACCESS_TOKEN_KEY);
+
+  if (iotAccessToken) {
+    if (next) {
+      url.pathname = next;
+      return NextResponse.redirect(url);
+    }
+    if (url.pathname.startsWith("/auth") || url.pathname === "/") {
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+  } else if (!url.pathname.startsWith("/auth")) {
+    url.pathname = "/auth/iniciar-sesion";
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: [
+    /**
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
+};

@@ -14,33 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/Loader";
 import { TypographyMuted } from "@/components/ui/typography";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-const formSchema = z.object({
-  username: z.string().min(3, { message: "El nombre de usuario es muy corto" }),
-  password: z.string().min(1, { message: "La contraseña es obligatoria" }),
-});
+import Link from "next/link";
+
+import useLoginForm from "./useLoginForm";
 
 export default function LoginForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-    reValidateMode: "onChange",
-  });
-
+  const { form, isLoading, onSubmit } = useLoginForm();
   const {
     formState: { isValid },
   } = form;
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
 
   return (
     <Form {...form}>
@@ -53,9 +36,11 @@ export default function LoginForm() {
               <FormItem>
                 <FormLabel>Usuario</FormLabel>
                 <FormControl>
-                  <Input placeholder="Usuario" {...field} />
+                  <Input placeholder="Usuario" autoComplete="username" {...field} />
                 </FormControl>
-                <FormDescription>Ingrese su nombre de usuario proporcionado</FormDescription>
+                <FormDescription>
+                  Ingrese su nombre de usuario proporcionado
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -71,6 +56,7 @@ export default function LoginForm() {
                     <Input
                       placeholder="Contraseña"
                       type="password"
+                      autoComplete="current-password"
                       {...field}
                     />
                   </FormControl>
@@ -81,13 +67,17 @@ export default function LoginForm() {
           </div>
           <TypographyMuted className="text-right pt-5">
             ¿Olvidaste tu contraseña?{" "}
-            <Link href="/auth/recuperar-contrasena" className="font-medium decoration-1 text-black">Recuperar contraseña</Link>
+            <Link
+              href="/auth/recuperar-contrasena"
+              className="font-medium decoration-1 text-black"
+            >
+              Recuperar contraseña
+            </Link>
           </TypographyMuted>
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={!isValid} className="w-full">
-            Iniciar sesión
-            {/* <Loader /> */}
+          <Button type="submit" disabled={!isValid || isLoading} className="w-full">
+            {isLoading ? <Loader /> : "Iniciar sesión"}
           </Button>
         </CardFooter>
       </form>
