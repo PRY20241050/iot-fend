@@ -20,16 +20,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  username: z.string().min(3, { message: "El nombre de usuario es muy corto" }),
-  password: z.string().min(1, { message: "La contraseña es obligatoria" }),
+  email: z.string().email({ message: "El correo electrónico no es válido" }),
 });
 
-export default function LoginForm() {
+interface Props {
+  submitted: (value: boolean) => void;
+}
+
+export default function RecoverPasswordForm({ submitted }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      email: "",
     },
     reValidateMode: "onChange",
   });
@@ -40,6 +42,7 @@ export default function LoginForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    submitted(true);
   }
 
   return (
@@ -48,45 +51,33 @@ export default function LoginForm() {
         <CardContent>
           <FormField
             control={form.control}
-            name="username"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Usuario</FormLabel>
+                <FormLabel>Correo electrónico</FormLabel>
                 <FormControl>
-                  <Input placeholder="Usuario" {...field} />
+                  <Input placeholder="Email" {...field} />
                 </FormControl>
-                <FormDescription>Ingrese su nombre de usuario proporcionado</FormDescription>
+                <FormDescription>
+                  Ingrese el email asociado a su cuenta
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="pt-2">
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Contraseña"
-                      type="password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <TypographyMuted className="text-right pt-5">
-            ¿Olvidaste tu contraseña?{" "}
-            <Link href="/auth/recuperar-contrasena" className="font-medium decoration-1 text-black">Recuperar contraseña</Link>
+            ¿Ya tienes una cuenta?{" "}
+            <Link
+              href="/auth/iniciar-sesion"
+              className="font-medium decoration-1 text-black"
+            >
+              Iniciar sesión
+            </Link>
           </TypographyMuted>
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={!isValid} className="w-full">
-            Iniciar sesión
+            Enviar correo
             {/* <Loader /> */}
           </Button>
         </CardFooter>

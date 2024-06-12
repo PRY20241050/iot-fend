@@ -13,33 +13,40 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/Loader";
-import { TypographyMuted } from "@/components/ui/typography";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
-  username: z.string().min(3, { message: "El nombre de usuario es muy corto" }),
-  password: z.string().min(1, { message: "La contraseña es obligatoria" }),
-});
+const formSchema = z
+  .object({
+    password: z.string().min(1, { message: "La contraseña es obligatoria" }),
+    confirm_password: z
+      .string()
+      .min(1, { message: "La confirmación de la contraseña es obligatoria" }),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirm_password"],
+  });
 
-export default function LoginForm() {
+export default function RestorePasswordForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
       password: "",
+      confirm_password: "",
     },
-    reValidateMode: "onChange",
+    reValidateMode: "onBlur",
   });
 
-  const {
-    formState: { isValid },
-  } = form;
+  const { formState } = form;
+
+  const { push } = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    push("/auth/iniciar-sesion");
   }
 
   return (
@@ -48,14 +55,17 @@ export default function LoginForm() {
         <CardContent>
           <FormField
             control={form.control}
-            name="username"
+            name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Usuario</FormLabel>
+                <FormLabel>Nueva contraseña</FormLabel>
                 <FormControl>
-                  <Input placeholder="Usuario" {...field} />
+                  <Input
+                    placeholder="Nueva contraseña"
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
-                <FormDescription>Ingrese su nombre de usuario proporcionado</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -63,30 +73,27 @@ export default function LoginForm() {
           <div className="pt-2">
             <FormField
               control={form.control}
-              name="password"
+              name="confirm_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
+                  <FormLabel>Confirmar contraseña</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Contraseña"
+                      placeholder="Confirmar contraseña"
                       type="password"
                       {...field}
                     />
                   </FormControl>
+                  <FormDescription>Repita su nueva contraseña</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <TypographyMuted className="text-right pt-5">
-            ¿Olvidaste tu contraseña?{" "}
-            <Link href="/auth/recuperar-contrasena" className="font-medium decoration-1 text-black">Recuperar contraseña</Link>
-          </TypographyMuted>
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={!isValid} className="w-full">
-            Iniciar sesión
+          <Button type="submit" className="w-full">
+            Establecer contraseña
             {/* <Loader /> */}
           </Button>
         </CardFooter>
