@@ -24,7 +24,8 @@
 html {
   text-size-adjust: 100%;
   // TODO: Choise the font-size for the root element (16px or 10px)
-  font-size: 62.5%;
+  //font-size: 62.5%;
+  font-size: 100%;
 }
 
 #__next {
@@ -62,7 +63,6 @@ textarea,
 button {
   border-radius: 0;
   outline: none;
-  border: none;
   background-color: transparent;
 
   &:hover,
