@@ -1,10 +1,7 @@
-import {
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TypographyH4 } from "@/components/ui/typography";
 import LoginForm from "./LoginForm";
+import { Suspense } from "react";
 
 export default function Login() {
   return (
@@ -16,7 +13,9 @@ export default function Login() {
           Iniciar sesión para acceder al dashboard
         </CardDescription>
       </CardHeader>
-      <LoginForm />
+      <Suspense>
+        <LoginForm />
+      </Suspense>
     </>
   );
 }

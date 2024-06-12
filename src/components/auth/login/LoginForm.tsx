@@ -18,7 +18,6 @@ import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 
 import useLoginForm from "./useLoginForm";
-import { Suspense } from "react";
 
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLoginForm();
@@ -27,71 +26,69 @@ export default function LoginForm() {
   } = form;
 
   return (
-    <Suspense>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <CardContent>
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Usuario</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Usuario"
+                    autoComplete="username"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Ingrese su nombre de usuario proporcionado
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="pt-2">
             <FormField
               control={form.control}
-              name="username"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Usuario</FormLabel>
+                  <FormLabel>Contraseña</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Usuario"
-                      autoComplete="username"
+                      placeholder="Contraseña"
+                      type="password"
+                      autoComplete="current-password"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>
-                    Ingrese su nombre de usuario proporcionado
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="pt-2">
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Contraseña</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Contraseña"
-                        type="password"
-                        autoComplete="current-password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <TypographyMuted className="text-right pt-5">
-              ¿Olvidaste tu contraseña?{" "}
-              <Link
-                href="/auth/recuperar-contrasena"
-                className="font-medium decoration-1 text-black"
-              >
-                Recuperar contraseña
-              </Link>
-            </TypographyMuted>
-          </CardContent>
-          <CardFooter>
-            <Button
-              type="submit"
-              disabled={!isValid || isLoading}
-              className="w-full"
+          </div>
+          <TypographyMuted className="text-right pt-5">
+            ¿Olvidaste tu contraseña?{" "}
+            <Link
+              href="/auth/recuperar-contrasena"
+              className="font-medium decoration-1 text-black"
             >
-              {isLoading ? <Loader /> : "Iniciar sesión"}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
-    </Suspense>
+              Recuperar contraseña
+            </Link>
+          </TypographyMuted>
+        </CardContent>
+        <CardFooter>
+          <Button
+            type="submit"
+            disabled={!isValid || isLoading}
+            className="w-full"
+          >
+            {isLoading ? <Loader /> : "Iniciar sesión"}
+          </Button>
+        </CardFooter>
+      </form>
+    </Form>
   );
 }
