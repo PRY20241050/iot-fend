@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
@@ -12,12 +11,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Loader from "@/components/ui/Loader";
 import { TypographyMuted } from "@/components/ui/typography";
 
 import Link from "next/link";
 
 import useLoginForm from "./useLoginForm";
+import FormButton from "@/components/ui/formButton";
 
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLoginForm();
@@ -80,13 +79,12 @@ export default function LoginForm() {
           </TypographyMuted>
         </CardContent>
         <CardFooter>
-          <Button
-            type="submit"
+          <FormButton
+            text="Iniciar sesión"
+            isLoading={isLoading}
             disabled={!isValid || isLoading}
             className="w-full"
-          >
-            {isLoading ? <Loader /> : "Iniciar sesión"}
-          </Button>
+          />
         </CardFooter>
       </form>
     </Form>

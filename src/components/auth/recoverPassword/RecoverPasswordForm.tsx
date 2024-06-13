@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
@@ -12,38 +11,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Loader from "@/components/ui/Loader";
 import { TypographyMuted } from "@/components/ui/typography";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const formSchema = z.object({
-  email: z.string().email({ message: "El correo electrónico no es válido" }),
-});
+import useRecoverPasswordForm from "./useRecoverPasswordForm";
+import FormButton from "@/components/ui/formButton";
 
 interface Props {
   submitted: (value: boolean) => void;
 }
 
 export default function RecoverPasswordForm({ submitted }: Props) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
-    reValidateMode: "onChange",
-  });
+  const { form, isLoading, onSubmit } = useRecoverPasswordForm({ submitted });
 
   const {
     formState: { isValid },
   } = form;
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    submitted(true);
-  }
 
   return (
     <Form {...form}>
@@ -76,10 +58,12 @@ export default function RecoverPasswordForm({ submitted }: Props) {
           </TypographyMuted>
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={!isValid} className="w-full">
-            Enviar correo
-            {/* <Loader /> */}
-          </Button>
+          <FormButton
+            text="Enviar correo"
+            isLoading={isLoading}
+            disabled={!isValid || isLoading}
+            className="w-full"
+          />
         </CardFooter>
       </form>
     </Form>

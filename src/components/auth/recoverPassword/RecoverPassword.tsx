@@ -3,7 +3,7 @@
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TypographyH4 } from "@/components/ui/typography";
 import RecoverPasswordForm from "./RecoverPasswordForm";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function RecoverPassword() {
   const [submitted, setSubmitted] = useState(false);
@@ -16,8 +16,8 @@ export default function RecoverPassword() {
           <>
             <CardTitle>¡Listo!</CardTitle>
             <CardDescription>
-              Le hemos enviado un correo electrónico con un enlace para
-              restablecer su contraseña
+              Hemos enviado un correo electrónico con un enlace para
+              restablecer su contraseña.
             </CardDescription>
           </>
         ) : (
@@ -30,7 +30,11 @@ export default function RecoverPassword() {
           </>
         )}
       </CardHeader>
-      {!submitted && <RecoverPasswordForm submitted={setSubmitted} />}
+      {!submitted && (
+        <Suspense>
+          <RecoverPasswordForm submitted={setSubmitted} />
+        </Suspense>
+      )}
     </>
   );
 }
