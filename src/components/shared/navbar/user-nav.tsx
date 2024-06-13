@@ -21,7 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function UserNav() {
-  const { refresh } = useRouter();
+  const { refresh, replace } = useRouter();
   const { user, logOut } = useAuthStore((state) => ({
     user: state.user,
     logOut: state.logOut,
@@ -31,7 +31,7 @@ export function UserNav() {
 
   const signOut = () => {
     logOut();
-    refresh();
+    replace("/auth/iniciar-sesion");
   };
 
   return (
@@ -73,7 +73,7 @@ export function UserNav() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/mi-perfil">
+          <Link href="/perfil">
             <DropdownMenuItem>Mi perfil</DropdownMenuItem>
           </Link>
           <Link href="/configuracion">
