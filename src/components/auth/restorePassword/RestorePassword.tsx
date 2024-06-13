@@ -15,7 +15,7 @@ export default function RestorePassword() {
           <>
             <CardTitle>¡Listo!</CardTitle>
             <CardDescription>Su contraseña fue actualizada.</CardDescription>
-            <TypographyMuted className="text-right pt-5">
+            <TypographyMuted className="pt-3">
               <Link
                 href="/auth/iniciar-sesion"
                 className="font-medium decoration-1 text-black"

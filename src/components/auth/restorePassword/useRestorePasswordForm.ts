@@ -1,4 +1,4 @@
-import { post } from "@/lib/api/api";
+import { restorePassword } from "@/services/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -45,11 +45,8 @@ export default function useRestorePasswordForm({ submitted }: Props) {
   function onSubmit(values: RestorePasswordFormValues) {
     setIsLoading(true);
 
-    post({
-      url: `password-reset-confirm/${uid}/${token}/`,
-      params: {
-        new_password: values.password,
-      },
+    restorePassword(uid, token, {
+      new_password: values.password,
     })
       .then((res) => {
         form.reset();

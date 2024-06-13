@@ -1,4 +1,4 @@
-import { post } from "@/lib/api/api";
+import { recoverPassword } from "@/services/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -30,18 +30,15 @@ export default function useRecoverPasswordForm({ submitted }: Props) {
   function onSubmit(values: RecoverPasswordFormValues) {
     setIsLoading(true);
 
-    post({
-      url: "/password-reset/",
-      params: values,
-    })
+    recoverPassword(values)
       .then((res) => {
         form.reset();
         submitted(true);
       })
       .catch((err) => {
         form.setError("email", {
-            type: "manual",
-            message: "No se encontró una cuenta con este correo electrónico",
+          type: "manual",
+          message: "No se encontró una cuenta con este correo electrónico",
         });
       })
       .finally(() => {

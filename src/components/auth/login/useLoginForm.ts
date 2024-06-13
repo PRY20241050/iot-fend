@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { post } from "@/lib/api/api";
-import { Token } from "@/types/auth";
 import { useState } from "react";
 import { setAuthTokenToCookie } from "@/lib/auth";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signInWithEmailAndPassword } from "@/services/auth";
 
 export interface LoginFormValues {
   username: string;
@@ -34,10 +33,7 @@ export default function useLoginForm() {
   const onSubmit = (values: LoginFormValues) => {
     setIsLoading(true);
 
-    post<Token>({
-      url: "/login/",
-      params: values,
-    })
+    signInWithEmailAndPassword(values)
       .then((res) => {
         form.reset();
         setAuthTokenToCookie(res);
@@ -52,7 +48,7 @@ export default function useLoginForm() {
         if (err.response?.data && err.response.status === 401) {
           form.setError("password", {
             type: "manual",
-            message: "Usuario o contraseña incorrectos"
+            message: "Usuario o contraseña incorrectos",
           });
         }
       })
