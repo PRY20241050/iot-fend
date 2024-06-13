@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
@@ -11,41 +10,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import FormButton from "@/components/ui/formButton";
 import { Input } from "@/components/ui/input";
-import Loader from "@/components/ui/Loader";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import useRestorePasswordForm from "./useRestorePasswordForm";
 
-const formSchema = z
-  .object({
-    password: z.string().min(1, { message: "La contraseña es obligatoria" }),
-    confirm_password: z
-      .string()
-      .min(1, { message: "La confirmación de la contraseña es obligatoria" }),
-  })
-  .refine((data) => data.password === data.confirm_password, {
-    message: "Las contraseñas no coinciden",
-    path: ["confirm_password"],
-  });
+interface Props {
+  submitted: (value: boolean) => void;
+}
 
-export default function RestorePasswordForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      password: "",
-      confirm_password: "",
-    },
-    reValidateMode: "onBlur",
-  });
-
-  const { push } = useRouter();
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    push("/auth/iniciar-sesion");
-  }
+export default function RestorePasswordForm({ submitted }: Props) {
+  const { form, onSubmit, isLoading } = useRestorePasswordForm({ submitted });
 
   return (
     <Form {...form}>
@@ -90,10 +64,12 @@ export default function RestorePasswordForm() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full">
-            Establecer contraseña
-            {/* <Loader /> */}
-          </Button>
+          <FormButton
+            text="Restablecer contraseña"
+            isLoading={isLoading}
+            disabled={isLoading}
+            className="w-full"
+          />
         </CardFooter>
       </form>
     </Form>
