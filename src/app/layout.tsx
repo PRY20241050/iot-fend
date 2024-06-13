@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import '@styles/app.scss'
+import "@styles/app.scss";
+import AuthMiddleware from "@/components/shared/authMiddleware";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthMiddleware>{children}</AuthMiddleware>
+      </body>
     </html>
   );
 }

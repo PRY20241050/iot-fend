@@ -5,6 +5,9 @@ import { useState } from "react";
 import { setAuthTokenToCookie } from "@/lib/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signInWithEmailAndPassword } from "@/services/auth";
+import { getUser } from "@/services/user";
+import { useAuthStore } from "@/store/useAuthStore";
+import { User } from "@/types/auth";
 
 export interface LoginFormValues {
   username: string;
@@ -20,6 +23,9 @@ export default function useLoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setUser } = useAuthStore((state) => ({
+    setUser: state.setUser,
+  }));
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -38,10 +44,14 @@ export default function useLoginForm() {
         form.reset();
         setAuthTokenToCookie(res);
 
+        getUser(res.access).then((res) => {
+          setUser(res.data as User);
+        });
+
         if (searchParams.has("next")) {
           router.push(searchParams.get("next") as unknown as string);
         } else {
-          router.push("/dashboard");
+          router.refresh();
         }
       })
       .catch((err) => {
