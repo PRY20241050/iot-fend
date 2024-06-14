@@ -57,3 +57,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .wrapper {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .inner-wrapper {
+    @apply max-w-[1440px] w-full px-4 phone-xl:px-6;
+  }
+}

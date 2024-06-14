@@ -34,6 +34,8 @@ export function UserNav() {
     replace("/auth/iniciar-sesion");
   };
 
+  console.log(user)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
