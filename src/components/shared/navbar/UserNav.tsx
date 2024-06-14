@@ -21,7 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function UserNav() {
-  const { refresh, replace } = useRouter();
+  const { replace } = useRouter();
   const { user, logOut } = useAuthStore((state) => ({
     user: state.user,
     logOut: state.logOut,

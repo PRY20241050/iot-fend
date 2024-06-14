@@ -3,7 +3,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import ChartCard from "./chart-card";
 import Filter from "./filter";
-import Header from "@/components/shared/header";
+import Header from "../shared/Header";
 import { ListBulletIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 

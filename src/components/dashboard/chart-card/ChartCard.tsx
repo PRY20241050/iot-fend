@@ -1,4 +1,4 @@
-import { LineChart } from "./lineChart"
+import { LineChart } from "./LineChart"
 
 export default function ChartCard() {
   return <LineChart />;

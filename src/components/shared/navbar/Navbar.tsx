@@ -1,6 +1,6 @@
-import Logo from "@/components/shared/Logo";
-import { Notifications } from "./notifications";
-import { UserNav } from "./user-nav";
+import Logo from "../Logo";
+import { Notifications } from "./Notifications";
+import { UserNav } from "./UserNav";
 
 export default function Navbar() {
   return (
