@@ -1,4 +1,4 @@
-import Logo from "@/components/shared/logo";
+import Logo from "@/components/shared/Logo";
 import { Notifications } from "./notifications";
 import { UserNav } from "./user-nav";
 
