@@ -1,5 +1,5 @@
 import { Button } from "./button";
-import Loader from "./loader";
+import Loader from "./sloader";
 
 interface Props {
   type?: "button" | "submit" | "reset";
