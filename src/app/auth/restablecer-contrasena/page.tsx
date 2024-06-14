@@ -1,6 +1,6 @@
 "use client";
 
-import { RestorePassword } from "@/components/auth/restorePassword";
+import { RestorePassword } from "@/components/auth/restore-password";
 import { redirect, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 

@@ -1,5 +1,5 @@
 import { LoginFormValues } from "@/components/auth/login/useLoginForm";
-import { RecoverPasswordFormValues } from "@/components/auth/recoverPassword/useRecoverPasswordForm";
+import { RecoverPasswordFormValues } from "@/components/auth/recover-password/useRecoverPasswordForm";
 import { post } from "@/lib/api/api";
 import { Token } from "@/types/auth";
 
