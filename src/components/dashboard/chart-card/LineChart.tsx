@@ -1,5 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { TypographyP } from "@/components/ui/typography";
+import { indexToLetter } from "@/lib/helpers/string";
+import { ChartData } from "@/types/dashboard";
 import {
   LineChart as Chart,
   Line,
@@ -12,109 +14,57 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "10:20",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "10:21",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "10:22",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "10:23",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "10:24",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "10:25",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "10:26",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "10:27",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "10:28",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "10:29",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "10:30",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "10:31",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "10:32",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+interface Props {
+  index: number;
+  title: string;
+  data: ChartData[];
+}
 
-export function LineChart() {
+const FONT_SIZE = 12;
+
+export function LineChart({ index, title, data }: Props) {
   return (
     <Card className="p-6 w-full">
-      <TypographyP className="font-bold pb-2">a) Sensor PM10</TypographyP>
-      <ResponsiveContainer width="100%" height={300}>
-        <Chart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 20,
-            right: 50,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" label="Tiempo" />
-          <YAxis label="mg/m3" />
+      <TypographyP className="font-bold pb-2">
+        {indexToLetter(index).toLowerCase()}) {title}
+      </TypographyP>
+      <ResponsiveContainer width="100%" height={250}>
+        <Chart width={500} height={300} data={data}>
+          <CartesianGrid strokeDasharray="4 4" />
+          <XAxis
+            dataKey="name"
+            label={{
+              value: "Tiempo",
+              position: "insideBottomRight",
+              offset: 0,
+              dy: 10,
+              style: { fontSize: FONT_SIZE },
+            }}
+            domain={["dataMin", "dataMax + 100"]}
+            minTickGap={0}
+            tickLine={false}
+            tickMargin={5}
+            tick={{ fontSize: FONT_SIZE }}
+          />
+          <YAxis
+            label={{
+              value: "mg/m3",
+              angle: -90,
+              position: "insideLeft",
+              style: { fontSize: FONT_SIZE },
+            }}
+            domain={[0, "dataMax + 1000"]}
+            minTickGap={0}
+            tickLine={false}
+            tick={{ fontSize: FONT_SIZE }}
+          />
           <Tooltip />
-          <Legend />
-          <ReferenceLine y={7200} label="LMP" stroke="red" />
+          <Legend iconType="square" iconSize={5} wrapperStyle={{ fontSize: FONT_SIZE }} />
+          <ReferenceLine
+            y={7200}
+            label={{ value: "LMP", dy: -10, style: { fontSize: FONT_SIZE } }}
+            stroke="red"
+          />
           <Line type="monotone" dataKey="pv" stroke="hsl(var(--primary))" />
           <Line type="monotone" dataKey="uv" stroke="var(--color-black)" />
         </Chart>

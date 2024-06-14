@@ -6,6 +6,7 @@ import Filter from "./filter";
 import Header from "../shared/Header";
 import { ListBulletIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { charts } from "@/mocks/dashboard";
 
 export default function Dashboard() {
   const { user, isBrickyard } = useAuthStore((state) => ({
@@ -21,13 +22,16 @@ export default function Dashboard() {
           <Header
             showTitle={isBrickyard}
             title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
-            btnAction={() => { push("/historial") }}
+            btnAction={() => {
+              push("/historial");
+            }}
             btnIcon={<ListBulletIcon className="h-4 w-4 mr-2" />}
             btnLabel="Ver historial"
           />
-          <div className="py-8 flex gap-4">
-            <ChartCard />
-            <ChartCard />
+          <div className="grid grid-cols-2 gap-6 my-4">
+            {charts.map((chart, index) => (
+              <ChartCard key={chart.id} index={index} {...chart} />
+            ))}
           </div>
         </div>
         <Filter />

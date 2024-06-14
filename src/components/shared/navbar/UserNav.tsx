@@ -15,7 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import getShortUsername from "@/lib/helpers/string";
+import { getShortUsername } from "@/lib/helpers/string";
 import { useAuthStore } from "@/store/useAuthStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -34,7 +34,7 @@ export function UserNav() {
     replace("/auth/iniciar-sesion");
   };
 
-  console.log(user)
+  console.log(user);
 
   return (
     <DropdownMenu>
