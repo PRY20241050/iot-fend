@@ -16,7 +16,7 @@ import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 
 import useLoginForm from "./useLoginForm";
-import FormButton from "@/components/ui/formButton";
+import FormButton from "@/components/ui/form-button";
 
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLoginForm();

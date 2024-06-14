@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { TypographyH4, TypographyP } from "@/components/ui/typography";
+import { TypographyP } from "@/components/ui/typography";
 import {
   LineChart as Chart,
   Line,

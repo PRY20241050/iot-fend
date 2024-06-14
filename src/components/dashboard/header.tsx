@@ -10,7 +10,7 @@ export default function Header() {
   }));
 
   return (
-    <div className="inner-wrapper flex justify-between items-end pt-8">
+    <div className="w-full flex justify-between items-end">
       {isBrickyard && (
         <TypographyH1 className="text-3xl lg:text-4xl">
           Ladrillera {user?.brickyard?.name ?? "Sin nombre"}

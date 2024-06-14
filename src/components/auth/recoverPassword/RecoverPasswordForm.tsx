@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 import useRecoverPasswordForm from "./useRecoverPasswordForm";
-import FormButton from "@/components/ui/formButton";
+import FormButton from "@/components/ui/form-button";
 
 interface Props {
   submitted: (value: boolean) => void;

@@ -1,10 +1,10 @@
 import { Button } from "./button";
-import Loader from "./Loader";
+import Loader from "./loader";
 
 interface Props {
   type?: "button" | "submit" | "reset";
   disabled: boolean;
-  className: string;
+  className?: string;
   text: string;
   isLoading: boolean;
 }
