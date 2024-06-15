@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { History } from "@/types/history";
 import { Table } from "@tanstack/react-table";
 
-interface Props {
-  table: Table<History>;
+interface Props<TData> {
+  table: Table<TData>;
 }
 
-export default function HistoryTablePagination({ table }: Props) {
+export default function SimpleTablePagination<TData>({ table }: Props<TData>) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <div className="flex-1 text-sm text-muted-foreground">

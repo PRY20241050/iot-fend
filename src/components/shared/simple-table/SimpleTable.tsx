@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -18,14 +19,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
-import HistoryTablePagination from "./HistoryTablePagination";
-import { columns } from "./useHistoryTable";
-import { historyTableData } from "@/mocks/history";
+import SimpleTablePagination from "./SimpleTablePagination";
 
-export default function HistoryTable() {
+interface Props<TData> {
+  data: TData[];
+  columns: ColumnDef<TData>[];
+}
+
+export default function HistoryTable<TData>({ data, columns }: Props<TData>) {
   const table = useReactTable({
-    data: historyTableData,
-    columns,
+    data: data,
+    columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -84,7 +88,7 @@ export default function HistoryTable() {
           </TableBody>
         </Table>
       </Card>
-      <HistoryTablePagination table={table} />
+      <SimpleTablePagination table={table} />
     </div>
   );
 }

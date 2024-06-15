@@ -70,7 +70,7 @@ export function UserNav() {
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <Link href="/limite-emisiones">
-            <DropdownMenuItem>Límites de emisiones</DropdownMenuItem>
+            <DropdownMenuItem>Límite de emisiones</DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

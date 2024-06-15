@@ -5,7 +5,9 @@ import Filter from "../shared/filter";
 import Header from "../shared/Header";
 import { useRouter } from "next/navigation";
 import { BarChartIcon } from "@radix-ui/react-icons";
-import { HistoryTable } from "./history-table";
+import { SimpleTable } from "../shared/simple-table";
+import { historyTableData } from "@/mocks/history";
+import { columnsHistoryTable } from "./useHistoryTable";
 
 export default function History() {
   const { user, isBrickyard } = useAuthStore((state) => ({
@@ -27,7 +29,7 @@ export default function History() {
             btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
             btnLabel="Ver graficos"
           />
-          <HistoryTable />
+          <SimpleTable data={historyTableData} columns={columnsHistoryTable} />
         </div>
         <Filter />
       </div>

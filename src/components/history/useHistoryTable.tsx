@@ -1,10 +1,10 @@
 import { History } from "@/types/history";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<History>[] = [
+export const columnsHistoryTable: ColumnDef<History>[] = [
   {
     accessorKey: "id",
-    header: "Id",
+    header: "ID",
     cell: ({ row }: any) => <div>{row.getValue("id")}</div>,
   },
   {
@@ -26,5 +26,5 @@ export const columns: ColumnDef<History>[] = [
     accessorKey: "concentration",
     header: "Concentración (mg/m3)",
     cell: ({ row }: any) => <div>{row.getValue("concentration")}</div>,
-  },
+  }
 ];
