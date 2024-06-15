@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import Filter from "../dashboard/filter";
+import Filter from "../shared/filter";
 import Header from "../shared/Header";
 import { useRouter } from "next/navigation";
 import { BarChartIcon } from "@radix-ui/react-icons";
