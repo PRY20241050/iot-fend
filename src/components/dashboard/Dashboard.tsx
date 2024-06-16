@@ -7,6 +7,7 @@ import Header from "../shared/Header";
 import { ListBulletIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { charts } from "@/mocks/dashboard";
+import { LayoutPrimary } from "../layouts";
 
 export default function Dashboard() {
   const { user, isBrickyard } = useAuthStore((state) => ({
@@ -16,26 +17,24 @@ export default function Dashboard() {
   const { push } = useRouter();
 
   return (
-    <section className="wrapper">
-      <div className="inner-wrapper flex gap-6 pt-8">
-        <div className="flex-grow">
-          <Header
-            showTitle={isBrickyard}
-            title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
-            btnAction={() => {
-              push("/historial");
-            }}
-            btnIcon={<ListBulletIcon className="h-4 w-4 mr-2" />}
-            btnLabel="Ver historial"
-          />
-          <div className="grid grid-cols-2 gap-6 my-4">
-            {charts.map((chart, index) => (
-              <ChartCard key={chart.id} index={index} {...chart} />
-            ))}
-          </div>
+    <LayoutPrimary className="flex gap-6">
+      <div className="flex-grow">
+        <Header
+          showTitle={isBrickyard}
+          title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
+          btnAction={() => {
+            push("/historial");
+          }}
+          btnIcon={<ListBulletIcon className="h-4 w-4 mr-2" />}
+          btnLabel="Ver historial"
+        />
+        <div className="grid grid-cols-2 gap-6 my-4">
+          {charts.map((chart, index) => (
+            <ChartCard key={chart.id} index={index} {...chart} />
+          ))}
         </div>
-        <Filter />
       </div>
-    </section>
+      <Filter />
+    </LayoutPrimary>
   );
 }
