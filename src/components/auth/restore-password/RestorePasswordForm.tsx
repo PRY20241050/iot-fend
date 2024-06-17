@@ -10,7 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import FormButton from "@/components/ui/form-button";
+import { FormButton } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useRestorePasswordForm from "./useRestorePasswordForm";
 

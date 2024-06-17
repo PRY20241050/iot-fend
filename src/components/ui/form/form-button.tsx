@@ -9,7 +9,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export default function FormButton({
+export function FormButton({
   type = "submit",
   disabled,
   isLoading,

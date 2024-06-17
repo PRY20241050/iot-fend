@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import FormButton from "@/components/ui/form-button";
+import { FormButton } from "@/components/ui/form"; 
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -167,9 +167,7 @@ export default function FilterForm() {
                       disabled={(date) =>
                         date > new Date() ||
                         date <
-                          new Date(
-                            form.getValues("dateFrom") ?? "1900-01-01"
-                          )
+                          new Date(form.getValues("dateFrom") ?? "1900-01-01")
                       }
                       initialFocus
                     />
