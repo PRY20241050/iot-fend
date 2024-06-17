@@ -1,4 +1,4 @@
-import { Chart, ChartData, ChartDetail } from "@/types/dashboard";
+import { Chart, ChartData, ChartDetail, Gauge } from "@/types/dashboard";
 
 export const chartData: ChartData[] = [
   {
@@ -79,7 +79,6 @@ export const chartData: ChartData[] = [
     pv: 4300,
     amt: 2100,
   },
-  
 ];
 
 export const chartDetail: ChartDetail[] = [
@@ -87,51 +86,104 @@ export const chartDetail: ChartDetail[] = [
     id: 1,
     title: "Mínimo",
     description: "Concentración (mg/m3)",
-    amount: 20.1,
+    value: 20.1,
   },
   {
     id: 2,
     title: "Máximo",
     description: "Concentración (mg/m3)",
-    amount: 120.1,
+    value: 120.1,
   },
   {
     id: 3,
     title: "Promedio",
     description: "Concentración (mg/m3)",
-    amount: 100.1,
+    value: 100.1,
   },
 ];
 
 export const charts: Chart[] = [
   {
     id: 1,
-    title: "Sensor PM10",
+    title: "Sensor CO",
     data: [...chartData],
-    details: chartDetail,
+    details: chartDetail
   },
   {
     id: 2,
-    title: "Sensor PM2.5",
+    title: "Sensor NO2",
     data: [...chartData],
-    details: chartDetail,
+    details: chartDetail
   },
   {
     id: 3,
-    title: "Sensor NO2",
+    title: "Sensor SO2",
     data: [...chartData],
-    details: chartDetail,
+    details: chartDetail
   },
   {
     id: 4,
-    title: "Sensor SO2",
+    title: "Sensor PM2.5",
     data: [...chartData],
-    details: chartDetail,
+    details: chartDetail
   },
   {
     id: 5,
-    title: "Sensor CO",
+    title: "Sensor PM10",
     data: [...chartData],
-    details: chartDetail,
+    details: chartDetail
+  },
+];
+
+export const gauges: Gauge[] = [
+  {
+    id: 1,
+    title: "Sensor CO",
+    limit: {
+      max_limit: 100,
+      is_modified: false,
+      emission_limit: 1,
+      gas_type: 1,
+    },
+  },
+  {
+    id: 2,
+    title: "Sensor NO2",
+    limit: {
+      max_limit: 320,
+      is_modified: false,
+      emission_limit: 1,
+      gas_type: 2,
+    },
+  },
+  {
+    id: 3,
+    title: "Sensor SO2",
+    limit: {
+      max_limit: 0.25,
+      is_modified: false,
+      emission_limit: 1,
+      gas_type: 3,
+    },
+  },
+  {
+    id: 4,
+    title: "Sensor PM2.5",
+    limit: {
+      max_limit: 150,
+      is_modified: false,
+      emission_limit: 1,
+      gas_type: 4,
+    },
+  },
+  {
+    id: 5,
+    title: "Sensor PM10",
+    limit: {
+      max_limit: 150,
+      is_modified: false,
+      emission_limit: 1,
+      gas_type: 4,
+    },
   },
 ];

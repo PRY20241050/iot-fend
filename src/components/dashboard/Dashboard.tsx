@@ -1,15 +1,18 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import ChartCard from "./chart-card";
 import Filter from "../shared/filter";
 import Header from "../shared/Header";
 import { ListBulletIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
-import { charts } from "@/mocks/dashboard";
 import { LayoutPrimary } from "../layouts";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { ChartCards, GaugeCards } from "./chart-cards";
 
 export default function Dashboard() {
+  const [isGauge, setIsGauge] = useState(true);
+
   const { user, isBrickyard } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
@@ -28,10 +31,15 @@ export default function Dashboard() {
           btnIcon={<ListBulletIcon className="h-4 w-4 mr-2" />}
           btnLabel="Ver historial"
         />
+        <Button
+          onClick={() => setIsGauge((state) => !state)}
+          variant="outline"
+          className="ml-auto"
+        >
+          {isGauge ? "Ver histograma" : "Ver medidores"}
+        </Button>
         <div className="grid grid-cols-2 gap-6 my-4">
-          {charts.map((chart, index) => (
-            <ChartCard key={chart.id} index={index} {...chart} />
-          ))}
+          {isGauge ? <GaugeCards /> : <ChartCards />}
         </div>
       </div>
       <Filter />

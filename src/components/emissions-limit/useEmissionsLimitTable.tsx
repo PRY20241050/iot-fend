@@ -9,11 +9,11 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { EmissionsLimit } from "@/types/emissions-limit";
+import { EmissionsLimitDataTable } from "@/types/emissions-limit";
 import { booleanToYesNo } from "@/lib/helpers/string";
 import { useRouter } from "next/navigation";
 
-export const columnsEmissionsLimitTable: ColumnDef<EmissionsLimit>[] = [
+export const columnsEmissionsLimitTable: ColumnDef<EmissionsLimitDataTable>[] = [
   {
     accessorKey: "id",
     header: "ID",

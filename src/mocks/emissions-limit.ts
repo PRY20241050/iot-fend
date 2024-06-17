@@ -1,6 +1,6 @@
-import { EmissionsLimit } from "@/types/emissions-limit";
+import { EmissionsLimitDataTable } from "@/types/emissions-limit";
 
-export const emissionsLimitTableData: EmissionsLimit[] = [
+export const emissionsLimitTableData: EmissionsLimitDataTable[] = [
   {
     id: 1,
     limitName: "Límite 1",

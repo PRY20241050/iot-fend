@@ -1,3 +1,5 @@
+import { LimitHistory } from "./limit-history";
+
 export interface Chart {
   id: number;
   title: string;
@@ -9,7 +11,7 @@ export interface ChartDetail {
   id: number;
   title: string;
   description: string;
-  amount: number;
+  value: number;
 }
 
 export interface ChartData {
@@ -17,4 +19,10 @@ export interface ChartData {
   uv: number;
   pv: number;
   amt: number;
+}
+
+export interface Gauge {
+  id: number;
+  title: string;
+  limit: LimitHistory;
 }

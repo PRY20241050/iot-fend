@@ -52,6 +52,11 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        gauge: {
+          normal: "hsl(var(--gauge-normal))",
+          warning: "hsl(var(--gauge-warning))",
+          danger: "hsl(var(--gauge-danger))",
+        },
         back: {
           DEFAULT: "#f9f9f9",
           primary: "#f9f9f9",

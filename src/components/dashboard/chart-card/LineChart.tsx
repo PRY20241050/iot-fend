@@ -1,6 +1,3 @@
-import { Card } from "@/components/ui/card";
-import { TypographyP } from "@/components/ui/typography";
-import { indexToLetter } from "@/lib/helpers/string";
 import { ChartData } from "@/types/dashboard";
 import {
   LineChart as Chart,
@@ -15,19 +12,13 @@ import {
 } from "recharts";
 
 interface Props {
-  index: number;
-  title: string;
   data: ChartData[];
 }
 
 const FONT_SIZE = 12;
 
-export function LineChart({ index, title, data }: Props) {
+export function LineChart({ data }: Props) {
   return (
-    <Card className="p-6 w-full">
-      <TypographyP className="font-bold pb-2">
-        {indexToLetter(index).toLowerCase()}) {title}
-      </TypographyP>
       <ResponsiveContainer width="100%" height={250}>
         <Chart width={500} height={300} data={data}>
           <CartesianGrid strokeDasharray="4 4" />
@@ -69,6 +60,5 @@ export function LineChart({ index, title, data }: Props) {
           <Line type="monotone" dataKey="uv" stroke="var(--color-black)" />
         </Chart>
       </ResponsiveContainer>
-    </Card>
   );
 }
