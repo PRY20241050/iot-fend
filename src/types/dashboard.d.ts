@@ -25,4 +25,5 @@ export interface Gauge {
   id: number;
   title: string;
   limit: LimitHistory;
+  value: number;
 }

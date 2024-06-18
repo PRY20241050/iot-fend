@@ -107,31 +107,31 @@ export const charts: Chart[] = [
     id: 1,
     title: "Sensor CO",
     data: [...chartData],
-    details: chartDetail
+    details: chartDetail,
   },
   {
     id: 2,
     title: "Sensor NO2",
     data: [...chartData],
-    details: chartDetail
+    details: chartDetail,
   },
   {
     id: 3,
     title: "Sensor SO2",
     data: [...chartData],
-    details: chartDetail
+    details: chartDetail,
   },
   {
     id: 4,
     title: "Sensor PM2.5",
     data: [...chartData],
-    details: chartDetail
+    details: chartDetail,
   },
   {
     id: 5,
     title: "Sensor PM10",
     data: [...chartData],
-    details: chartDetail
+    details: chartDetail,
   },
 ];
 
@@ -139,6 +139,7 @@ export const gauges: Gauge[] = [
   {
     id: 1,
     title: "Sensor CO",
+    value: 0,
     limit: {
       max_limit: 100,
       is_modified: false,
@@ -149,6 +150,7 @@ export const gauges: Gauge[] = [
   {
     id: 2,
     title: "Sensor NO2",
+    value: 0,
     limit: {
       max_limit: 320,
       is_modified: false,
@@ -159,6 +161,7 @@ export const gauges: Gauge[] = [
   {
     id: 3,
     title: "Sensor SO2",
+    value: 0,
     limit: {
       max_limit: 0.25,
       is_modified: false,
@@ -169,6 +172,7 @@ export const gauges: Gauge[] = [
   {
     id: 4,
     title: "Sensor PM2.5",
+    value: 0,
     limit: {
       max_limit: 150,
       is_modified: false,
@@ -179,6 +183,7 @@ export const gauges: Gauge[] = [
   {
     id: 5,
     title: "Sensor PM10",
+    value: 0,
     limit: {
       max_limit: 150,
       is_modified: false,

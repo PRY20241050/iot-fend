@@ -7,6 +7,7 @@ interface Props {
   btnAction: () => void;
   btnIcon?: JSX.Element;
   btnLabel?: string;
+  children?: React.ReactNode;
 }
 
 export default function Header({
@@ -15,16 +16,20 @@ export default function Header({
   btnAction,
   btnIcon,
   btnLabel = "",
+  children,
 }: Props) {
   return (
     <div className="w-full flex justify-between items-end">
       {showTitle && (
         <TypographyH1 className="text-3xl lg:text-4xl">{title}</TypographyH1>
       )}
-      <Button onClick={btnAction} className="ml-auto">
-        {btnIcon}
-        {btnLabel}
-      </Button>
+      <div className="flex gap-2">
+        {children}
+        <Button onClick={btnAction} className="ml-auto">
+          {btnIcon}
+          {btnLabel}
+        </Button>
+      </div>
     </div>
   );
 }

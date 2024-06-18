@@ -32,7 +32,7 @@ export function ChartCard({ index, ...props }: Props) {
 type GaugeCardProps = Gauge & { index: number };
 
 export function GaugeCard({ index, ...props }: GaugeCardProps) {
-  const { title, limit } = props;
+  const { title, limit, value } = props;
 
   function valueStateColor(value: number) {
     if (value < limit.max_limit * 0.75) {
@@ -47,9 +47,10 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
   const low = limit.max_limit * 0.75;
   const medium = limit.max_limit * 0.25;
   const high = limit.max_limit * 0.25;
-
-  const value = 0.19;
+  
   const maxValue = limit.max_limit * 1.25;
+
+  console.log(value)
 
   return (
     <div>
