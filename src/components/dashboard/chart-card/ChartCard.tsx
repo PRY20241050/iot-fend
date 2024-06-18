@@ -20,7 +20,7 @@ export function ChartCard({ index, ...props }: Props) {
         </TypographyP>
         <LineChart data={data} />
       </Card>
-      <div className="grid grid-cols-3 gap-3 mt-3">
+      <div className="grid phone-sm:grid-cols-3 gap-3 mt-3">
         {details.map((detail) => (
           <DetailChart key={detail.id} {...detail} />
         ))}
@@ -66,7 +66,7 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
           maxValue={maxValue}
         />
       </Card>
-      <div className="grid grid-cols-3 gap-3 mt-3">
+      <div className="grid phone-sm:grid-cols-3 gap-3 mt-3">
         <DetailChart
           description="Concentración (mg/m3)"
           title="Mínimo"

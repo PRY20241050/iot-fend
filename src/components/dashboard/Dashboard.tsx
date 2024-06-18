@@ -25,7 +25,7 @@ export default function Dashboard() {
   const { push } = useRouter();
 
   return (
-    <LayoutPrimary className="flex gap-6">
+    <LayoutPrimary className="tablet-lg:flex tablet-lg:gap-6">
       <div className="flex-grow">
         <Header
           showTitle={isBrickyard}
@@ -39,7 +39,7 @@ export default function Dashboard() {
           <Button
             onClick={() => setIsGauge((state) => !state)}
             variant="outline"
-            className="ml-auto"
+            className="phone-xl:ml-auto"
           >
             {isGauge ? (
               <>
@@ -52,7 +52,7 @@ export default function Dashboard() {
             )}
           </Button>
         </Header>
-        <div className="grid grid-cols-2 gap-6 my-4">
+        <div className="grid phone-xl:grid-cols-2 gap-6 my-4">
           {isGauge ? <GaugeCards /> : <ChartCards />}
         </div>
       </div>

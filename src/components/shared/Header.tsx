@@ -19,13 +19,13 @@ export default function Header({
   children,
 }: Props) {
   return (
-    <div className="w-full flex justify-between items-end">
+    <div className="w-full flex flex-col gap-3 justify-between phone-xl:flex-row phone-xl:items-end">
       {showTitle && (
         <TypographyH1 className="text-3xl lg:text-4xl">{title}</TypographyH1>
       )}
       <div className="flex gap-2">
         {children}
-        <Button onClick={btnAction} className="ml-auto">
+        <Button onClick={btnAction} className="phone-xl:ml-auto">
           {btnIcon}
           {btnLabel}
         </Button>

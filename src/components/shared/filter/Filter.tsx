@@ -2,12 +2,12 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import FilterForm from "./FilterForm";
 
 interface Props {
-  isGauge: boolean;
+  isGauge?: boolean;
 }
 
-export default function Filter({ isGauge }: Props) {
+export default function Filter({ isGauge = false }: Props) {
   return (
-    <aside className="max-w-[35%] w-[270px]">
+    <aside className="tablet-lg:max-w-[35%] tablet-lg:w-[270px]">
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Filtrar registros</CardTitle>
