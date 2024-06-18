@@ -22,12 +22,22 @@ import { useRouter } from "next/navigation";
 
 export function UserNav() {
   const { replace } = useRouter();
-  const { user, logOut } = useAuthStore((state) => ({
-    user: state.user,
-    logOut: state.logOut,
-  }));
+  const { user, logOut, isBrickyard, isInstitution } = useAuthStore(
+    (state) => ({
+      user: state.user,
+      isBrickyard: state.isBrickyard,
+      isInstitution: state.isInstitution,
+      logOut: state.logOut,
+    })
+  );
 
   const abrev = getShortUsername(user?.username ?? "");
+
+  const setRol = () => {
+    if (isBrickyard) return "Ladrillera";
+    if (isInstitution) return "Institución";
+    return "Usuario";
+  };
 
   const signOut = () => {
     logOut();
@@ -46,6 +56,11 @@ export function UserNav() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal py-3 -mx-1 mb-1 px-3 -mt-1 bg-black/100">
+          <p className="text-sm font-medium leading-none text-white">
+            {setRol()}
+          </p>
+        </DropdownMenuLabel>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.username}</p>

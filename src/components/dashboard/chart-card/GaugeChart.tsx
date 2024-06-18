@@ -27,7 +27,14 @@ export default function GaugeChart({
     { name: "High", value: highValue, color: "hsl(var(--gauge-danger))" },
   ];
 
-  const graphValue = value > maxValue ? maxValue : value;
+  const setGraphValue = (value: number) => {
+    if (value < 0) {
+      return 0;
+    } else if (value > maxValue) {
+      return maxValue;
+    }
+    return value;
+  };
 
   return (
     <ResponsiveContainer width="100%" height={120}>
@@ -50,7 +57,7 @@ export default function GaugeChart({
         </Pie>
         {needle({
           data,
-          value: graphValue,
+          value: setGraphValue(value),
           cx,
           cy,
           iR,
