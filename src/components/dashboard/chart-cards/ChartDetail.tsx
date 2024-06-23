@@ -5,7 +5,7 @@ import { ChartDetail } from "@/types/dashboard";
 
 type Props = Omit<ChartDetail, "id"> & { className?: string };
 
-export default function DetailChart({ title, description, value, className }: Props) {
+export function DetailChart({ title, description, value, className }: Props) {
   return (
     <Card className={cn("p-4", className)}>
       <CardTitle className="mb-1">{title}</CardTitle>

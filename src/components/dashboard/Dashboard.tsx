@@ -12,7 +12,9 @@ import { useRouter } from "next/navigation";
 import { LayoutPrimary } from "../layouts";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { ChartCards, GaugeCards } from "./chart-cards";
+import { ChartCards } from "./chart-cards";
+import { GaugeCards } from "./gauge-cards";
+import { GaugeLegend } from "./gauge-cards/GaugeCard";
 
 export default function Dashboard() {
   const [isGauge, setIsGauge] = useState(true);
@@ -52,6 +54,7 @@ export default function Dashboard() {
             )}
           </Button>
         </Header>
+        {isGauge && <GaugeLegend />}
         <div className="grid phone-xl:grid-cols-2 gap-6 my-4">
           {isGauge ? <GaugeCards /> : <ChartCards />}
         </div>
