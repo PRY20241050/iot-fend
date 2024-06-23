@@ -27,8 +27,6 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
 
   const maxValue = limit.max_limit * 1.25;
 
-  console.log(value);
-
   return (
     <div>
       <Card className="p-6 w-full">
