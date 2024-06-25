@@ -25,12 +25,20 @@ interface Props<TData> {
   columns: ColumnDef<TData>[];
   data?: TData[];
   isLoading?: boolean;
+  page?: number;
+  paginationInfo?: any;
+  fetchNextPage?: () => void;
+  fetchPrevPage?: () => void;
 }
 
 export default function HistoryTable<TData>({
   data = [],
   columns,
   isLoading = false,
+  page,
+  paginationInfo,
+  fetchNextPage,
+  fetchPrevPage,
 }: Props<TData>) {
   const table = useReactTable({
     data: data,
@@ -106,7 +114,12 @@ export default function HistoryTable<TData>({
           </TableBody>
         </Table>
       </Card>
-      <SimpleTablePagination table={table} />
+      <SimpleTablePagination
+        page={page}
+        paginationInfo={paginationInfo}
+        fetchNextPage={fetchNextPage}
+        fetchPrevPage={fetchPrevPage}
+      />
     </div>
   );
 }

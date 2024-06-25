@@ -1,31 +1,44 @@
 import { Button } from "@/components/ui/button";
-import { Table } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 
-interface Props<TData> {
-  table: Table<TData>;
+interface Props {
+  page?: number;
+  paginationInfo?: any;
+  fetchNextPage?: () => void;
+  fetchPrevPage?: () => void;
 }
 
-export default function SimpleTablePagination<TData>({ table }: Props<TData>) {
+export default function SimpleTablePagination({
+  page,
+  paginationInfo,
+  fetchNextPage,
+  fetchPrevPage,
+}: Props) {
+  const [totalPages, setTotalPages] = useState<number>(10);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(paginationInfo?.count / 10));
+  }, [paginationInfo?.count]);
+
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <div className="flex-1 text-sm text-muted-foreground">
-        {table.getPaginationRowModel().rows.length} de{" "}
-        {table.getCoreRowModel().rows.length} registros
+        {page} de {totalPages} páginas
       </div>
       <div className="space-x-2">
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={() => fetchPrevPage?.()}
+          disabled={paginationInfo?.previous == null}
         >
           Anterior
         </Button>
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={() => fetchNextPage?.()}
+          disabled={paginationInfo?.next == null}
         >
           Siguiente
         </Button>

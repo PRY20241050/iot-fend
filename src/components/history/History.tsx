@@ -23,20 +23,23 @@ export default function History() {
     isBrickyard: state.isBrickyard,
   }));
 
-  const { dateFrom, dateTo, gases, scale, device } = useFilterStore((state) => ({
-    dateFrom: state.dateFrom,
-    dateTo: state.dateTo,
-    gases: state.gases,
-    scale: state.scale,
-    device: state.device,
-  }));
+  const { dateFrom, dateTo, gases, scale, device } = useFilterStore(
+    (state) => ({
+      dateFrom: state.dateFrom,
+      dateTo: state.dateTo,
+      gases: state.gases,
+      scale: state.scale,
+      device: state.device,
+    })
+  );
 
   const { push } = useRouter();
 
-  const { items, isLoading, updateParams } = usePaginationFetchData<
-    GetMeasurementsWithDeviceParams,
-    MeasurementWithDevice
-  >(getMeasurementsWithDevice, {});
+  const { items, paginationInfo, isLoading, page, fetchData, updateParams } =
+    usePaginationFetchData<
+      GetMeasurementsWithDeviceParams,
+      MeasurementWithDevice
+    >(getMeasurementsWithDevice, {});
 
   useEffect(() => {
     updateParams({
@@ -50,6 +53,14 @@ export default function History() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.brickyard?.id, dateFrom, dateTo, gases]);
+
+  const fetchNextPage = () => {
+    fetchData(page + 1);
+  };
+
+  const fetchPrevPage = () => {
+    fetchData(page - 1);
+  };
 
   return (
     <LayoutPrimary className="flex gap-6">
@@ -67,6 +78,10 @@ export default function History() {
           data={items}
           isLoading={isLoading}
           columns={columnsHistoryTable}
+          page={page}
+          paginationInfo={paginationInfo}
+          fetchNextPage={fetchNextPage}
+          fetchPrevPage={fetchPrevPage}
         />
       </div>
       <Filter />
