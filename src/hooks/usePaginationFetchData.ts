@@ -55,7 +55,8 @@ export function usePaginationFetchData<T, U>(
     setPage(newPage);
     setIsLoading(true);
 
-    fetchDataFunction({ ...params, page: newPage })
+    try {
+      fetchDataFunction({ ...params, page: newPage })
       .then((data) => {
         setPaginationInfo(data);
         setHasNext(data.next !== null);
@@ -72,6 +73,7 @@ export function usePaginationFetchData<T, U>(
       .finally(() => {
         setIsLoading(false);
       });
+    } catch (error) {}
   };
 
   useEffect(() => {

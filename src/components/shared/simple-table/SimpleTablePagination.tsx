@@ -9,8 +9,8 @@ export default function SimpleTablePagination<TData>({ table }: Props<TData>) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <div className="flex-1 text-sm text-muted-foreground">
-        {table.getPaginationRowModel().rows.length} de{" "}
-        {table.getCoreRowModel().rows.length} registros
+        {table.getState().pagination.pageIndex + 1} de{" "}
+        {table.getPageCount().toLocaleString()} registros
       </div>
       <div className="space-x-2">
         <Button

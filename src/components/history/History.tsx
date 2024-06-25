@@ -16,6 +16,9 @@ import {
 } from "@/services/measurements";
 import { useEffect } from "react";
 import { useFilterStore } from "@/store/useFilterStore";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function History() {
   const { user, isBrickyard } = useAuthStore((state) => ({
@@ -23,20 +26,23 @@ export default function History() {
     isBrickyard: state.isBrickyard,
   }));
 
-  const { dateFrom, dateTo, gases, scale, device } = useFilterStore((state) => ({
-    dateFrom: state.dateFrom,
-    dateTo: state.dateTo,
-    gases: state.gases,
-    scale: state.scale,
-    device: state.device,
-  }));
+  const { dateFrom, dateTo, gases, scale, device } = useFilterStore(
+    (state) => ({
+      dateFrom: state.dateFrom,
+      dateTo: state.dateTo,
+      gases: state.gases,
+      scale: state.scale,
+      device: state.device,
+    })
+  );
 
   const { push } = useRouter();
 
-  const { items, isLoading, updateParams } = usePaginationFetchData<
-    GetMeasurementsWithDeviceParams,
-    MeasurementWithDevice
-  >(getMeasurementsWithDevice, {});
+  const { items, paginationInfo, isLoading, page, fetchData, updateParams } =
+    usePaginationFetchData<
+      GetMeasurementsWithDeviceParams,
+      MeasurementWithDevice
+    >(getMeasurementsWithDevice, {});
 
   useEffect(() => {
     updateParams({
@@ -52,24 +58,28 @@ export default function History() {
   }, [user?.brickyard?.id, dateFrom, dateTo, gases]);
 
   return (
-    <LayoutPrimary className="flex gap-6">
-      <div className="flex-grow">
-        <Header
-          showTitle={isBrickyard}
-          title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
-          btnAction={() => {
-            push("/dashboard");
-          }}
-          btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
-          btnLabel="Ver graficos"
-        />
-        <SimpleTable
-          data={items}
-          isLoading={isLoading}
-          columns={columnsHistoryTable}
-        />
-      </div>
-      <Filter />
-    </LayoutPrimary>
+    <QueryClientProvider client={queryClient}>
+      <LayoutPrimary className="flex gap-6">
+        <div className="flex-grow">
+          <Header
+            showTitle={isBrickyard}
+            title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
+            btnAction={() => {
+              push("/dashboard");
+            }}
+            btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
+            btnLabel="Ver graficos"
+          />
+          <SimpleTable
+            data={items}
+            isLoading={isLoading}
+            columns={columnsHistoryTable}
+            paginationInfo={paginationInfo}
+            fetchData={fetchData}
+          />
+        </div>
+        <Filter />
+      </LayoutPrimary>
+    </QueryClientProvider>
   );
 }
