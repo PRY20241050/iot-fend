@@ -4,29 +4,19 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
   FormButton,
   FormSelect,
   FormDatePicker,
 } from "@/components/ui/form";
 import useFilterForm from "./useFilterForm";
 import { CardContent, CardFooter } from "@/components/ui/card";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Calendar } from "@/components/ui/calendar";
-import { es } from "date-fns/locale";
 import { useRequest } from "@/lib/api/swr";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Device } from "@/types/device";
 import { DEVICES_URL } from "@/services/consts";
+import { usePathname } from "next/navigation";
 
 const scales = [
   {
@@ -40,7 +30,7 @@ const scales = [
   {
     value: "day",
     label: "Día",
-  }
+  },
 ];
 
 const gases = [
@@ -71,6 +61,8 @@ interface Props {
 }
 
 export default function FilterForm({ isGauge }: Props) {
+  const pathname = usePathname();
+
   const { form, onSubmit } = useFilterForm();
 
   const { user } = useAuthStore((state) => ({
@@ -88,6 +80,8 @@ export default function FilterForm({ isGauge }: Props) {
     value: device.id.toString(),
     label: device.name,
   }));
+
+  const isDashboard = pathname === "/dashboard";
 
   return (
     <Form {...form}>
@@ -119,7 +113,7 @@ export default function FilterForm({ isGauge }: Props) {
               />
             </>
           )}
-          {isGauge && (
+          {(isGauge || !isDashboard) && (
             <FormSelect
               form={form}
               name="device"

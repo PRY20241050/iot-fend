@@ -6,7 +6,6 @@ import Header from "../shared/Header";
 import { useRouter } from "next/navigation";
 import { BarChartIcon } from "@radix-ui/react-icons";
 import { SimpleTable } from "../shared/simple-table";
-import { historyTableData } from "@/mocks/history";
 import { columnsHistoryTable } from "./useHistoryTable";
 import { LayoutPrimary } from "../layouts";
 import { usePaginationFetchData } from "@/hooks/usePaginationFetchData";
@@ -24,16 +23,17 @@ export default function History() {
     isBrickyard: state.isBrickyard,
   }));
 
-  const { dateFrom, dateTo, gases, scale } = useFilterStore((state) => ({
+  const { dateFrom, dateTo, gases, scale, device } = useFilterStore((state) => ({
     dateFrom: state.dateFrom,
     dateTo: state.dateTo,
     gases: state.gases,
     scale: state.scale,
+    device: state.device,
   }));
 
   const { push } = useRouter();
 
-  const { items, isLoading, fetchData, updateParams } = usePaginationFetchData<
+  const { items, isLoading, updateParams } = usePaginationFetchData<
     GetMeasurementsWithDeviceParams,
     MeasurementWithDevice
   >(getMeasurementsWithDevice, {});
@@ -43,6 +43,7 @@ export default function History() {
       brickyardsIds: user?.brickyard && [user?.brickyard?.id],
       dateFrom: dateFrom as Date,
       dateTo: dateTo as Date,
+      device: device as number,
       gases,
       scale,
     });

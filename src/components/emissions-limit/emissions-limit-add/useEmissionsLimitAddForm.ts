@@ -99,7 +99,6 @@ export default function useEmissionsLimitAddForm() {
 
   function onSubmit(values: EmissionsLimitAddFormValues) {
     setIsLoading(true);
-    console.log(values);
   }
 
   return {

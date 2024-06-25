@@ -20,6 +20,7 @@ export const getMeasurementsWithDevice = async ({
   dateFrom,
   dateTo,
   scale,
+  device,
 }: GetMeasurementsWithDeviceParams): Promise<
   PaginationResponse<MeasurementWithDevice>
 > => {
@@ -29,9 +30,10 @@ export const getMeasurementsWithDevice = async ({
       page,
       group_by: scale,
       brickyard_ids: brickyardsIds?.join(","),
-      ...(gases && gases.length > 0 && { gas_types: gases.join(",") }),
       start_date: dateFrom,
       end_date: dateTo,
+      ...(device && { device_id: device }),
+      ...(gases && gases.length > 0 && { gas_types: gases.join(",") }),
     },
   });
 };

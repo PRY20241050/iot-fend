@@ -16,7 +16,7 @@ const formSchema = z
     dateFrom: z.date({ message: "Fecha inválida" }).optional(),
     dateTo: z.date({ message: "Fecha inválida" }).optional(),
     scale: z.string().optional(),
-    device: z.number().optional(),
+    device: z.string().optional(),
     gases: z.array(z.number()).optional(),
   })
   .refine(
@@ -51,7 +51,6 @@ export default function useFilterForm() {
 
   const onSubmit = (values: FilterFormValues) => {
     setFilter(values);
-    console.log(values);
   };
 
   return {
