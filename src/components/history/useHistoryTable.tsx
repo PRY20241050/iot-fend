@@ -1,30 +1,31 @@
-import { History } from "@/types/history";
+import { MeasurementWithDevice } from "@/types/measurement";
 import { ColumnDef } from "@tanstack/react-table";
+import { formatDateToSpanishString } from "@/lib/helpers/date";
 
-export const columnsHistoryTable: ColumnDef<History>[] = [
+export const columnsHistoryTable: ColumnDef<MeasurementWithDevice>[] = [
   {
     accessorKey: "id",
     header: "ID",
     cell: ({ row }: any) => <div>{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "oven",
+    accessorKey: "device_name",
     header: "Horno",
-    cell: ({ row }: any) => <div>{row.getValue("oven")}</div>,
+    cell: ({ row }: any) => <div>{row.getValue("device_name")}</div>,
   },
   {
-    accessorKey: "gas",
+    accessorKey: "gas_abbreviation",
     header: "Gas",
-    cell: ({ row }: any) => <div>{row.getValue("gas")}</div>,
+    cell: ({ row }: any) => <div>{row.getValue("gas_abbreviation")}</div>,
   },
   {
-    accessorKey: "createdDate",
+    accessorKey: "date",
     header: "Fecha de registro",
-    cell: ({ row }: any) => <div>{row.getValue("createdDate")}</div>,
+    cell: ({ row }: any) => <div>{formatDateToSpanishString(row.getValue("date"))}</div>,
   },
   {
-    accessorKey: "concentration",
+    accessorKey: "value",
     header: "Concentración (mg/m3)",
-    cell: ({ row }: any) => <div>{row.getValue("concentration")}</div>,
+    cell: ({ row }: any) => <div>{row.getValue("value")}</div>,
   }
 ];

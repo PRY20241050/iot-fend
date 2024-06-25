@@ -9,13 +9,46 @@ import { SimpleTable } from "../shared/simple-table";
 import { historyTableData } from "@/mocks/history";
 import { columnsHistoryTable } from "./useHistoryTable";
 import { LayoutPrimary } from "../layouts";
+import { usePaginationFetchData } from "@/hooks/usePaginationFetchData";
+import { MeasurementWithDevice } from "@/types/measurement";
+import {
+  getMeasurementsWithDevice,
+  GetMeasurementsWithDeviceParams,
+} from "@/services/measurements";
+import { useEffect } from "react";
+import { useFilterStore } from "@/store/useFilterStore";
 
 export default function History() {
   const { user, isBrickyard } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
   }));
+
+  const { dateFrom, dateTo, gases, scale } = useFilterStore((state) => ({
+    dateFrom: state.dateFrom,
+    dateTo: state.dateTo,
+    gases: state.gases,
+    scale: state.scale,
+  }));
+
   const { push } = useRouter();
+
+  const { items, isLoading, fetchData, updateParams } = usePaginationFetchData<
+    GetMeasurementsWithDeviceParams,
+    MeasurementWithDevice
+  >(getMeasurementsWithDevice, {});
+
+  useEffect(() => {
+    updateParams({
+      brickyardsIds: user?.brickyard && [user?.brickyard?.id],
+      dateFrom: dateFrom as Date,
+      dateTo: dateTo as Date,
+      gases,
+      scale,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.brickyard?.id, dateFrom, dateTo, gases]);
 
   return (
     <LayoutPrimary className="flex gap-6">
@@ -29,7 +62,11 @@ export default function History() {
           btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
           btnLabel="Ver graficos"
         />
-        <SimpleTable data={historyTableData} columns={columnsHistoryTable} />
+        <SimpleTable
+          data={items}
+          isLoading={isLoading}
+          columns={columnsHistoryTable}
+        />
       </div>
       <Filter />
     </LayoutPrimary>

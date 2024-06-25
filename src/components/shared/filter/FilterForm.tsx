@@ -30,43 +30,39 @@ import { DEVICES_URL } from "@/services/consts";
 
 const scales = [
   {
+    value: "minute",
+    label: "Minuto",
+  },
+  {
+    value: "hour",
+    label: "Hora",
+  },
+  {
     value: "day",
     label: "Día",
-  },
-  {
-    value: "week",
-    label: "Semana",
-  },
-  {
-    value: "month",
-    label: "Mes",
-  },
-  {
-    value: "year",
-    label: "Año",
-  },
+  }
 ];
 
 const gases = [
   {
-    id: "SO2",
-    label: "SO2",
-  },
-  {
-    id: "NO2",
-    label: "NO2",
-  },
-  {
-    id: "CO",
+    id: 1,
     label: "CO",
   },
   {
-    id: "PM10",
-    label: "PM10",
+    id: 2,
+    label: "NO2",
   },
   {
-    id: "PM2.5",
+    id: 3,
+    label: "SO2",
+  },
+  {
+    id: 4,
     label: "PM2.5",
+  },
+  {
+    id: 5,
+    label: "PM10",
   },
 ];
 

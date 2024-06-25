@@ -22,11 +22,16 @@ import { Card } from "@/components/ui/card";
 import SimpleTablePagination from "./SimpleTablePagination";
 
 interface Props<TData> {
-  data: TData[];
   columns: ColumnDef<TData>[];
+  data?: TData[];
+  isLoading?: boolean;
 }
 
-export default function HistoryTable<TData>({ data, columns }: Props<TData>) {
+export default function HistoryTable<TData>({
+  data = [],
+  columns,
+  isLoading = false,
+}: Props<TData>) {
   const table = useReactTable({
     data: data,
     columns: columns,
@@ -59,31 +64,44 @@ export default function HistoryTable<TData>({ data, columns }: Props<TData>) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row: any) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell: any) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
+            {isLoading ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Sin resultados
+                  Cargando...
                 </TableCell>
               </TableRow>
+            ) : (
+              <>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row: any) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell: any) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      Sin resultados
+                    </TableCell>
+                  </TableRow>
+                )}
+              </>
             )}
           </TableBody>
         </Table>

@@ -1,0 +1,37 @@
+import { MeasurementWithDevice } from "@/types/measurement";
+import { PaginationResponse } from "@/types/models";
+import { MEASUEMRENTS_URL } from "./consts";
+import { fetcher } from "@/lib/api/api";
+import { FilterFormValues } from "@/components/shared/filter/useFilterForm";
+
+export type GetMeasurementsWithDeviceParams = Omit<
+  FilterFormValues,
+  "gases"
+> & {
+  page?: number;
+  gases?: number[];
+  brickyardsIds?: number[];
+};
+
+export const getMeasurementsWithDevice = async ({
+  page,
+  brickyardsIds,
+  gases,
+  dateFrom,
+  dateTo,
+  scale,
+}: GetMeasurementsWithDeviceParams): Promise<
+  PaginationResponse<MeasurementWithDevice>
+> => {
+  return await fetcher<PaginationResponse<MeasurementWithDevice>>({
+    url: `${MEASUEMRENTS_URL}/paginated/`,
+    params: {
+      page,
+      group_by: scale,
+      brickyard_ids: brickyardsIds?.join(","),
+      ...(gases && gases.length > 0 && { gas_types: gases.join(",") }),
+      start_date: dateFrom,
+      end_date: dateTo,
+    },
+  });
+};

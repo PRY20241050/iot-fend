@@ -7,8 +7,8 @@ export interface FilterFormValues {
   dateFrom?: Date;
   dateTo?: Date;
   scale?: string;
-  device?: string;
-  gases: string[];
+  device?: number;
+  gases: number[];
 }
 
 const formSchema = z
@@ -16,19 +16,14 @@ const formSchema = z
     dateFrom: z.date({ message: "Fecha inválida" }).optional(),
     dateTo: z.date({ message: "Fecha inválida" }).optional(),
     scale: z.string().optional(),
-    device: z.string().optional(),
-    gases: z.array(z.string()).optional(),
+    device: z.number().optional(),
+    gases: z.array(z.number()).optional(),
   })
   .refine(
     (data) => {
       if (data.dateFrom && data.dateTo) {
         return data.dateFrom <= data.dateTo;
       }
-
-      if ((data.dateFrom && !data.dateTo) || (!data.dateFrom && data.dateTo)) {
-        return false;
-      }
-
       return true;
     },
     {
@@ -48,7 +43,7 @@ export default function useFilterForm() {
       dateFrom: undefined,
       dateTo: undefined,
       scale: "",
-      device: "",
+      device: undefined,
       gases: [],
     },
     reValidateMode: "onChange",
