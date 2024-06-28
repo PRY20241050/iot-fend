@@ -37,7 +37,7 @@ export default function useGaugeCard() {
     if (limitsData) {
       setGauges((prevGauges) =>
         prevGauges.map((gauge) => {
-          const limit = limitsData[0].limit_history.find((limit) => {
+          const limit = limitsData[0]?.limit_history.find((limit) => {
             return limit.gas_type === gauge.id;
           });
           return limit ? { ...gauge, limit } : gauge;
