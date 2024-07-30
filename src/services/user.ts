@@ -16,7 +16,7 @@ export const getUser = async (
     };
 
     const user = await apiClient
-      .get<User>('/profile/', undefined)
+      .get<User>('/profile/')
       .then((res) => res.data);
 
     return { data: user };

@@ -28,15 +28,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   setUser: (user: User) =>
     set({
       user,
+      isAuthenticated: true,
+      isBrickyard: user.brickyard !== null,
+      isInstitution: user.institution !== null,
       userType:
         user.brickyard !== null
           ? "brickyard"
           : user.institution !== null
           ? "institution"
           : null,
-      isAuthenticated: true,
-      isBrickyard: user.brickyard !== null,
-      isInstitution: user.institution !== null,
     }),
   /**
    * Verifies if the user is authenticated by checking if the access token is valid

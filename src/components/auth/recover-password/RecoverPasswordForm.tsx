@@ -9,12 +9,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormButton
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 import useRecoverPasswordForm from "./useRecoverPasswordForm";
-import { FormButton } from "@/components/ui/form";
 
 interface Props {
   submitted: (value: boolean) => void;

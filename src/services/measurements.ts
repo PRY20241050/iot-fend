@@ -1,6 +1,6 @@
 import { MeasurementWithDevice } from "@/types/measurement";
 import { PaginationResponse } from "@/types/models";
-import { MEASUEMRENTS_URL } from "./consts";
+import { MEASUREMENTS_URL } from "./consts";
 import { fetcher } from "@/lib/api/api";
 import { FilterFormValues } from "@/components/shared/filter/useFilterForm";
 
@@ -25,7 +25,7 @@ export const getMeasurementsWithDevice = async ({
   PaginationResponse<MeasurementWithDevice>
 > => {
   return await fetcher<PaginationResponse<MeasurementWithDevice>>({
-    url: `${MEASUEMRENTS_URL}/paginated/`,
+    url: `${MEASUREMENTS_URL}/paginated/`,
     params: {
       page,
       group_by: scale,
