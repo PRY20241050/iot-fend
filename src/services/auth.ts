@@ -1,5 +1,6 @@
 import { LoginFormValues } from "@/components/auth/login/useLoginForm";
 import { RecoverPasswordFormValues } from "@/components/auth/recover-password/useRecoverPasswordForm";
+import { ChangePasswordFormValues } from "@/components/profile/change-password/useChangePasswordForm";
 import { post } from "@/lib/api/api";
 import { Token } from "@/types/auth";
 
@@ -26,6 +27,13 @@ export const restorePassword = async (
 ) => {
   return post({
     url: `password-reset-confirm/${uid}/${token}/`,
+    params,
+  });
+};
+
+export const changePassword = async (params: ChangePasswordFormValues) => {
+  return post({
+    url: "/change-password/",
     params,
   });
 };

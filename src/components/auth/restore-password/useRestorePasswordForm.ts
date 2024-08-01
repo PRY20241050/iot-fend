@@ -27,7 +27,7 @@ interface Props {
 }
 
 export default function useRestorePasswordForm({ submitted }: Props) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
 
   const uid = searchParams.get("uid");

@@ -8,9 +8,9 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormButton,
   FormMessage,
 } from "@/components/ui/form";
-import { FormButton } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useRestorePasswordForm from "./useRestorePasswordForm";
 
