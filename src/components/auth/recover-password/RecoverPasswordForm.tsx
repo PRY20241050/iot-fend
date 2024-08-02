@@ -3,15 +3,9 @@
 import { CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormButton
+  FormButton,
+  FormInput,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 import useRecoverPasswordForm from "./useRecoverPasswordForm";
@@ -31,21 +25,12 @@ export default function RecoverPasswordForm({ submitted }: Props) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent>
-          <FormField
-            control={form.control}
+          <FormInput
+            form={form}
             name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Correo electrónico</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Ingrese el email asociado a su cuenta
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Correo electrónico"
+            placeholder="Email"
+            description="Ingrese el email asociado a su cuenta"
           />
           <TypographyMuted className="text-right pt-5">
             ¿Ya tienes una cuenta?{" "}

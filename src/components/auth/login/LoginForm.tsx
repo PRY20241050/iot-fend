@@ -1,16 +1,7 @@
 "use client";
 
 import { CardContent, CardFooter } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form, FormInput } from "@/components/ui/form";
 import { TypographyMuted } from "@/components/ui/typography";
 
 import Link from "next/link";
@@ -28,44 +19,20 @@ export default function LoginForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent>
-          <FormField
-            control={form.control}
+          <FormInput
+            form={form}
             name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Usuario</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Usuario"
-                    autoComplete="username"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Ingrese su nombre de usuario proporcionado
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Usuario"
+            placeholder="Usuario"
+            description="Ingrese su nombre de usuario proporcionado"
           />
           <div className="pt-2">
-            <FormField
-              control={form.control}
+            <FormInput
+              form={form}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Contraseña"
-                      type="password"
-                      autoComplete="current-password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Contraseña"
+              placeholder="Contraseña"
+              type="password"
             />
           </div>
           <TypographyMuted className="text-right pt-5">

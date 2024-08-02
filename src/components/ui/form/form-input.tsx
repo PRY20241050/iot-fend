@@ -12,7 +12,7 @@ import {
 interface Props {
   form: UseFormReturn<any>;
   name: string;
-  label: string;
+  label?: string;
   type?: string;
   placeholder?: string;
   description?: string;
@@ -34,7 +34,7 @@ export function FormInput({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
             <Input
               type={type}

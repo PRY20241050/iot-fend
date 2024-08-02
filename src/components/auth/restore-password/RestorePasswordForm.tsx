@@ -3,15 +3,9 @@
 import { CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
   FormButton,
-  FormMessage,
+  FormInput,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import useRestorePasswordForm from "./useRestorePasswordForm";
 
 interface Props {
@@ -25,41 +19,21 @@ export default function RestorePasswordForm({ submitted }: Props) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent>
-          <FormField
-            control={form.control}
+          <FormInput
+            form={form}
             name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nueva contraseña</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Nueva contraseña"
-                    type="password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Nueva contraseña"
+            placeholder="Nueva contraseña"
+            type="password"
           />
           <div className="pt-2">
-            <FormField
-              control={form.control}
+            <FormInput
+              form={form}
               name="confirm_password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirmar contraseña</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Confirmar contraseña"
-                      type="password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Repita su nueva contraseña</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Confirmar contraseña"
+              placeholder="Confirmar contraseña"
+              type="password"
+              description="Repita su nueva contraseña"
             />
           </div>
         </CardContent>
