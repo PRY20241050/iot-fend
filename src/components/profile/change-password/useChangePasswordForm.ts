@@ -30,6 +30,8 @@ export default function useChangePasswordForm() {
   });
 
   const onSubmit = async (values: ChangePasswordFormValues) => {
+    setIsLoading(true);
+
     changePassword({
       old_password: values.old_password,
       new_password: values.new_password,
@@ -37,7 +39,14 @@ export default function useChangePasswordForm() {
       .then((res) => {
         form.reset();
       })
-      .catch((err) => {})
+      .catch((err) => {
+        if (err.response?.data) {
+          form.setError("old_password", {
+            type: "manual",
+            message: "La contraseña actual es incorrecta",
+          });
+        }
+      })
       .finally(() => {
         setIsLoading(false);
       });
