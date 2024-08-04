@@ -14,6 +14,7 @@ interface Props {
   form: UseFormReturn<any>;
   name: string;
   label: string;
+  disabled?: boolean;
   placeholder?: string;
   selectLabel?: string;
   options?: { value: string; label: string }[];
@@ -23,6 +24,7 @@ export function FormSelect({
   form,
   name,
   label,
+  disabled = false,
   placeholder,
   selectLabel = undefined,
   options,
@@ -35,7 +37,7 @@ export function FormSelect({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Select onValueChange={field.onChange}>
+            <Select onValueChange={field.onChange} disabled={disabled}>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} {...field} />
               </SelectTrigger>

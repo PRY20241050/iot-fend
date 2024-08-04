@@ -17,44 +17,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Device } from "@/types/device";
 import { DEVICES_URL } from "@/services/consts";
 import { usePathname } from "next/navigation";
-
-const scales = [
-  {
-    value: "minute",
-    label: "Minuto",
-  },
-  {
-    value: "hour",
-    label: "Hora",
-  },
-  {
-    value: "day",
-    label: "Día",
-  },
-];
-
-const gases = [
-  {
-    id: 1,
-    label: "CO",
-  },
-  {
-    id: 2,
-    label: "NO2",
-  },
-  {
-    id: 3,
-    label: "SO2",
-  },
-  {
-    id: 4,
-    label: "PM2.5",
-  },
-  {
-    id: 5,
-    label: "PM10",
-  },
-];
+import { GASES, SCALES } from "@/mocks/filter";
 
 interface Props {
   isGauge: boolean;
@@ -63,13 +26,13 @@ interface Props {
 export default function FilterForm({ isGauge }: Props) {
   const pathname = usePathname();
 
-  const { form, onSubmit } = useFilterForm();
+  const { form, onSubmit, resetForm } = useFilterForm();
 
   const { user } = useAuthStore((state) => ({
     user: state.user,
   }));
 
-  const { data } = useRequest<Device[]>({
+  const { data, isLoading } = useRequest<Device[]>({
     url: user?.brickyard?.id ? DEVICES_URL : "",
     params: {
       brickyard_id: user?.brickyard?.id,
@@ -109,7 +72,7 @@ export default function FilterForm({ isGauge }: Props) {
                 label="Por escala de tiempo"
                 placeholder="Seleccionar escala"
                 selectLabel="Escalas"
-                options={scales}
+                options={SCALES}
               />
             </>
           )}
@@ -121,6 +84,7 @@ export default function FilterForm({ isGauge }: Props) {
               placeholder="Seleccionar dispositivo"
               selectLabel="Dispositivos"
               options={devices}
+              disabled={isLoading}
             />
           )}
           {!isGauge && (
@@ -130,7 +94,7 @@ export default function FilterForm({ isGauge }: Props) {
               render={() => (
                 <FormItem>
                   <FormLabel>Por gas</FormLabel>
-                  {gases.map((gas) => (
+                  {GASES.map((gas) => (
                     <FormField
                       key={gas.id}
                       control={form.control}
@@ -173,9 +137,14 @@ export default function FilterForm({ isGauge }: Props) {
             text="Aplicar filtro"
             disabled={false}
             isLoading={false}
+            type="submit"
             className="w-full"
           />
-          <Button variant="secondary" className="w-full">
+          <Button
+            variant="secondary"
+            className="w-full"
+            onClick={() => resetForm()}
+          >
             Reiniciar filtros
           </Button>
         </CardFooter>

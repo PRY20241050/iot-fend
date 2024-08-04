@@ -32,6 +32,14 @@ const formSchema = z
     }
   );
 
+const formDefaultValues: FilterFormValues = {
+  dateFrom: undefined,
+  dateTo: undefined,
+  scale: "",
+  device: undefined,
+  gases: [],
+};
+
 export default function useFilterForm() {
   const { setFilter } = useFilterStore((state) => ({
     setFilter: state.setFilter,
@@ -39,15 +47,13 @@ export default function useFilterForm() {
 
   const form = useForm<FilterFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      dateFrom: undefined,
-      dateTo: undefined,
-      scale: "",
-      device: undefined,
-      gases: [],
-    },
+    defaultValues: formDefaultValues,
     reValidateMode: "onChange",
   });
+
+  const resetForm = () => {
+    form.reset(formDefaultValues);
+  };
 
   const onSubmit = (values: FilterFormValues) => {
     setFilter(values);
@@ -55,6 +61,7 @@ export default function useFilterForm() {
 
   return {
     form,
+    resetForm,
     onSubmit,
   };
 }
