@@ -16,7 +16,7 @@ export default function ProfileMenu() {
           href={item.href}
           key={item.id}
           className={cn("relative", {
-            "before:absolute before:h-full before:w-1 before:bg-foreground before:rounded-md":
+            "before:absolute before:h-full before:w-1 before:bg-primary before:rounded-md":
               pathname === item.href,
           })}
         >

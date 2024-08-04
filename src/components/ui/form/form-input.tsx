@@ -17,6 +17,7 @@ interface Props {
   placeholder?: string;
   description?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 export function FormInput({
@@ -27,13 +28,14 @@ export function FormInput({
   description,
   type = "text",
   disabled = false,
+  className
 }: Props) {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={className}>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
             <Input

@@ -10,7 +10,7 @@ export default function ChangePasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-3 pt-4 max-w-[75%]"
+        className="space-y-3 pt-4 phone-xl:max-w-[75%]"
       >
         <FormInput
           form={form}
