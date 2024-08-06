@@ -46,7 +46,7 @@ export default function History() {
       brickyardsIds: user?.brickyard && [user?.brickyard?.id],
       dateFrom: dateFrom as Date,
       dateTo: dateTo as Date,
-      device: device as number,
+      device,
       gases,
       scale,
     });

@@ -1,22 +1,23 @@
-import { useFilterStore } from "@/store/useFilterStore";
+import { useRequest } from "@/lib/api/swr";
+import { OPTIONAL_STRING } from "@/lib/utils/validators";
+import { DEVICES_URL, EMISSION_LIMITS_URL } from "@/services/consts";
+import { useAuthStore } from "@/store/useAuthStore";
+import { FilterStoreValues, useFilterStore } from "@/store/useFilterStore";
+import { Device } from "@/types/device";
+import { EmissionsLimit } from "@/types/emissions-limit";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export interface FilterFormValues {
-  dateFrom?: Date;
-  dateTo?: Date;
-  scale?: string;
-  device?: number;
-  gases: number[];
-}
+type FilterFormValues = FilterStoreValues;
 
 const formSchema = z
   .object({
     dateFrom: z.date({ message: "Fecha inválida" }).optional(),
     dateTo: z.date({ message: "Fecha inválida" }).optional(),
-    scale: z.string().optional(),
-    device: z.string().optional(),
+    scale: OPTIONAL_STRING,
+    device: OPTIONAL_STRING,
+    emissionLimit: OPTIONAL_STRING,
     gases: z.array(z.number()).optional(),
   })
   .refine(
@@ -37,12 +38,60 @@ const formDefaultValues: FilterFormValues = {
   dateTo: undefined,
   scale: "",
   device: undefined,
+  emissionLimit: undefined,
   gases: [],
 };
 
 export default function useFilterForm() {
   const { setFilter } = useFilterStore((state) => ({
     setFilter: state.setFilter,
+  }));
+
+  const { user, isBrickyard } = useAuthStore((state) => ({
+    user: state.user,
+    isBrickyard: state.isBrickyard,
+  }));
+
+  // Fetch devices
+  const { data: deviceData, isLoading: devicesIsLoading } = useRequest<
+    Device[]
+  >(
+    user?.brickyard?.id
+      ? {
+          url: DEVICES_URL,
+          params: {
+            brickyard_id: user?.brickyard?.id,
+          },
+        }
+      : null
+  );
+
+  // Fetch limits
+  const { data: limitsData, isLoading: limitsIsLoading } = useRequest<
+    EmissionsLimit[]
+  >(
+    user
+      ? {
+          url: EMISSION_LIMITS_URL,
+          params: {
+            ...(isBrickyard && {
+              brickyard_id: user.brickyard?.id,
+              show_institution: true,
+              is_public: true,
+            }),
+          },
+        }
+      : null
+  );
+
+  const devices = deviceData?.map((device) => ({
+    value: device.id.toString(),
+    label: device.name,
+  }));
+
+  const emissionLimits = limitsData?.map((limit) => ({
+    value: limit.id.toString(),
+    label: limit.name,
   }));
 
   const form = useForm<FilterFormValues>({
@@ -61,7 +110,11 @@ export default function useFilterForm() {
 
   return {
     form,
-    resetForm,
     onSubmit,
+    resetForm,
+    devices,
+    devicesIsLoading,
+    emissionLimits,
+    limitsIsLoading,
   };
 }

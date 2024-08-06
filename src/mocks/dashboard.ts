@@ -142,8 +142,6 @@ export const gauges: Gauge[] = [
     value: 0,
     limit: {
       max_limit: 100,
-      is_modified: false,
-      emission_limit: 1,
       gas_type: 1,
     },
   },
@@ -153,8 +151,6 @@ export const gauges: Gauge[] = [
     value: 0,
     limit: {
       max_limit: 320,
-      is_modified: false,
-      emission_limit: 1,
       gas_type: 2,
     },
   },
@@ -164,8 +160,6 @@ export const gauges: Gauge[] = [
     value: 0,
     limit: {
       max_limit: 0.25,
-      is_modified: false,
-      emission_limit: 1,
       gas_type: 3,
     },
   },
@@ -175,8 +169,6 @@ export const gauges: Gauge[] = [
     value: 0,
     limit: {
       max_limit: 150,
-      is_modified: false,
-      emission_limit: 1,
       gas_type: 4,
     },
   },
@@ -186,8 +178,6 @@ export const gauges: Gauge[] = [
     value: 0,
     limit: {
       max_limit: 150,
-      is_modified: false,
-      emission_limit: 1,
       gas_type: 4,
     },
   },

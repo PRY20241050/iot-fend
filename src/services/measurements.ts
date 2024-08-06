@@ -2,10 +2,10 @@ import { MeasurementWithDevice } from "@/types/measurement";
 import { PaginationResponse } from "@/types/models";
 import { MEASUREMENTS_URL } from "./consts";
 import { fetcher } from "@/lib/api/api";
-import { FilterFormValues } from "@/components/shared/filter/useFilterForm";
+import { FilterStoreValues } from "@/store/useFilterStore";
 
 export type GetMeasurementsWithDeviceParams = Omit<
-  FilterFormValues,
+  FilterStoreValues,
   "gases"
 > & {
   page?: number;

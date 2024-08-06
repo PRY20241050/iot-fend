@@ -12,39 +12,26 @@ import useFilterForm from "./useFilterForm";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { useRequest } from "@/lib/api/swr";
-import { useAuthStore } from "@/store/useAuthStore";
-import { Device } from "@/types/device";
-import { DEVICES_URL } from "@/services/consts";
 import { usePathname } from "next/navigation";
 import { GASES, SCALES } from "@/mocks/filter";
 
 interface Props {
-  isGauge: boolean;
+  isGauge?: boolean;
 }
 
-export default function FilterForm({ isGauge }: Props) {
+export default function FilterForm({ isGauge = false }: Props) {
   const pathname = usePathname();
+  const isHistory = pathname === "/historial";
 
-  const { form, onSubmit, resetForm } = useFilterForm();
-
-  const { user } = useAuthStore((state) => ({
-    user: state.user,
-  }));
-
-  const { data, isLoading } = useRequest<Device[]>({
-    url: user?.brickyard?.id ? DEVICES_URL : "",
-    params: {
-      brickyard_id: user?.brickyard?.id,
-    },
-  });
-
-  const devices = data?.map((device) => ({
-    value: device.id.toString(),
-    label: device.name,
-  }));
-
-  const isDashboard = pathname === "/dashboard";
+  const {
+    form,
+    onSubmit,
+    resetForm,
+    devices,
+    devicesIsLoading,
+    emissionLimits,
+    limitsIsLoading,
+  } = useFilterForm();
 
   return (
     <Form {...form}>
@@ -76,16 +63,27 @@ export default function FilterForm({ isGauge }: Props) {
               />
             </>
           )}
-          {(isGauge || !isDashboard) && (
-            <FormSelect
-              form={form}
-              name="device"
-              label="Por dispositivo"
-              placeholder="Seleccionar dispositivo"
-              selectLabel="Dispositivos"
-              options={devices}
-              disabled={isLoading}
-            />
+          {(isGauge || isHistory) && (
+            <>
+              <FormSelect
+                form={form}
+                name="device"
+                label="Por dispositivo"
+                placeholder="Seleccionar dispositivo"
+                selectLabel="Dispositivos"
+                options={devices}
+                disabled={devicesIsLoading}
+              />
+              <FormSelect
+                form={form}
+                name="emissionLimit"
+                label="Comparar con límite de emisión"
+                placeholder="Seleccionar límite de emisión"
+                selectLabel="Límites de emisión"
+                options={emissionLimits}
+                disabled={limitsIsLoading}
+              />
+            </>
           )}
           {!isGauge && (
             <FormField
@@ -137,7 +135,6 @@ export default function FilterForm({ isGauge }: Props) {
             text="Aplicar filtro"
             disabled={false}
             isLoading={false}
-            type="submit"
             className="w-full"
           />
           <Button
