@@ -3,7 +3,7 @@ import { DEVICES_URL, EMISSION_LIMITS_URL } from "@/services/consts";
 import { useFilterStore } from "@/store/useFilterStore";
 import { EmissionsLimit } from "@/types/emissions-limit";
 import { SensorWithLastMeasurement } from "@/types/sensor";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { gauges as initialGauges } from "@/mocks/dashboard";
 import { GAUGE_REVALIDATION_INTERVAL } from "@/lib/utils";
 
@@ -34,7 +34,7 @@ export default function useGaugeCard() {
       : null
   );
 
-  const updateGaugesWithLimitData = useCallback(() => {
+  useEffect(() => {
     if (!limitData) return;
 
     setGauges(
@@ -47,7 +47,7 @@ export default function useGaugeCard() {
     );
   }, [limitData]);
 
-  const updateGaugesWithSensorData = useCallback(() => {
+  useEffect(() => {
     if (!sensorsData) return;
 
     const twoMinutesAgo = Date.now() - GAUGE_REVALIDATION_INTERVAL;
@@ -73,14 +73,6 @@ export default function useGaugeCard() {
       })
     );
   }, [sensorsData]);
-
-  useEffect(() => {
-    updateGaugesWithLimitData();
-  }, [updateGaugesWithLimitData]);
-
-  useEffect(() => {
-    updateGaugesWithSensorData();
-  }, [updateGaugesWithSensorData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
