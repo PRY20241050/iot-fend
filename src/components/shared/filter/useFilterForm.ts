@@ -37,15 +37,16 @@ const formDefaultValues: FilterFormValues = {
   dateFrom: undefined,
   dateTo: undefined,
   scale: "",
-  device: undefined,
-  emissionLimit: undefined,
+  device: "",
+  emissionLimit: "",
   gases: [],
 };
 
 export default function useFilterForm() {
-  const { getFilter, setFilter } = useFilterStore((state) => ({
+  const { getFilter, setFilter, resetFilter } = useFilterStore((state) => ({
     getFilter: state.getFilter,
     setFilter: state.setFilter,
+    resetFilter: state.resetFilter,
   }));
 
   const { user, isBrickyard } = useAuthStore((state) => ({
@@ -102,12 +103,16 @@ export default function useFilterForm() {
   });
 
   const resetForm = () => {
-    if (JSON.stringify(getFilter()) === JSON.stringify(formDefaultValues))
-      return;
-    form.reset(formDefaultValues);
+    form.reset({ ...formDefaultValues }, { keepValues: false });
+
+    // Reset filter if form values are different
+    if (JSON.stringify(getFilter()) !== JSON.stringify(form.getValues())) {
+      resetFilter();
+    }
   };
 
   const onSubmit = (values: FilterFormValues) => {
+    // Update filter if form values are different
     if (JSON.stringify(getFilter()) === JSON.stringify(values)) return;
     setFilter(values);
   };

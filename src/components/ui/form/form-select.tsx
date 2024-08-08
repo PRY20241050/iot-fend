@@ -37,10 +37,7 @@ export function FormSelect({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Select onValueChange={(value) => {
-              field.onChange(value);
-              console.log(`Field ${name} changed to:`, value);
-            }} disabled={disabled}>
+            <Select onValueChange={field.onChange} value={field.value} disabled={disabled}>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} {...field} />
               </SelectTrigger>

@@ -140,6 +140,7 @@ export default function FilterForm({ isGauge = false }: Props) {
           <Button
             variant="secondary"
             className="w-full"
+            type="button"
             onClick={() => resetForm()}
           >
             Reiniciar filtros

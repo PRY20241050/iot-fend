@@ -30,9 +30,9 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     set({
       dateFrom: undefined,
       dateTo: undefined,
-      scale: undefined,
-      device: undefined,
-      emissionLimit: undefined,
+      scale: '',
+      device: '',
+      emissionLimit: '',
       gases: [],
     }),
 }));

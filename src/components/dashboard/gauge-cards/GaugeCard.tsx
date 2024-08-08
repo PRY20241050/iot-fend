@@ -5,6 +5,7 @@ import { TypographyP } from "@/components/ui/typography";
 import { indexToLetter } from "@/lib/helpers/string";
 import GaugeChart from "./GaugeChart";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 type GaugeCardProps = Gauge & { index: number };
 
@@ -59,38 +60,38 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
 }
 
 export function GaugeLegend() {
+  const GAUGE_LEGENDS = [
+    {
+      color: "bg-status-normal",
+      title: "Seguro",
+      description: "Por debajo del 80% del límite máximo permitido",
+    },
+    {
+      color: "bg-status-warning",
+      title: "Advertencia",
+      description: "20% antes del límite máximo permitido",
+    },
+    {
+      color: "bg-status-danger",
+      title: "Peligro",
+      description: "Sobre el límite máximo permitido",
+    },
+  ];
+
   return (
     <Card className="mt-4">
       <CardHeader>
         <CardTitle>Leyenda</CardTitle>
-        <ul className="pt-3 phone-md:flex phone-md:gap-4 phone-md:flex-wrap tablet-lg:gap-6">
-          <li className="flex items-center mb-1">
-            <span className="w-4 h-4 bg-gauge-normal rounded-full inline-block mr-2"></span>
-            <div>
-              <span className="font-semibold">Seguro</span>
-              <p className="text-sm text-gray-600">
-                Por debajo del límite máximo permitido
-              </p>
-            </div>
-          </li>
-          <li className="flex items-center mb-1">
-            <span className="w-4 h-4 bg-gauge-warning rounded-full inline-block mr-2"></span>
-            <div>
-              <span className="font-semibold">Advertencia</span>
-              <p className="text-sm text-gray-600">
-                20% antes del límite máximo permitido
-              </p>
-            </div>
-          </li>
-          <li className="flex items-center">
-            <span className="w-4 h-4 bg-gauge-danger rounded-full inline-block mr-2"></span>
-            <div>
-              <span className="font-semibold">Peligro</span>
-              <p className="text-sm text-gray-600">
-                Sobre el límite máximo permitido
-              </p>
-            </div>
-          </li>
+        <ul className="pt-3 phone-md:flex phone-md:gap-4 phone-md:flex-wrap tablet-lg:gap-6 space-y-1">
+          {GAUGE_LEGENDS.map((legend, index) => (
+            <li key={index} className="flex items-center">
+              <span className={cn("w-4 h-4 rounded-full inline-block mr-2", legend.color)}></span>
+              <div>
+                <span className="font-semibold">{legend.title}</span>
+                <p className="text-sm text-gray-600">{legend.description}</p>
+              </div>
+            </li>
+          ))}
         </ul>
       </CardHeader>
     </Card>
