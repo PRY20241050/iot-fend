@@ -43,7 +43,8 @@ const formDefaultValues: FilterFormValues = {
 };
 
 export default function useFilterForm() {
-  const { setFilter } = useFilterStore((state) => ({
+  const { getFilter, setFilter } = useFilterStore((state) => ({
+    getFilter: state.getFilter,
     setFilter: state.setFilter,
   }));
 
@@ -101,10 +102,13 @@ export default function useFilterForm() {
   });
 
   const resetForm = () => {
+    if (JSON.stringify(getFilter()) === JSON.stringify(formDefaultValues))
+      return;
     form.reset(formDefaultValues);
   };
 
   const onSubmit = (values: FilterFormValues) => {
+    if (JSON.stringify(getFilter()) === JSON.stringify(values)) return;
     setFilter(values);
   };
 

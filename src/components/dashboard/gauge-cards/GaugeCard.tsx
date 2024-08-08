@@ -13,11 +13,11 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
 
   function valueStateColor(value: number) {
     if (value < limit.max_limit * 0.75) {
-      return "bg-gauge-normal/10";
+      return "bg-status-normal/10";
     } else if (value < limit.max_limit) {
-      return "bg-gauge-warning/10";
+      return "bg-status-warning/10";
     } else {
-      return "bg-gauge-danger/10";
+      return "bg-status-danger/10";
     }
   }
 

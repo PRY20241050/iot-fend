@@ -23,15 +23,15 @@ export default function History() {
     isBrickyard: state.isBrickyard,
   }));
 
-  const { dateFrom, dateTo, gases, scale, device } = useFilterStore(
-    (state) => ({
+  const { dateFrom, dateTo, gases, scale, device, emissionLimit } =
+    useFilterStore((state) => ({
       dateFrom: state.dateFrom,
       dateTo: state.dateTo,
       gases: state.gases,
       scale: state.scale,
       device: state.device,
-    })
-  );
+      emissionLimit: state.emissionLimit,
+    }));
 
   const { push } = useRouter();
 
@@ -49,10 +49,20 @@ export default function History() {
       device,
       gases,
       scale,
+      emissionLimit,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.brickyard?.id, dateFrom, dateTo, gases]);
+  }, [
+    user?.brickyard?.id,
+    user?.brickyard,
+    dateFrom,
+    dateTo,
+    device,
+    gases,
+    scale,
+    emissionLimit,
+  ]);
 
   const fetchNextPage = () => {
     fetchData(page + 1);
@@ -82,6 +92,9 @@ export default function History() {
           paginationInfo={paginationInfo}
           fetchNextPage={fetchNextPage}
           fetchPrevPage={fetchPrevPage}
+          // tableRowClass={cn({
+          //   "bg-status-danger/10": !isLoading && emissionLimit,
+          // })}
         />
       </div>
       <Filter />

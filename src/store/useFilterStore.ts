@@ -11,6 +11,7 @@ export interface FilterStoreValues {
 
 interface FilterStoreActions {
   setFilter: (filter: FilterStoreValues) => void;
+  getFilter: () => FilterStoreValues;
   resetFilter: () => void;
 }
 
@@ -24,6 +25,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
   emissionLimit: undefined,
   gases: [],
   setFilter: (filter: FilterStoreValues) => set({ ...filter }),
+  getFilter: () => get(),
   resetFilter: () =>
     set({
       dateFrom: undefined,

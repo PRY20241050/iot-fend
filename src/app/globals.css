@@ -25,10 +25,10 @@
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
 
-    /* Gauge */
-    --gauge-normal: 120 100% 50%;
-    --gauge-warning: 60 100% 50%;
-    --gauge-danger: 0 100% 50%;
+    /* Status */
+    --status-normal: 120 100% 50%;
+    --status-warning: 60 100% 50%;
+    --status-danger: 0 100% 50%;
   }
 
   .dark {

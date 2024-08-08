@@ -29,9 +29,10 @@ interface Props<TData> {
   paginationInfo?: any;
   fetchNextPage?: () => void;
   fetchPrevPage?: () => void;
+  tableRowClass?: string;
 }
 
-export default function HistoryTable<TData>({
+export default function SimpleTable<TData>({
   data = [],
   columns,
   isLoading = false,
@@ -39,6 +40,7 @@ export default function HistoryTable<TData>({
   paginationInfo,
   fetchNextPage,
   fetchPrevPage,
+  tableRowClass,
 }: Props<TData>) {
   const table = useReactTable({
     data: data,
@@ -88,6 +90,7 @@ export default function HistoryTable<TData>({
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
+                      className={tableRowClass}
                     >
                       {row.getVisibleCells().map((cell: any) => (
                         <TableCell key={cell.id}>

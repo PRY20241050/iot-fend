@@ -52,10 +52,10 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gauge: {
-          normal: "hsl(var(--gauge-normal))",
-          warning: "hsl(var(--gauge-warning))",
-          danger: "hsl(var(--gauge-danger))",
+        status: {
+          normal: "hsl(var(--status-normal))",
+          warning: "hsl(var(--status-warning))",
+          danger: "hsl(var(--status-danger))",
         },
         back: {
           DEFAULT: "#f9f9f9",

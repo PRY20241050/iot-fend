@@ -21,6 +21,7 @@ export const getMeasurementsWithDevice = async ({
   dateTo,
   scale,
   device,
+  emissionLimit,
 }: GetMeasurementsWithDeviceParams): Promise<
   PaginationResponse<MeasurementWithDevice>
 > => {
@@ -28,12 +29,13 @@ export const getMeasurementsWithDevice = async ({
     url: `${MEASUREMENTS_URL}/paginated/`,
     params: {
       page,
-      group_by: scale,
+      ...(scale && { group_by: scale }),
       brickyard_ids: brickyardsIds?.join(","),
       start_date: dateFrom,
       end_date: dateTo,
       ...(device && { device_id: device }),
       ...(gases && gases.length > 0 && { gas_types: gases.join(",") }),
+      ...(emissionLimit && { by_emission_limit_id: emissionLimit }),
     },
   });
 };

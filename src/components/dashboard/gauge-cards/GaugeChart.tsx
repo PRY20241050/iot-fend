@@ -22,9 +22,9 @@ export default function GaugeChart({
   maxValue,
 }: Props) {
   const data = [
-    { name: "Low", value: lowValue, color: "hsl(var(--gauge-normal))" },
-    { name: "Medium", value: mediumValue, color: "hsl(var(--gauge-warning))" },
-    { name: "High", value: highValue, color: "hsl(var(--gauge-danger))" },
+    { name: "Low", value: lowValue, color: "hsl(var(--status-normal))" },
+    { name: "Medium", value: mediumValue, color: "hsl(var(--status-warning))" },
+    { name: "High", value: highValue, color: "hsl(var(--status-danger))" },
   ];
 
   const setGraphValue = (value: number) => {
