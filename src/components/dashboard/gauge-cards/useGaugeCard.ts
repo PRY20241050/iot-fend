@@ -1,5 +1,8 @@
 import { useRequest } from "@/lib/api/swr";
-import { DEVICES_URL, EMISSION_LIMITS_URL } from "@/services/consts";
+import {
+  emissionLimitsByIdUrl,
+  lastMeasurementUrl,
+} from "@/services/consts";
 import { useFilterStore } from "@/store/useFilterStore";
 import { EmissionsLimit } from "@/types/emissions-limit";
 import { SensorWithLastMeasurement } from "@/types/sensor";
@@ -19,7 +22,7 @@ export default function useGaugeCard() {
     useRequest<EmissionsLimit>(
       emissionLimit
         ? {
-            url: `${EMISSION_LIMITS_URL}/${emissionLimit}`,
+            url: emissionLimitsByIdUrl(emissionLimit),
           }
         : null
     );
@@ -29,7 +32,7 @@ export default function useGaugeCard() {
   >(
     device
       ? {
-          url: `${DEVICES_URL}/${device}/sensors/last_measurements/`,
+          url: lastMeasurementUrl(device),
         }
       : null
   );

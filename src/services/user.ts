@@ -1,6 +1,7 @@
 import apiClient from "@/lib/api/apiClient";
 import { getResponseError } from "@/lib/utils/errors";
 import { User } from "@/types/auth";
+import { PROFILE_URL } from "./consts";
 
 /**
  * Get user profile provided an access token, use this from the server side
@@ -15,9 +16,7 @@ export const getUser = async (
       Authorization: `Bearer ${accessToken}`,
     };
 
-    const user = await apiClient
-      .get<User>('/profile/')
-      .then((res) => res.data);
+    const user = await apiClient.get<User>(PROFILE_URL).then((res) => res.data);
 
     return { data: user };
   } catch (error: any) {
