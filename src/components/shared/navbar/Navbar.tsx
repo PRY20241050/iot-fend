@@ -1,5 +1,5 @@
 import Logo from "../Logo";
-import { Notifications } from "./Notifications";
+import { Notifications } from "./notification";
 import { UserNav } from "./UserNav";
 
 export default function Navbar() {

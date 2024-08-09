@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
 import SimpleTablePagination from "./SimpleTablePagination";
+import Loader from "@/components/ui/loader";
 
 interface Props<TData> {
   columns: ColumnDef<TData>[];
@@ -80,7 +81,7 @@ export default function SimpleTable<TData>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Cargando...
+                  <Loader className="border-primary">Cargando...</Loader>
                 </TableCell>
               </TableRow>
             ) : (

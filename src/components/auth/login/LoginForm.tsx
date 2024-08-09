@@ -1,13 +1,12 @@
 "use client";
 
 import { CardContent, CardFooter } from "@/components/ui/card";
-import { Form, FormInput } from "@/components/ui/form";
+import { Form, FormInput, FormButton } from "@/components/ui/form";
 import { TypographyMuted } from "@/components/ui/typography";
 
 import Link from "next/link";
 
 import useLoginForm from "./useLoginForm";
-import { FormButton } from "@/components/ui/form";
 
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLoginForm();
