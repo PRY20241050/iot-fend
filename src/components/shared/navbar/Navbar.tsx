@@ -1,10 +1,15 @@
+import { cn } from "@/lib/utils";
 import Logo from "../Logo";
 import { Notifications } from "./notification";
 import { UserNav } from "./UserNav";
 
-export default function Navbar() {
+interface Props {
+  className?: string;
+}
+
+export default function Navbar({ className }: Props) {
   return (
-    <div className="border-b">
+    <div className={cn("border-b w-full bg-white", className)}>
       <div className="flex h-16 items-center px-4">
         <Logo />
         <div className="ml-auto flex items-center space-x-4">

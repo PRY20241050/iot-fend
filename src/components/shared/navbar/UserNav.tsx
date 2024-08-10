@@ -56,7 +56,7 @@ export function UserNav() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal py-3 -mx-1 mb-1 px-3 -mt-1 bg-black/100">
+        <DropdownMenuLabel className="font-normal py-3 -mx-1 mb-1 px-3 -mt-1 bg-black">
           <p className="text-sm font-medium leading-none text-white">
             {setRol()}
           </p>

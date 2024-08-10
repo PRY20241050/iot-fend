@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { type PaginationResponse } from "@/types/models"; 
+import { type PaginationResponse } from "@/types/models";
 
 /**
  * Hook to handle fetching paginated data.
@@ -24,11 +24,12 @@ import { type PaginationResponse } from "@/types/models";
  *
  * @template T - Type of the search parameters.
  * @template U - Type of the elements in the data list.
+ * @template V - Type of the pagination information.
  */
 
-interface UsePaginationFetchDataReturn<T, U> {
+interface UsePaginationFetchDataReturn<T, U, V extends PaginationResponse<U>> {
   items?: U[];
-  paginationInfo?: PaginationResponse<U>;
+  paginationInfo?: V;
   isLoading: boolean;
   page: number;
   hasNext: boolean;
@@ -38,14 +39,14 @@ interface UsePaginationFetchDataReturn<T, U> {
   resetAll: () => void;
 }
 
-export function usePaginationFetchData<T, U>(
-  fetchDataFunction: (params: T) => Promise<PaginationResponse<U>>,
+export function usePaginationFetchData<T, U, V extends PaginationResponse<U>>(
+  fetchDataFunction: (params: T) => Promise<V>,
   initialParams: T,
   groupResults = false,
   showDefaultError = true
-): UsePaginationFetchDataReturn<T, U> {
+): UsePaginationFetchDataReturn<T, U, V> {
   const [items, setItems] = useState<U[]>();
-  const [paginationInfo, setPaginationInfo] = useState<PaginationResponse<U>>();
+  const [paginationInfo, setPaginationInfo] = useState<V>();
   const [hasNext, setHasNext] = useState<boolean>(false);
   const [params, setParams] = useState<T>(initialParams);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -67,7 +68,7 @@ export function usePaginationFetchData<T, U>(
       })
       .catch(() => {
         if (showDefaultError)
-            console.error("Hubo un error al cargar los resultados");
+          console.error("Hubo un error al cargar los resultados");
       })
       .finally(() => {
         setIsLoading(false);

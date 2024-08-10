@@ -3,19 +3,11 @@
 $colors: map.merge(
   $default-colors,
   (
-    // Primary colors
-    --color-primary: #f74548,
-    --color-secondary: #000,
-
     // Status colors
     --color-warning: #eeab28,
     --color-success: #30c97a,
     --color-error: #f74548,
     --color-info: #4588f5,
-
-    // Text colors
-    --color-text-title: #000,
-    --color-text-p1: #000,
 
     // Opacity colors
     --color-opacity-0: rgba(0, 0, 0, 0),
