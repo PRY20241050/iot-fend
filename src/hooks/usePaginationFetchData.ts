@@ -27,7 +27,7 @@ import { type PaginationResponse } from "@/types/models";
  * @template V - Type of the pagination information.
  */
 
-interface UsePaginationFetchDataReturn<T, U, V extends PaginationResponse<U>> {
+interface UsePaginationFetchDataReturn<T, U, V extends PaginationResponse<U> = PaginationResponse<U>> {
   items?: U[];
   paginationInfo?: V;
   isLoading: boolean;
@@ -39,7 +39,7 @@ interface UsePaginationFetchDataReturn<T, U, V extends PaginationResponse<U>> {
   resetAll: () => void;
 }
 
-export function usePaginationFetchData<T, U, V extends PaginationResponse<U>>(
+export function usePaginationFetchData<T, U, V extends PaginationResponse<U> = PaginationResponse<U>>(
   fetchDataFunction: (params: T) => Promise<V>,
   initialParams: T,
   groupResults = false,

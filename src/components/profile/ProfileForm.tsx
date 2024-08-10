@@ -53,7 +53,7 @@ export default function ProfileForm() {
             <FormInput
               form={form}
               name="brickyard_name"
-              label="Ladrillera"
+              label="Empresa"
               disabled
             />
             <FormInput

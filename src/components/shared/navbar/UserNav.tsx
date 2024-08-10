@@ -93,9 +93,6 @@ export function UserNav() {
           <Link href="/perfil">
             <DropdownMenuItem>Mi perfil</DropdownMenuItem>
           </Link>
-          <Link href="/configuracion">
-            <DropdownMenuItem>Configuración</DropdownMenuItem>
-          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>Cerrar sesión</DropdownMenuItem>
