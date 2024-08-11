@@ -2,7 +2,7 @@ import { Measurement } from "./measurement";
 
 export interface Sensor {
   id: number;
-  last_update: Date;
+  updated_at: Date;
   created_at: Date;
   device: number;
   gas_type: number;

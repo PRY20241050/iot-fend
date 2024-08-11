@@ -7,7 +7,7 @@ export interface Device {
   description: string;
   status: boolean;
   battery_level: number;
-  last_update: DateTime;
+  updated_at: DateTime;
   created_at: DateTime;
   brickyard: number;
   sensors: Sensor[];

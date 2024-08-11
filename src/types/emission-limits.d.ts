@@ -9,7 +9,7 @@ export interface EmissionLimits {
   app_alert: boolean;
   is_public: boolean;
   is_default: boolean;
-  last_updated: DateTime;
+  updated_at: DateTime;
   created_at: DateTime;
   institution: number;
   management: number;

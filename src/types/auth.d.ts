@@ -29,7 +29,7 @@ export interface Institution {
   address: string;
   phone: number;
   contact: string;
-  last_update: string;
+  updated_at: string;
   created_at: string;
 }
 

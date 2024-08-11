@@ -6,7 +6,7 @@ export interface LimitHistory {
   start_date?: DateTime;
   end_date?: DateTime;
   is_modified: boolean;
-  last_update?: DateTime;
+  updated_at?: DateTime;
   created_at?: DateTime;
   emission_limit: number;
   gas_type: number;

@@ -5,7 +5,7 @@ export interface Alert {
     name: string;
     description: string;
     created_at: Date;
-    last_update: Date;
+    update_at: Date;
     is_read: boolean;
     user: number;
 }
