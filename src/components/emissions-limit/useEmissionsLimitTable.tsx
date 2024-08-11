@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ColumnDef } from "@tanstack/react-table";
 import {
   DropdownMenu,
@@ -12,6 +13,17 @@ import { booleanToYesNo } from "@/lib/helpers/string";
 import { useRouter } from "next/navigation";
 import { LimitHistory } from "@/types/limit-history";
 import { GASES } from "@/mocks/filter";
+import { deleteEmissionLimit } from "@/services/emission-limits";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
   {
@@ -56,7 +68,6 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
     id: "actions",
     header: "Acciones",
     cell: ({ row }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const router = useRouter();
 
       const handleEdit = () => {
@@ -64,22 +75,58 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
       };
 
       const handleDelete = () => {
-        console.log("Delete", row.original);
+        console.log("Deleted");
+        const body = document.getElementById("root-body");
+
+        deleteEmissionLimit(row.original.id)
+          .then(() => {
+            console.log("Límite de emisiones eliminado correctamente");
+          })
+          .catch(() => {
+            console.error("Error eliminando el límite de emisiones");
+          })
+          .finally(() => {
+            setTimeout(() => {
+              body?.style.removeProperty("pointer-events");
+              router.refresh();
+            }, 800);
+          });
       };
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menú</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleEdit}>Editar</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>Eliminar</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Dialog>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Abrir menú</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleEdit}>Editar</DropdownMenuItem>
+              <DialogTrigger asChild>
+                <DropdownMenuItem>Eliminar</DropdownMenuItem>
+              </DialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Eliminar límite</DialogTitle>
+              <DialogDescription>
+                ¿Estás seguro de que deseas eliminar este límite de emisiones?
+                Todos los datos relacionados con este límite se perderán.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="secondary">Cancelar</Button>
+              </DialogClose>
+              <DialogClose asChild>
+                <Button onClick={handleDelete}>Eliminar</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       );
     },
   },

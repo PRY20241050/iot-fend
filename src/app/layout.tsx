@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body id="root-body" className={inter.className}>
         <AuthMiddleware>{children}</AuthMiddleware>
       </body>
     </html>

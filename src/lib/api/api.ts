@@ -32,6 +32,19 @@ export async function post<T>({
     .then((res) => res.data);
 }
 
+export async function destroy<T>({
+  url,
+  params = {},
+}: FetcherOptions): Promise<T> {
+  if (isEmptyValue(url)) {
+    throw new Error("The url parameter is required");
+  }
+
+  return await apiClient
+    .delete<T>(url, params)
+    .then((res) => res.data);
+}
+
 export async function fetcherNative<T>(
   input: RequestInfo | URL,
   init?: RequestInit | undefined

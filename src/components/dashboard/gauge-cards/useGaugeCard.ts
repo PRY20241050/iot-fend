@@ -1,8 +1,5 @@
 import { useRequest } from "@/lib/api/swr";
-import {
-  emissionLimitsByIdUrl,
-  lastMeasurementUrl,
-} from "@/services/consts";
+import { emissionLimitsByIdUrl, lastMeasurementUrl } from "@/services/consts";
 import { useFilterStore } from "@/store/useFilterStore";
 import { EmissionLimits } from "@/types/emission-limits";
 import { SensorWithLastMeasurement } from "@/types/sensor";
@@ -53,7 +50,7 @@ export default function useGaugeCard() {
   useEffect(() => {
     if (!sensorsData) return;
 
-    const twoMinutesAgo = Date.now() - GAUGE_REVALIDATION_INTERVAL;
+    const gapTime = Date.now() - GAUGE_REVALIDATION_INTERVAL;
 
     setGauges((prevGauges) =>
       prevGauges.map((gauge) => {
@@ -66,7 +63,7 @@ export default function useGaugeCard() {
             sensor.last_measurement.created_at
           ).getTime();
           const value =
-            measurementTime >= twoMinutesAgo
+            measurementTime >= gapTime
               ? Number(sensor.last_measurement.value)
               : 0;
           return { ...gauge, value };

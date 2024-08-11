@@ -1,6 +1,9 @@
 import { useRequest } from "@/lib/api/swr";
 import { OPTIONAL_STRING } from "@/lib/utils/validators";
-import { DEVICES_URL, EMISSION_LIMITS_URL } from "@/services/consts";
+import {
+  DEVICES_URL,
+  emissionLimitsByBrickyardIdUrl,
+} from "@/services/consts";
 import { useAuthStore } from "@/store/useAuthStore";
 import { FilterStoreValues, useFilterStore } from "@/store/useFilterStore";
 import { Device } from "@/types/device";
@@ -49,9 +52,8 @@ export default function useFilterForm() {
     resetFilter: state.resetFilter,
   }));
 
-  const { user, isBrickyard } = useAuthStore((state) => ({
+  const { user } = useAuthStore((state) => ({
     user: state.user,
-    isBrickyard: state.isBrickyard,
   }));
 
   // Fetch devices
@@ -72,15 +74,13 @@ export default function useFilterForm() {
   const { data: limitsData, isLoading: limitsIsLoading } = useRequest<
     EmissionLimits[]
   >(
-    user
+    user?.brickyard?.id
       ? {
-          url: EMISSION_LIMITS_URL,
+          url: emissionLimitsByBrickyardIdUrl(user.brickyard.id),
           params: {
-            ...(isBrickyard && {
-              brickyard_id: user.brickyard?.id,
-              show_institution: true,
-              is_public: true,
-            }),
+            add_institution: true,
+            is_public: true,
+            add_management: true,
           },
         }
       : null

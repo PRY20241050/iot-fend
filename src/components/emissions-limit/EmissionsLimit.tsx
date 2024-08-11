@@ -31,7 +31,15 @@ export default function EmissionsLimit() {
         btnIcon={<PlusIcon className="h-4 w-4 mr-2" />}
         btnLabel="Añadir límite"
       />
-      <SimpleTable data={items} columns={columnsEmissionsLimitTable} />
+      <SimpleTable
+        data={items}
+        isLoading={isLoading}
+        columns={columnsEmissionsLimitTable}
+        page={page}
+        paginationInfo={paginationInfo}
+        fetchNextPage={fetchNextPage}
+        fetchPrevPage={fetchPrevPage}
+      />
     </LayoutPrimary>
   );
 }
