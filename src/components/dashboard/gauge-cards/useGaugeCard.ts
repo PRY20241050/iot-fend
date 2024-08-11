@@ -4,7 +4,7 @@ import {
   lastMeasurementUrl,
 } from "@/services/consts";
 import { useFilterStore } from "@/store/useFilterStore";
-import { EmissionsLimit } from "@/types/emissions-limit";
+import { EmissionLimits } from "@/types/emission-limits";
 import { SensorWithLastMeasurement } from "@/types/sensor";
 import { useEffect, useState } from "react";
 import { gauges as initialGauges } from "@/mocks/dashboard";
@@ -19,7 +19,7 @@ export default function useGaugeCard() {
   }));
 
   const { data: limitData, isLoading: limitIsLoading } =
-    useRequest<EmissionsLimit>(
+    useRequest<EmissionLimits>(
       emissionLimit
         ? {
             url: emissionLimitsByIdUrl(emissionLimit),

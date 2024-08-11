@@ -9,7 +9,7 @@ interface Props {
 
 export default function Navbar({ className }: Props) {
   return (
-    <div className={cn("border-b w-full bg-white", className)}>
+    <div className={cn("border-b w-full bg-white z-30", className)}>
       <div className="flex h-16 items-center px-4">
         <Logo />
         <div className="ml-auto flex items-center space-x-4">

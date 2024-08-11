@@ -4,7 +4,7 @@ import { DEVICES_URL, EMISSION_LIMITS_URL } from "@/services/consts";
 import { useAuthStore } from "@/store/useAuthStore";
 import { FilterStoreValues, useFilterStore } from "@/store/useFilterStore";
 import { Device } from "@/types/device";
-import { EmissionsLimit } from "@/types/emissions-limit";
+import { EmissionLimits } from "@/types/emission-limits";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -70,7 +70,7 @@ export default function useFilterForm() {
 
   // Fetch limits
   const { data: limitsData, isLoading: limitsIsLoading } = useRequest<
-    EmissionsLimit[]
+    EmissionLimits[]
   >(
     user
       ? {

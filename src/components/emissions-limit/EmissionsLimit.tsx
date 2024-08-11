@@ -5,27 +5,33 @@ import Header from "../shared/Header";
 import { useRouter } from "next/navigation";
 import { SimpleTable } from "../shared/simple-table";
 import { columnsEmissionsLimitTable } from "./useEmissionsLimitTable";
-import { emissionsLimitTableData } from "@/mocks/emissions-limit";
 import { LayoutPrimary } from "../layouts";
+import useEmissionLimits from "./useEmissionLimits";
 
 export default function EmissionsLimit() {
   const { push } = useRouter();
+
+  const {
+    items,
+    isLoading,
+    paginationInfo,
+    page,
+    fetchNextPage,
+    fetchPrevPage,
+  } = useEmissionLimits();
 
   return (
     <LayoutPrimary>
       <Header
         showTitle
-        title="Límites de emisiones"
+        title="Límite de emisiones"
         btnAction={() => {
           push("/limite-emisiones/agregar");
         }}
         btnIcon={<PlusIcon className="h-4 w-4 mr-2" />}
         btnLabel="Añadir límite"
       />
-      <SimpleTable
-        data={emissionsLimitTableData}
-        columns={columnsEmissionsLimitTable}
-      />
+      <SimpleTable data={items} columns={columnsEmissionsLimitTable} />
     </LayoutPrimary>
   );
 }

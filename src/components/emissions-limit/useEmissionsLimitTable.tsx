@@ -3,44 +3,53 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { EmissionsLimitDataTable } from "@/types/emissions-limit";
+import { EmissionLimits } from "@/types/emission-limits";
 import { booleanToYesNo } from "@/lib/helpers/string";
 import { useRouter } from "next/navigation";
+import { LimitHistory } from "@/types/limit-history";
+import { GASES } from "@/mocks/filter";
 
-export const columnsEmissionsLimitTable: ColumnDef<EmissionsLimitDataTable>[] = [
+export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
   {
     accessorKey: "id",
     header: "ID",
     cell: ({ row }: any) => <div>{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "limitName",
+    accessorKey: "name",
     header: "Nombre del límite",
-    cell: ({ row }: any) => <div>{row.getValue("limitName")}</div>,
+    cell: ({ row }: any) => <div>{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "gases",
+    accessorKey: "limit_history",
     header: "Gases aplicables",
-    cell: ({ row }: any) => <div>{row.getValue("gases").join(", ")}</div>,
-  },
-  {
-    accessorKey: "emailAlert",
-    header: "Alertas por correo",
     cell: ({ row }: any) => (
-      <div>{booleanToYesNo(row.getValue("emailAlert"))}</div>
+      <div>
+        {row
+          .getValue("limit_history")
+          .map((limit: LimitHistory) => {
+            return GASES[limit.gas_type].label;
+          })
+          .join(", ")}
+      </div>
     ),
   },
   {
-    accessorKey: "appAlert",
+    accessorKey: "email_alert",
+    header: "Alertas por correo",
+    cell: ({ row }: any) => (
+      <div>{booleanToYesNo(row.getValue("email_alert"))}</div>
+    ),
+  },
+  {
+    accessorKey: "app_alert",
     header: "Alertas por aplicación",
     cell: ({ row }: any) => (
-      <div>{booleanToYesNo(row.getValue("appAlert"))}</div>
+      <div>{booleanToYesNo(row.getValue("app_alert"))}</div>
     ),
   },
   {
@@ -52,12 +61,12 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionsLimitDataTable>[] = 
 
       const handleEdit = () => {
         router.push(`/limite-emisiones/${row.original.id}`);
-      }
+      };
 
       const handleDelete = () => {
         console.log("Delete", row.original);
       };
-      
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -67,13 +76,7 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionsLimitDataTable>[] = 
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={handleEdit}
-            >
-              Editar
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleEdit}>Editar</DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>Eliminar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -81,4 +84,3 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionsLimitDataTable>[] = 
     },
   },
 ];
-

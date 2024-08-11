@@ -1,20 +1,13 @@
 import { DateTime } from "luxon";
 import { LimitHistory } from "./limit-history";
 
-export interface EmissionsLimitDataTable {
-  id: number;
-  limitName: string;
-  gases: string[];
-  emailAlert: boolean;
-  appAlert: boolean;
-}
-
-export interface EmissionsLimit {
+export interface EmissionLimits {
   id: number;
   name: string;
   description: string;
   email_alert: boolean;
   app_alert: boolean;
+  is_public: boolean;
   is_default: boolean;
   last_updated: DateTime;
   created_at: DateTime;

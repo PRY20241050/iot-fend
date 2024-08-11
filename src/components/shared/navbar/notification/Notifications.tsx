@@ -76,7 +76,7 @@ export default function Notifications() {
             <div className="text-center text-xs py-2 font-bold">
               No hay más notificaciones </div>
           }
-          scrollThreshold={0.7}
+          scrollThreshold={0}
           className="space-y-2 p-[10px] max-h-[calc(60vh-36px)]"
         >
           {alertsData?.map((alert) => (

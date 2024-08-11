@@ -37,8 +37,16 @@ export function formatDateBackward(
   }
 
   const daysDiff = differenceInDays(now, zonedDate);
+  if (hoursDiff == 1) {
+    return `Hace ${hoursDiff} hora`;
+  }
+
   if (hoursDiff < 24) {
     return `Hace ${hoursDiff} horas`;
+  }
+
+  if (daysDiff == 1) {
+    return `Hace ${daysDiff} día`;
   }
 
   if (daysDiff < 7) {
