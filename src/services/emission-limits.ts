@@ -1,10 +1,24 @@
-import { destroy, fetcher } from "@/lib/api/api";
+import { destroy, fetcher, post } from "@/lib/api/api";
 import { PaginationResponse } from "@/types/models";
 import {
+  EMISSION_LIMITS_URL,
   emissionLimitsByBrickyardIdUrl,
   emissionLimitsByIdUrl,
 } from "./consts";
-import { EmissionLimits } from "@/types/emission-limits";
+import { CreateEmissionLimit, EmissionLimits } from "@/types/emission-limits";
+
+export const createEmissionLimit = async (data: CreateEmissionLimit) => {
+  return await post<EmissionLimits>({
+    url: EMISSION_LIMITS_URL,
+    params: data,
+  });
+};
+
+export const deleteEmissionLimit = async (id: number) => {
+  return await destroy({
+    url: emissionLimitsByIdUrl(id.toString()),
+  });
+};
 
 export type GetEmissionLimitsParams = {
   brickyard_id?: number;
@@ -33,11 +47,5 @@ export const getEmissionLimitsByBrickyardId = async (
   return await fetcher<EmissionLimits[]>({
     url: brickyard_id ? emissionLimitsByBrickyardIdUrl(brickyard_id) : "",
     params: otherParams,
-  });
-};
-
-export const deleteEmissionLimit = async (id: number) => {
-  return await destroy({
-    url: emissionLimitsByIdUrl(id.toString()),
   });
 };

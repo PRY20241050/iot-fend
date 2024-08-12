@@ -35,3 +35,6 @@ export const PROFILE_URL = "/profile/";
 // Alerts
 export const MY_ALERTS_URL = "/my-alerts/";
 export const MARK_MY_ALERTS_AS_READ_URL = `${MY_ALERTS_URL}mark-as-read/`;
+
+// Limit History
+export const LIMIT_HISTORY_URL = "/limit-history/";

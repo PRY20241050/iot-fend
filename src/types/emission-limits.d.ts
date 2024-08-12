@@ -11,7 +11,18 @@ export interface EmissionLimits {
   is_default: boolean;
   updated_at: DateTime;
   created_at: DateTime;
-  institution: number;
-  management: number;
+  brickyard: number | null;
+  institution: number | null;
+  management: number | null;
   limit_history: LimitHistory[];
 }
+
+export type CreateEmissionLimit = Omit<
+  EmissionLimits,
+  "id" | "updated_at" | "created_at",
+  "limit_history" | "brickyard" | "institution" | "management"
+> & {
+  brickyard?: number;
+  institution?: number;
+  management?: number;
+};

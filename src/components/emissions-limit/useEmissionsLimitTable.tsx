@@ -44,7 +44,7 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
         {row
           .getValue("limit_history")
           .map((limit: LimitHistory) => {
-            return GASES[limit.gas_type].label;
+            return GASES[limit.gas_type - 1]?.label;
           })
           .join(", ")}
       </div>
@@ -71,7 +71,7 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
       const router = useRouter();
 
       const handleEdit = () => {
-        router.push(`/limite-emisiones/${row.original.id}`);
+        router.push(`/limite-emisiones/${row.original.id}/editar`);
       };
 
       const handleDelete = () => {

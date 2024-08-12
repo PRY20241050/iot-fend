@@ -1,5 +1,15 @@
+import { CO, NO2, PM10, PM25, SO2 } from "@/lib/utils";
+import {
+  OPTIONAL_BOOLEAN,
+  OPTIONAL_NUMBER_REGEX,
+  OPTIONAL_STRING,
+} from "@/lib/utils/validators";
+import { createEmissionLimit } from "@/services/emission-limits";
+import { createLimitHistory } from "@/services/limit-history";
+import { useAuthStore } from "@/store/useAuthStore";
 import { EmissionLimits } from "@/types/emission-limits";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,53 +17,73 @@ import { z } from "zod";
 const formSchema = z
   .object({
     name: z.string().min(1, { message: "El nombre es requerido" }),
-    description: z.string().optional(),
-    setpm10limit: z.boolean().optional(),
-    pm10limit: z
-      .number()
-      .min(0, { message: "El límite de PM10 debe ser mayor o igual a 0" }),
-    setpm25limit: z.boolean().optional(),
-    pm25limit: z
-      .number()
-      .min(0, { message: "El límite de PM2.5 debe ser mayor o igual a 0" }),
-    setso2limit: z.boolean().optional(),
-    so2limit: z
-      .number()
-      .min(0, { message: "El límite de SO2 debe ser mayor o igual a 0" }),
-    setno2limit: z.boolean().optional(),
-    no2limit: z
-      .number()
-      .min(0, { message: "El límite de NO2 debe ser mayor o igual a 0" }),
-    setcolimit: z.boolean().optional(),
-    colimit: z
-      .number()
-      .min(0, { message: "El límite de CO debe ser mayor o igual a 0" }),
-    email_alert: z.boolean().optional(),
-    app_alert: z.boolean().optional(),
+    description: OPTIONAL_STRING,
+    setpm10limit: OPTIONAL_BOOLEAN,
+    pm10limit: OPTIONAL_NUMBER_REGEX,
+    setpm25limit: OPTIONAL_BOOLEAN,
+    pm25limit: OPTIONAL_NUMBER_REGEX,
+    setso2limit: OPTIONAL_BOOLEAN,
+    so2limit: OPTIONAL_NUMBER_REGEX,
+    setno2limit: OPTIONAL_BOOLEAN,
+    no2limit: OPTIONAL_NUMBER_REGEX,
+    setcolimit: OPTIONAL_BOOLEAN,
+    colimit: OPTIONAL_NUMBER_REGEX,
+    email_alert: OPTIONAL_BOOLEAN,
+    app_alert: OPTIONAL_BOOLEAN,
   })
   .refine(
     (data) => {
-      if (data.setpm10limit && data.pm10limit === undefined) {
-        return false;
-      }
-      if (data.setpm25limit && data.pm25limit === undefined) {
-        return false;
-      }
-      if (data.setso2limit && data.so2limit === undefined) {
-        return false;
-      }
-      if (data.setno2limit && data.no2limit === undefined) {
-        return false;
-      }
-      if (data.setcolimit && data.colimit === undefined) {
-        return false;
-      }
+      if (data.setpm10limit && data.pm10limit === undefined) return false;
       return true;
     },
     {
       message:
         "Debe definir el límite de gas si la opción correspondiente está activada",
-      path: ["pm10limit", "pm25limit", "so2limit", "no2limit", "colimit"],
+      path: ["pm10limit"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.setpm25limit && data.pm25limit === undefined) return false;
+      return true;
+    },
+    {
+      message:
+        "Debe definir el límite de gas si la opción correspondiente está activada",
+      path: ["pm25limit"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.setso2limit && data.so2limit === undefined) return false;
+      return true;
+    },
+    {
+      message:
+        "Debe definir el límite de gas si la opción correspondiente está activada",
+      path: ["so2limit"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.setno2limit && data.no2limit === undefined) return false;
+      return true;
+    },
+    {
+      message:
+        "Debe definir el límite de gas si la opción correspondiente está activada",
+      path: ["no2limit"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.setcolimit && data.colimit === undefined) return false;
+      return true;
+    },
+    {
+      message:
+        "Debe definir el límite de gas si la opción correspondiente está activada",
+      path: ["colimit"],
     }
   )
   .refine(
@@ -68,7 +98,13 @@ const formSchema = z
     },
     {
       message: "Debe definir al menos un límite de gas",
-      path: ["pm10limit", "pm25limit", "so2limit", "no2limit", "colimit"],
+      path: [
+        "setpm10limit",
+        "setpm25limit",
+        "setso2limit",
+        "setno2limit",
+        "setcolimit",
+      ],
     }
   );
 
@@ -80,6 +116,10 @@ interface Props {
 
 export default function useEmissionsLimitAddForm({ initialData }: Props) {
   const [isLoading, setIsLoading] = useState(false);
+  const { push } = useRouter();
+  const { user } = useAuthStore((state) => ({
+    user: state.user,
+  }));
 
   const form = useForm<EmissionsLimitAddFormValues>({
     resolver: zodResolver(formSchema),
@@ -102,8 +142,56 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
     reValidateMode: "onChange",
   });
 
+  function handleHistoryLimit(id: number, gasTypeId: number, limit: number) {
+    createLimitHistory({
+      emission_limit: id,
+      gas_type: gasTypeId,
+      max_limit: limit,
+      is_modified: false,
+      start_date: new Date(),
+      end_date: new Date("9999-12-31"),
+    }).catch(() => {
+      console.error("No se pudo crear el límite de historial");
+    });
+  }
+
   function onSubmit(values: EmissionsLimitAddFormValues) {
+    if (initialData) return;
+
     setIsLoading(true);
+    createEmissionLimit({
+      name: values.name,
+      description: values.description,
+      email_alert: values.email_alert,
+      app_alert: values.app_alert,
+      is_public: false,
+      is_default: false,
+      brickyard: user?.brickyard?.id,
+    })
+      .then((response) => {
+        if (values.setpm10limit) {
+          handleHistoryLimit(response.id, PM10, Number(values.pm10limit));
+        }
+        if (values.setpm25limit) {
+          handleHistoryLimit(response.id, PM25, Number(values.pm25limit));
+        }
+        if (values.setso2limit) {
+          handleHistoryLimit(response.id, SO2, Number(values.so2limit));
+        }
+        if (values.setno2limit) {
+          handleHistoryLimit(response.id, NO2, Number(values.no2limit));
+        }
+        if (values.setcolimit) {
+          handleHistoryLimit(response.id, CO, Number(values.colimit));
+        }
+        push("/limite-emisiones");
+      })
+      .catch(() => {
+        console.error("No se pudo crear el límite de emisiones");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -112,25 +200,25 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
     const findLimit = (gasType: number) =>
       initialData.limit_history.find((limit) => limit.gas_type === gasType);
 
-    const pm10 = findLimit(5);
-    const pm25 = findLimit(4);
-    const so2 = findLimit(3);
-    const no2 = findLimit(2);
-    const co = findLimit(1);
+    const co = findLimit(CO);
+    const no2 = findLimit(NO2);
+    const so2 = findLimit(SO2);
+    const pm25 = findLimit(PM25);
+    const pm10 = findLimit(PM10);
 
     form.reset({
       name: initialData.name,
       description: initialData.description,
       setpm10limit: !!pm10,
-      pm10limit: pm10?.max_limit,
+      pm10limit: String(pm10?.max_limit),
       setpm25limit: !!pm25,
-      pm25limit: pm25?.max_limit,
+      pm25limit: String(pm25?.max_limit),
       setso2limit: !!so2,
-      so2limit: so2?.max_limit,
+      so2limit: String(so2?.max_limit),
       setno2limit: !!no2,
-      no2limit: no2?.max_limit,
+      no2limit: String(no2?.max_limit),
       setcolimit: !!co,
-      colimit: co?.max_limit,
+      colimit: String(co?.max_limit),
       email_alert: initialData.email_alert,
       app_alert: initialData.app_alert,
     });
