@@ -14,12 +14,23 @@ export type GetEmissionLimitsParams = {
   paginated?: boolean;
 };
 
-export const getEmissionLimitsByBrickyardId = async (
+export const getEmissionLimitsByBrickyardIdPaginated = async (
   params: GetEmissionLimitsParams
 ) => {
   const { brickyard_id, ...otherParams } = params;
 
   return await fetcher<PaginationResponse<EmissionLimits>>({
+    url: brickyard_id ? emissionLimitsByBrickyardIdUrl(brickyard_id) : "",
+    params: otherParams,
+  });
+};
+
+export const getEmissionLimitsByBrickyardId = async (
+  params: GetEmissionLimitsParams
+) => {
+  const { brickyard_id, ...otherParams } = params;
+
+  return await fetcher<EmissionLimits[]>({
     url: brickyard_id ? emissionLimitsByBrickyardIdUrl(brickyard_id) : "",
     params: otherParams,
   });

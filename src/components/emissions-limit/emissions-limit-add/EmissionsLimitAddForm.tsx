@@ -6,7 +6,7 @@ import {
   FormInput,
   FormSwitch,
   FormTextArea,
-  FormButton
+  FormButton,
 } from "@/components/ui/form";
 import useEmissionsLimitAddForm from "./useEmissionsLimitAddForm";
 import { TypographyH4, TypographyP } from "@/components/ui/typography";
@@ -15,9 +15,16 @@ import s from "./EmissionsLimitAdd.module.scss";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { EmissionLimits } from "@/types/emission-limits";
 
-export default function EmissionsLimitAddForm() {
-  const { form, isLoading, onSubmit } = useEmissionsLimitAddForm();
+interface Props {
+  initialData?: EmissionLimits;
+}
+
+export default function EmissionsLimitAddForm({ initialData }: Props) {
+  const { form, isLoading, onSubmit } = useEmissionsLimitAddForm({
+    initialData,
+  });
   const { push } = useRouter();
 
   return (

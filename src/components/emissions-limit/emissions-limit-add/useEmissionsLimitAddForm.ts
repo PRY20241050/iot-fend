@@ -1,5 +1,6 @@
+import { EmissionLimits } from "@/types/emission-limits";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -73,7 +74,11 @@ const formSchema = z
 
 export type EmissionsLimitAddFormValues = z.infer<typeof formSchema>;
 
-export default function useEmissionsLimitAddForm() {
+interface Props {
+  initialData?: EmissionLimits;
+}
+
+export default function useEmissionsLimitAddForm({ initialData }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<EmissionsLimitAddFormValues>({
@@ -100,6 +105,36 @@ export default function useEmissionsLimitAddForm() {
   function onSubmit(values: EmissionsLimitAddFormValues) {
     setIsLoading(true);
   }
+
+  useEffect(() => {
+    if (!initialData) return;
+
+    const findLimit = (gasType: number) =>
+      initialData.limit_history.find((limit) => limit.gas_type === gasType);
+
+    const pm10 = findLimit(5);
+    const pm25 = findLimit(4);
+    const so2 = findLimit(3);
+    const no2 = findLimit(2);
+    const co = findLimit(1);
+
+    form.reset({
+      name: initialData.name,
+      description: initialData.description,
+      setpm10limit: !!pm10,
+      pm10limit: pm10?.max_limit,
+      setpm25limit: !!pm25,
+      pm25limit: pm25?.max_limit,
+      setso2limit: !!so2,
+      so2limit: so2?.max_limit,
+      setno2limit: !!no2,
+      no2limit: no2?.max_limit,
+      setcolimit: !!co,
+      colimit: co?.max_limit,
+      email_alert: initialData.email_alert,
+      app_alert: initialData.app_alert,
+    });
+  }, [initialData]);
 
   return {
     form,

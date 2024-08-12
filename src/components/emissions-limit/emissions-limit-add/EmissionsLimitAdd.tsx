@@ -3,8 +3,13 @@ import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { LayoutPrimary } from "@/components/layouts";
 import EmissionsLimitAddForm from "./EmissionsLimitAddForm";
 import s from "./EmissionsLimitAdd.module.scss";
+import { EmissionLimits } from "@/types/emission-limits";
 
-export default function EmissionsLimitAdd() {
+interface Props {
+  initialData?: EmissionLimits;
+}
+
+export default function EmissionsLimitAdd({ initialData }: Props) {
   return (
     <LayoutPrimary>
       <TypographyH1 className="text-2xl lg:text-3xl">
@@ -14,7 +19,7 @@ export default function EmissionsLimitAdd() {
         Añade un nuevo límite para el control de las emisiones de tu ladrillera
       </TypographyP>
       <DropdownMenuSeparator className="my-4 h-[2px]" />
-      <EmissionsLimitAddForm />
+      <EmissionsLimitAddForm initialData={initialData} />
     </LayoutPrimary>
   );
 }

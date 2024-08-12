@@ -1,6 +1,6 @@
 import { usePaginationFetchData } from "@/hooks/usePaginationFetchData";
 import {
-  getEmissionLimitsByBrickyardId,
+  getEmissionLimitsByBrickyardIdPaginated,
   GetEmissionLimitsParams,
 } from "@/services/emission-limits";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -15,7 +15,7 @@ export default function useEmissionLimits() {
 
   const { items, paginationInfo, isLoading, page, fetchData, updateParams } =
     usePaginationFetchData<GetEmissionLimitsParams, EmissionLimits>(
-      getEmissionLimitsByBrickyardId,
+      getEmissionLimitsByBrickyardIdPaginated,
       {}
     );
 
