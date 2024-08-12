@@ -24,6 +24,6 @@ export interface ChartData {
 export interface Gauge {
   id: number;
   title: string;
-  limit: Pick<LimitHistory, "max_limit" | "gas_type">;
+  limit: Pick<LimitHistory, "max_limit" | "gas_type"> & { is_default?: boolean };
   value: number;
 }

@@ -39,10 +39,22 @@ export default function useGaugeCard() {
 
     setGauges(
       initialGauges.map((gauge) => {
-        const limit = limitData?.limit_history.find((limit) => {
+        // Find the limit for the gauge
+        const maxLimit = limitData?.limit_history.find((limit) => {
           return limit.gas_type === gauge.id;
         });
-        return limit ? { ...gauge, limit } : gauge;
+
+        // If the limit exists, update the gauge with the limit and is_default set to false. Otherwise, return the default gauge.
+        return maxLimit
+          ? {
+              ...gauge,
+              limit: {
+                is_default: false,
+                max_limit: maxLimit.max_limit,
+                gas_type: maxLimit.gas_type,
+              },
+            }
+          : gauge;
       })
     );
   }, [limitData]);

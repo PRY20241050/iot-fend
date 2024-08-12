@@ -52,6 +52,7 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
         <DetailChart
           description="Concentración (mg/m3)"
           title="Máximo permitido"
+          disabled={limit.is_default}
           value={Number(limit.max_limit)}
         />
       </div>
@@ -85,7 +86,12 @@ export function GaugeLegend() {
         <ul className="pt-3 phone-md:flex phone-md:gap-4 phone-md:flex-wrap tablet-lg:gap-6 space-y-1">
           {GAUGE_LEGENDS.map((legend, index) => (
             <li key={index} className="flex items-center">
-              <span className={cn("w-4 h-4 rounded-full inline-block mr-2", legend.color)}></span>
+              <span
+                className={cn(
+                  "w-4 h-4 rounded-full inline-block mr-2",
+                  legend.color
+                )}
+              ></span>
               <div>
                 <span className="font-semibold">{legend.title}</span>
                 <p className="text-sm text-gray-600">{legend.description}</p>

@@ -141,6 +141,7 @@ export const gauges: Gauge[] = [
     title: "Sensor CO",
     value: 0,
     limit: {
+      is_default: true,
       max_limit: 100,
       gas_type: 1,
     },
@@ -150,6 +151,7 @@ export const gauges: Gauge[] = [
     title: "Sensor NO2",
     value: 0,
     limit: {
+      is_default: true,
       max_limit: 320,
       gas_type: 2,
     },
@@ -159,6 +161,7 @@ export const gauges: Gauge[] = [
     title: "Sensor SO2",
     value: 0,
     limit: {
+      is_default: true,
       max_limit: 0.25,
       gas_type: 3,
     },
@@ -168,6 +171,7 @@ export const gauges: Gauge[] = [
     title: "Sensor PM2.5",
     value: 0,
     limit: {
+      is_default: true,
       max_limit: 150,
       gas_type: 4,
     },
@@ -177,6 +181,7 @@ export const gauges: Gauge[] = [
     title: "Sensor PM10",
     value: 0,
     limit: {
+      is_default: true,
       max_limit: 150,
       gas_type: 4,
     },
