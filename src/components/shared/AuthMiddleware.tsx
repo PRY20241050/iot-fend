@@ -1,7 +1,7 @@
 "use client";
 
 import { AuthState, useAuthStore } from "@/store/useAuthStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -13,16 +13,12 @@ const selector = (state: AuthState) => ({
 });
 
 export default function AuthMiddleware({ children }: Props) {
-  const [isHydrated, setIsHydrated] = useState(false);
   const { verifyIsAuthenticated } = useAuthStore(selector);
 
   useEffect(() => {
-    if (!isHydrated) {
-      verifyIsAuthenticated()
-      setIsHydrated(true);
-    }
+    verifyIsAuthenticated();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isHydrated]);
+  }, []);
 
   return <>{children}</>;
 }
