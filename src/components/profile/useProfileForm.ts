@@ -1,4 +1,5 @@
 import { OPTIONAL_STRING } from "@/lib/utils/validators";
+import { AuthStateValues } from "@/store/useAuthStore";
 import { User } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -11,9 +12,15 @@ export interface ProfileForm {
   username: string;
   email: string;
   role: string;
+
   brickyard_name: string;
   brickyard_address: string;
   brickyard_contact: string;
+
+  institution_name: string;
+  institution_phone: string;
+  institution_address: string;
+  institution_contact: string;
 }
 
 const formSchema = z.object({
@@ -22,18 +29,28 @@ const formSchema = z.object({
   username: OPTIONAL_STRING,
   email: OPTIONAL_STRING,
   role: OPTIONAL_STRING,
+
   brickyard_name: OPTIONAL_STRING,
   brickyard_address: OPTIONAL_STRING,
+  brickyard_contact: OPTIONAL_STRING,
+
+  institution_name: OPTIONAL_STRING,
+  institution_phone: OPTIONAL_STRING,
+  institution_address: OPTIONAL_STRING,
+  institution_contact: OPTIONAL_STRING,
 });
 
-interface UseProfileFormProps {
+type UseProfileFormProps = Pick<
+  AuthStateValues,
+  "isBrickyard" | "isInstitution"
+> & {
   user?: User | null;
-  isBrickyard: boolean;
-}
+};
 
 export default function useProfileForm({
   user,
   isBrickyard,
+  isInstitution,
 }: UseProfileFormProps) {
   const form = useForm<ProfileForm>({
     resolver: zodResolver(formSchema),
@@ -43,9 +60,15 @@ export default function useProfileForm({
       username: "",
       email: "",
       role: "",
+
       brickyard_name: "",
       brickyard_address: "",
       brickyard_contact: "",
+
+      institution_name: "",
+      institution_phone: "",
+      institution_address: "",
+      institution_contact: "",
     },
   });
 
@@ -63,8 +86,14 @@ export default function useProfileForm({
         brickyard_address: user.brickyard?.address,
         brickyard_contact: user.brickyard?.contact,
       }),
+      ...(isInstitution && {
+        institution_name: user.institution?.name,
+        institution_phone: String(user.institution?.phone),
+        institution_address: user.institution?.address,
+        institution_contact: user.institution?.contact,
+      }),
     });
-  }, [user, isBrickyard, form]);
+  }, [user, isBrickyard, isInstitution, form]);
 
   return {
     form,

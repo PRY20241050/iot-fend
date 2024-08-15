@@ -29,6 +29,9 @@
     --status-normal: 120 100% 50%;
     --status-warning: 60 100% 50%;
     --status-danger: 0 100% 50%;
+
+    /* Off-set */
+    --navbar-height: 4rem;
   }
 
   .dark {

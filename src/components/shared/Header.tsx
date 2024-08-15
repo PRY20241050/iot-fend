@@ -21,7 +21,9 @@ export default function Header({
   return (
     <div className="w-full flex flex-col gap-3 justify-between phone-xl:flex-row phone-xl:items-end">
       {showTitle && (
-        <TypographyH1 className="text-3xl lg:text-4xl">{title}</TypographyH1>
+        <TypographyH1 className="text-3xl lg:text-4xl font-semibold">
+          {title}
+        </TypographyH1>
       )}
       <div className="flex gap-2">
         {children}

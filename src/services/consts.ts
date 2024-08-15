@@ -38,3 +38,6 @@ export const MARK_MY_ALERTS_AS_READ_URL = `${MY_ALERTS_URL}mark-as-read/`;
 
 // Limit History
 export const LIMIT_HISTORY_URL = "/limit-history/";
+
+// Brickyards
+export const BRICKYARDS_URL = "/brickyards/"

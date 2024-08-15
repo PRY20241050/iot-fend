@@ -3,17 +3,22 @@ import { getUser } from "@/services/user";
 import { Token, User } from "@/types/auth";
 import { create } from "zustand";
 
-export interface AuthState {
+export interface AuthStateValues {
   user: User | null;
   isAuthenticated: boolean;
   isBrickyard: boolean;
   isInstitution: boolean;
   userType: "brickyard" | "institution" | null;
+}
+
+export interface AuthStateActions {
   setUser: (user: User) => void;
   verifyIsAuthenticated: () => Promise<boolean>;
   resetState: () => void;
   logOut: () => void;
 }
+
+interface AuthState extends AuthStateValues, AuthStateActions {}
 
 export const authSelector = (state: AuthState): Pick<AuthState, "user"> => ({
   user: state.user,

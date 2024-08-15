@@ -6,13 +6,16 @@ import useProfileForm from "./useProfileForm";
 import { TypographyH4 } from "../ui/typography";
 
 export default function ProfileForm() {
-  const { user, isBrickyard } = useAuthStore((state) => ({
+  const { user, isBrickyard, isInstitution } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
+    isInstitution: state.isInstitution,
   }));
+
   const { form } = useProfileForm({
     user,
     isBrickyard,
+    isInstitution,
   });
 
   return (
@@ -47,7 +50,11 @@ export default function ProfileForm() {
           disabled
         />
         <FormInput form={form} name="role" label="Cargo" disabled />
-        <TypographyH4 className="pt-3 tablet-xl:pt-5">Organización</TypographyH4>
+        {user && (
+          <TypographyH4 className="pt-3 tablet-xl:pt-5">
+            Organización
+          </TypographyH4>
+        )}
         {isBrickyard && (
           <>
             <FormInput
@@ -66,6 +73,34 @@ export default function ProfileForm() {
               form={form}
               name="brickyard_contact"
               label="Contacto"
+              disabled
+            />
+          </>
+        )}
+        {isInstitution && (
+          <>
+            <FormInput
+              form={form}
+              name="institution_name"
+              label="Empresa"
+              disabled
+            />
+            <FormInput
+              form={form}
+              name="institution_address"
+              label="Dirección"
+              disabled
+            />
+            <FormInput
+              form={form}
+              name="institution_phone"
+              label="Teléfono de contacto"
+              disabled
+            />
+            <FormInput
+              form={form}
+              name="institution_contact"
+              label="Correo de contacto"
               disabled
             />
           </>

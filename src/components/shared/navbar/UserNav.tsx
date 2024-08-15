@@ -21,7 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function UserNav() {
-  const { replace } = useRouter();
+  const { push } = useRouter();
   const { user, logOut, isBrickyard, isInstitution } = useAuthStore(
     (state) => ({
       user: state.user,
@@ -35,13 +35,13 @@ export function UserNav() {
 
   const setRol = () => {
     if (isBrickyard) return "Ladrillera";
-    if (isInstitution) return "Institución";
+    if (isInstitution) return user?.institution?.name;
     return "Usuario";
   };
 
   const signOut = () => {
     logOut();
-    replace("/auth/iniciar-sesion");
+    push("/auth/iniciar-sesion");
   };
 
   console.log(user);

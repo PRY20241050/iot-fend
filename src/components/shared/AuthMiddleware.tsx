@@ -1,13 +1,13 @@
 "use client";
 
-import { AuthState, useAuthStore } from "@/store/useAuthStore";
+import { AuthStateActions, useAuthStore } from "@/store/useAuthStore";
 import { useEffect } from "react";
 
 interface Props {
   children: React.ReactNode;
 }
 
-const selector = (state: AuthState) => ({
+const selector = (state: AuthStateActions) => ({
   verifyIsAuthenticated: state.verifyIsAuthenticated,
   resetState: state.resetState,
 });

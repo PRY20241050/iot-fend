@@ -75,7 +75,6 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
       };
 
       const handleDelete = () => {
-        console.log("Deleted");
         const body = document.getElementById("root-body");
 
         deleteEmissionLimit(row.original.id)

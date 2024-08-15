@@ -16,7 +16,7 @@ import { ChartCards } from "./chart-cards";
 import { GaugeCards } from "./gauge-cards";
 import { GaugeLegend } from "./gauge-cards/GaugeCard";
 
-export default function Dashboard() {
+export default function BrickyardDashboard() {
   const [isGauge, setIsGauge] = useState(true);
 
   const { user, isBrickyard } = useAuthStore((state) => ({
