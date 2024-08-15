@@ -1,13 +1,11 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import Filter from "../shared/filter";
-import Header from "../shared/Header";
+import { Filter, Header, SimpleTable } from "@/components/shared";
 import { useRouter } from "next/navigation";
 import { BarChartIcon } from "@radix-ui/react-icons";
-import { SimpleTable } from "../shared/simple-table";
 import { columnsHistoryTable } from "./useHistoryTable";
-import { LayoutPrimary } from "../layouts";
+import { LayoutPrimary } from "@/components/layouts";
 import { usePaginationFetchData } from "@/hooks/usePaginationFetchData";
 import { MeasurementWithDevice } from "@/types/measurement";
 import {
@@ -53,15 +51,7 @@ export default function History() {
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    user?.brickyard,
-    dateFrom,
-    dateTo,
-    device,
-    gases,
-    scale,
-    emissionLimit,
-  ]);
+  }, [user?.brickyard, dateFrom, dateTo, device, gases, scale, emissionLimit]);
 
   const fetchNextPage = () => {
     fetchData(page + 1);

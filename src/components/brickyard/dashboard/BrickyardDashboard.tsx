@@ -1,17 +1,16 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import Filter from "../shared/filter";
-import Header from "../shared/Header";
+import { Filter, Header } from "@/components/shared";
 import {
   BarChartIcon,
   ListBulletIcon,
   PieChartIcon,
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
-import { LayoutPrimary } from "../layouts";
+import { LayoutPrimary } from "@/components/layouts";
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { ChartCards } from "./chart-cards";
 import { GaugeCards } from "./gauge-cards";
 import { GaugeLegend } from "./gauge-cards/GaugeCard";

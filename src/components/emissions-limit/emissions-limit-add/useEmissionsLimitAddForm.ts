@@ -222,7 +222,7 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       email_alert: initialData.email_alert,
       app_alert: initialData.app_alert,
     });
-  }, [initialData]);
+  }, [initialData, form]);
 
   return {
     form,

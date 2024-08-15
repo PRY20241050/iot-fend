@@ -1,5 +1,5 @@
 import { Gauge } from "@/types/dashboard";
-import { DetailChart } from "@/components/dashboard/chart-cards";
+import { DetailChart } from "@/components/brickyard/dashboard/chart-cards";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { TypographyP } from "@/components/ui/typography";
 import { indexToLetter } from "@/lib/helpers/string";

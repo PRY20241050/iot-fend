@@ -14,12 +14,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
 
 interface Props {
   data: Brickyard;
 }
 
 export function BrickyardCard({ data }: Props) {
+  const { push } = useRouter();
+
+  const handleClick = () => {
+    console.log(`/brickyard/${data.id}/dashboard`);
+    // push(`/brickyard/${data.id}/dashboard`);
+  };
+
   return (
     <Card>
       <CardContent className="px-6 py-4 flex justify-between">
@@ -40,7 +48,7 @@ export function BrickyardCard({ data }: Props) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => {}}>
+            <DropdownMenuItem onClick={handleClick}>
               Ver emisiones
             </DropdownMenuItem>
           </DropdownMenuContent>

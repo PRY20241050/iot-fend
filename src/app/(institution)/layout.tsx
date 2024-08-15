@@ -13,11 +13,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const { push } = useRouter();
 
-  if (isInstitution) {
-    push("/home");
+  if (isBrickyard) {
+    push("/dashboard");
   }
 
-  if (isBrickyard) {
+  if (isInstitution) {
     return (
       <main>
         <Navbar className="fixed" />
