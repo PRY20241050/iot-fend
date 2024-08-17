@@ -1,7 +1,9 @@
-export default function LadrilleraHistorialPage() {
-  return (
-    <div>
-      <h1>Historial</h1>
-    </div>
-  );
+import { History } from "@/components/brickyard/history";
+
+interface Props {
+  params: { id?: string };
+}
+
+export default function LadrilleraHistorialPage({ params }: Props) {
+  return <History brickyardId={params.id} institution />;
 }

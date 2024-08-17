@@ -10,7 +10,7 @@ interface Props {
 export default function Navbar({ className }: Props) {
   return (
     <div className={cn("border-b w-full bg-white z-30", className)}>
-      <div className="flex h-16 items-center px-4">
+      <div className="flex h-16 items-center px-4 inner-wrapper mx-auto">
         <Logo />
         <div className="ml-auto flex items-center space-x-4">
           <Notifications />

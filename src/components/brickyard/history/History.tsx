@@ -15,8 +15,14 @@ import {
 import { useEffect } from "react";
 import { useFilterStore } from "@/store/useFilterStore";
 import { DASHBOARD_PATH } from "@/lib/utils";
+import { UserTypeContext } from "@/components/shared/context";
 
-export default function History() {
+interface Props {
+  brickyardId?: string;
+  institution?: boolean;
+}
+
+export default function History({ brickyardId, institution = false }: Props) {
   const { user, isBrickyard } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
@@ -63,31 +69,33 @@ export default function History() {
   };
 
   return (
-    <LayoutPrimary className="flex gap-6">
-      <div className="flex-grow">
-        <Header
-          showTitle={isBrickyard}
-          title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
-          btnAction={() => {
-            push(DASHBOARD_PATH);
-          }}
-          btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
-          btnLabel="Ver graficos"
-        />
-        <SimpleTable
-          data={items}
-          isLoading={isLoading}
-          columns={columnsHistoryTable}
-          page={page}
-          paginationInfo={paginationInfo}
-          fetchNextPage={fetchNextPage}
-          fetchPrevPage={fetchPrevPage}
-          // tableRowClass={cn({
-          //   "bg-status-danger/10": !isLoading && emissionLimit,
-          // })}
-        />
-      </div>
-      <Filter />
-    </LayoutPrimary>
+    <UserTypeContext.Provider value={{ brickyardId, institution }}>
+      <LayoutPrimary className="flex gap-6">
+        <div className="flex-grow">
+          <Header
+            showTitle={isBrickyard}
+            title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
+            btnAction={() => {
+              push(DASHBOARD_PATH);
+            }}
+            btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
+            btnLabel="Ver graficos"
+          />
+          <SimpleTable
+            data={items}
+            isLoading={isLoading}
+            columns={columnsHistoryTable}
+            page={page}
+            paginationInfo={paginationInfo}
+            fetchNextPage={fetchNextPage}
+            fetchPrevPage={fetchPrevPage}
+            // tableRowClass={cn({
+            //   "bg-status-danger/10": !isLoading && emissionLimit,
+            // })}
+          />
+        </div>
+        <Filter />
+      </LayoutPrimary>
+    </UserTypeContext.Provider>
   );
 }

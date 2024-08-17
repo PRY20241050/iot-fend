@@ -14,12 +14,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { GASES, SCALES } from "@/mocks/filter";
+import { useGaugeContext } from "../context/GaugeContext";
 
-interface Props {
-  isGauge?: boolean;
-}
-
-export default function FilterForm({ isGauge = false }: Props) {
+export default function FilterForm() {
+  const { isGauge } = useGaugeContext();
   const pathname = usePathname();
   const isHistory = pathname === "/historial";
 

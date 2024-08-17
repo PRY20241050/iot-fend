@@ -6,6 +6,9 @@ import { indexToLetter } from "@/lib/helpers/string";
 import GaugeChart from "./GaugeChart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { Coda } from "next/font/google";
+
+const console = Coda({ weight: ["400"], subsets: ["latin"] });
 
 type GaugeCardProps = Gauge & { index: number };
 
@@ -41,6 +44,20 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
           value={value}
           maxValue={maxValue}
         />
+        <TypographyP
+          className={cn(
+            "flex items-center justify-end text-muted-foreground",
+            console.className
+          )}
+        >
+          <span
+            className={cn(
+              "w-4 h-4 rounded-full inline-block mr-2",
+              "bg-muted-foreground"
+            )}
+          ></span>
+          Sin conexión
+        </TypographyP>
       </Card>
       <div className="grid phone-sm:grid-cols-2 gap-3 mt-3">
         <DetailChart

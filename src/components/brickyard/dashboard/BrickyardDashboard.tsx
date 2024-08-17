@@ -7,7 +7,7 @@ import {
   ListBulletIcon,
   PieChartIcon,
 } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LayoutPrimary } from "@/components/layouts";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ import { useRequest } from "@/lib/api/swr";
 import { brickyardByIdUrl } from "@/services/consts";
 import { Brickyard } from "@/types/brickyard";
 import { HISTORIAL_PATH, historialBrickyardPath } from "@/lib/utils";
-import { UserTypeContext } from "@/components/shared/context";
+import { GaugeContext, UserTypeContext } from "@/components/shared/context";
 
 interface Props {
   brickyardId?: string;
@@ -29,42 +29,44 @@ export default function BrickyardDashboard({
   brickyardId,
   institution = false,
 }: Props) {
-  const { brickyardName, goToHistory, isGauge, setIsGauge } =
+  const { brickyardName, goToHistory, isGauge, toggleGauge } =
     useBrickyardDashboard({ brickyardId, institution });
 
   return (
     <UserTypeContext.Provider value={{ brickyardId, institution }}>
-      <LayoutPrimary className="tablet-lg:flex tablet-lg:gap-6">
-        <div className="flex-grow">
-          <Header
-            title={brickyardName ? `Ladrillera ${brickyardName}` : ""}
-            btnAction={goToHistory}
-            btnIcon={<ListBulletIcon className="h-4 w-4 mr-2" />}
-            btnLabel="Ver historial"
-          >
-            <Button
-              onClick={() => setIsGauge((state) => !state)}
-              variant="outline"
-              className="phone-xl:ml-auto"
+      <GaugeContext.Provider value={{ isGauge }}>
+        <LayoutPrimary className="tablet-lg:flex tablet-lg:gap-6">
+          <div className="flex-grow">
+            <Header
+              title={brickyardName ? `Ladrillera ${brickyardName}` : ""}
+              btnAction={goToHistory}
+              btnIcon={<ListBulletIcon className="h-4 w-4 mr-2" />}
+              btnLabel="Ver historial"
             >
-              {isGauge ? (
-                <>
-                  <BarChartIcon className="h-4 w-4 mr-2" /> Ver histograma
-                </>
-              ) : (
-                <>
-                  <PieChartIcon className="h-4 w-4 mr-2" /> Ver medidores
-                </>
-              )}
-            </Button>
-          </Header>
-          {isGauge && <GaugeLegend />}
-          <div className="grid phone-xl:grid-cols-2 gap-6 my-4">
-            {isGauge ? <GaugeCards /> : <ChartCards />}
+              <Button
+                onClick={toggleGauge}
+                variant="outline"
+                className="phone-xl:ml-auto"
+              >
+                {isGauge ? (
+                  <>
+                    <BarChartIcon className="h-4 w-4 mr-2" /> Ver histograma
+                  </>
+                ) : (
+                  <>
+                    <PieChartIcon className="h-4 w-4 mr-2" /> Ver medidores
+                  </>
+                )}
+              </Button>
+            </Header>
+            {isGauge && <GaugeLegend />}
+            <div className="grid phone-xl:grid-cols-2 gap-6 my-4">
+              {isGauge ? <GaugeCards /> : <ChartCards />}
+            </div>
           </div>
-        </div>
-        <Filter isGauge={isGauge} />
-      </LayoutPrimary>
+          <Filter />
+        </LayoutPrimary>
+      </GaugeContext.Provider>
     </UserTypeContext.Provider>
   );
 }
@@ -84,7 +86,13 @@ function useBrickyardDashboard({ brickyardId, institution }: Props) {
       : null
   );
 
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
+  const pathname = usePathname();
+
+  const toggleGauge = () => {
+    replace(`${pathname}?gauge=${!isGauge}`);
+    setIsGauge((state) => !state);
+  };
 
   const brickyardName = institution ? data?.name : user?.brickyard?.name;
   const goToHistory = () => {
@@ -95,7 +103,7 @@ function useBrickyardDashboard({ brickyardId, institution }: Props) {
   return {
     brickyardName,
     isGauge,
-    setIsGauge,
+    toggleGauge,
     goToHistory,
   };
 }

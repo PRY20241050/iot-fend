@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingPage from "@/components/shared/loading-page";
-import Navbar from "@/components/shared/navbar";
+import { Navbar } from "@/components/shared/navbar";
 import { DASHBOARD_PATH } from "@/lib/utils";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
