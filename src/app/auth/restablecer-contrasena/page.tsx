@@ -1,6 +1,7 @@
 "use client";
 
 import { RestorePassword } from "@/components/auth/restore-password";
+import { LOGIN_PATH } from "@/lib/utils";
 import { redirect, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -10,7 +11,7 @@ function RestablecerContrasenaPage() {
   if (searchParams.has("token") && searchParams.has("uid")) {
     return <RestorePassword />;
   } else {
-    redirect("/auth/iniciar-sesion");
+    redirect(LOGIN_PATH);
   }
 }
 

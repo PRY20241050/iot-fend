@@ -1,6 +1,7 @@
 "use client";
 
 import { EmissionsLimitAdd } from "@/components/emissions-limit";
+import { LIMITE_EMISIONES_PATH } from "@/lib/utils";
 import { getEmissionLimitsByBrickyardId } from "@/services/emission-limits";
 import { useAuthStore } from "@/store/useAuthStore";
 import { EmissionLimits } from "@/types/emission-limits";
@@ -15,7 +16,7 @@ export default function LimiteEmisionesEditPage() {
   >();
 
   if (!/^\d+$/.test(id as string)) {
-    redirect("/limite-emisiones");
+    redirect(LIMITE_EMISIONES_PATH);
   }
 
   const { user, isBrickyard } = useAuthStore((state) => ({

@@ -7,6 +7,7 @@ import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 
 import useLoginForm from "./useLoginForm";
+import { RECUPERAR_CONTRASENA_PATH } from "@/lib/utils";
 
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLoginForm();
@@ -37,7 +38,7 @@ export default function LoginForm() {
           <TypographyMuted className="text-right pt-5">
             ¿Olvidaste tu contraseña?{" "}
             <Link
-              href="/auth/recuperar-contrasena"
+              href={RECUPERAR_CONTRASENA_PATH}
               className="font-medium decoration-1 text-black"
             >
               Recuperar contraseña

@@ -1,9 +1,6 @@
 import { useRequest } from "@/lib/api/swr";
 import { OPTIONAL_STRING } from "@/lib/utils/validators";
-import {
-  DEVICES_URL,
-  emissionLimitsByBrickyardIdUrl,
-} from "@/services/consts";
+import { DEVICES_URL, emissionLimitsByBrickyardIdUrl } from "@/services/consts";
 import { useAuthStore } from "@/store/useAuthStore";
 import { FilterStoreValues, useFilterStore } from "@/store/useFilterStore";
 import { Device } from "@/types/device";
@@ -11,6 +8,7 @@ import { EmissionLimits } from "@/types/emission-limits";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useUserTypeContext } from "../context/UserTypeContext";
 
 type FilterFormValues = FilterStoreValues;
 
@@ -46,25 +44,27 @@ const formDefaultValues: FilterFormValues = {
 };
 
 export default function useFilterForm() {
+  const { institution, brickyardId } = useUserTypeContext();
   const { getFilter, setFilter, resetFilter } = useFilterStore((state) => ({
     getFilter: state.getFilter,
     setFilter: state.setFilter,
     resetFilter: state.resetFilter,
   }));
 
-  const { user } = useAuthStore((state) => ({
+  const { user, isAuthenticated } = useAuthStore((state) => ({
     user: state.user,
+    isAuthenticated: state.isAuthenticated,
   }));
 
   // Fetch devices
   const { data: deviceData, isLoading: devicesIsLoading } = useRequest<
     Device[]
   >(
-    user?.brickyard?.id
+    isAuthenticated
       ? {
           url: DEVICES_URL,
           params: {
-            brickyard_id: user?.brickyard?.id,
+            brickyard_id: institution ? brickyardId : user?.brickyard?.id,
           },
         }
       : null
@@ -74,12 +74,14 @@ export default function useFilterForm() {
   const { data: limitsData, isLoading: limitsIsLoading } = useRequest<
     EmissionLimits[]
   >(
-    user?.brickyard?.id
+    isAuthenticated
       ? {
-          url: emissionLimitsByBrickyardIdUrl(user.brickyard.id),
+          url: emissionLimitsByBrickyardIdUrl(
+            institution ? brickyardId : user?.brickyard.id
+          ),
           params: {
+            ...(!institution && { is_public: true }),
             add_institution: true,
-            is_public: true,
             add_management: true,
           },
         }

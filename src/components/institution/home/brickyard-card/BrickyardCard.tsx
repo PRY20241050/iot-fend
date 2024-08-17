@@ -5,7 +5,6 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { Brickyard } from "@/types/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +14,8 @@ import {
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import { Brickyard } from "@/types/brickyard";
+import { dashboardBrickyardPath } from "@/lib/utils";
 
 interface Props {
   data: Brickyard;
@@ -24,8 +25,7 @@ export function BrickyardCard({ data }: Props) {
   const { push } = useRouter();
 
   const handleClick = () => {
-    console.log(`/brickyard/${data.id}/dashboard`);
-    // push(`/brickyard/${data.id}/dashboard`);
+    push(dashboardBrickyardPath(String(data.id)));
   };
 
   return (

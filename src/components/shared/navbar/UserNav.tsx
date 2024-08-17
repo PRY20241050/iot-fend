@@ -16,6 +16,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getShortUsername } from "@/lib/helpers/string";
+import {
+  DASHBOARD_PATH,
+  HISTORIAL_PATH,
+  LIMITE_EMISIONES_PATH,
+  LOGIN_PATH,
+  PERFIL_PATH,
+} from "@/lib/utils";
 import { useAuthStore } from "@/store/useAuthStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -41,7 +48,7 @@ export function UserNav() {
 
   const signOut = () => {
     logOut();
-    push("/auth/iniciar-sesion");
+    push(LOGIN_PATH);
   };
 
   console.log(user);
@@ -75,22 +82,22 @@ export function UserNav() {
             <DropdownMenuSubTrigger>Emisiones</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <Link href="/dashboard">
+                <Link href={DASHBOARD_PATH}>
                   <DropdownMenuItem>Dashboard</DropdownMenuItem>
                 </Link>
-                <Link href="/historial">
+                <Link href={HISTORIAL_PATH}>
                   <DropdownMenuItem>Historial</DropdownMenuItem>
                 </Link>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <Link href="/limite-emisiones">
+          <Link href={LIMITE_EMISIONES_PATH}>
             <DropdownMenuItem>Límite de emisiones</DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/perfil">
+          <Link href={PERFIL_PATH}>
             <DropdownMenuItem>Mi perfil</DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>

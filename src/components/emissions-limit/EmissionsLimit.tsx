@@ -7,6 +7,7 @@ import { SimpleTable } from "../shared/simple-table";
 import { columnsEmissionsLimitTable } from "./useEmissionsLimitTable";
 import { LayoutPrimary } from "../layouts";
 import useEmissionLimits from "./useEmissionLimits";
+import { CREAR_LIMITE_EMISIONES_PATH } from "@/lib/utils";
 
 export default function EmissionsLimit() {
   const { push } = useRouter();
@@ -26,7 +27,7 @@ export default function EmissionsLimit() {
         showTitle
         title="Límite de emisiones"
         btnAction={() => {
-          push("/limite-emisiones/agregar");
+          push(CREAR_LIMITE_EMISIONES_PATH);
         }}
         btnIcon={<PlusIcon className="h-4 w-4 mr-2" />}
         btnLabel="Añadir límite"

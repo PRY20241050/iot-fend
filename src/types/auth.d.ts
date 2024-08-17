@@ -32,7 +32,3 @@ export interface Institution {
   updated_at: string;
   created_at: string;
 }
-
-export interface Brickyard extends Institution {
-  ruc: string;
-}

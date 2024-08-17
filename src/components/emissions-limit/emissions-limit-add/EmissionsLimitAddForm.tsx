@@ -12,7 +12,7 @@ import useEmissionsLimitAddForm from "./useEmissionsLimitAddForm";
 import { TypographyH4, TypographyP } from "@/components/ui/typography";
 
 import s from "./EmissionsLimitAdd.module.scss";
-import { cn } from "@/lib/utils";
+import { cn, LIMITE_EMISIONES_PATH } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { EmissionLimits } from "@/types/emission-limits";
@@ -131,7 +131,7 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
           <Button
             variant="secondary"
             onClick={() => {
-              push("/limite-emisiones");
+              push(LIMITE_EMISIONES_PATH);
             }}
           >
             Volver

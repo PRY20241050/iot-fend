@@ -9,6 +9,7 @@ import {
 import { TypographyMuted } from "@/components/ui/typography";
 import Link from "next/link";
 import useRecoverPasswordForm from "./useRecoverPasswordForm";
+import { LOGIN_PATH } from "@/lib/utils";
 
 interface Props {
   submitted: (value: boolean) => void;
@@ -35,7 +36,7 @@ export default function RecoverPasswordForm({ submitted }: Props) {
           <TypographyMuted className="text-right pt-5">
             ¿Ya tienes una cuenta?{" "}
             <Link
-              href="/auth/iniciar-sesion"
+              href={LOGIN_PATH}
               className="font-medium decoration-1 text-black"
             >
               Iniciar sesión

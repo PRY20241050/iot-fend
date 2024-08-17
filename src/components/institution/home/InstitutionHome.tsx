@@ -3,8 +3,8 @@ import { LayoutPrimary } from "@/components/layouts";
 import { TypographyH1, TypographyH2 } from "@/components/ui/typography";
 import { BrickyardCard } from "./brickyard-card";
 import { useRequest } from "@/lib/api/swr";
-import { Brickyard } from "@/types/auth";
 import { BRICKYARDS_URL } from "@/services/consts";
+import { Brickyard } from "@/types/brickyard";
 
 const skeletonItems = [...Array.from({ length: 4 }, (_, i) => i)];
 

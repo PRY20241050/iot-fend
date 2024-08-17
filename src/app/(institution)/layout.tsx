@@ -2,6 +2,7 @@
 
 import LoadingPage from "@/components/shared/loading-page";
 import Navbar from "@/components/shared/navbar";
+import { DASHBOARD_PATH } from "@/lib/utils";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { push } = useRouter();
 
   if (isBrickyard) {
-    push("/dashboard");
+    push(DASHBOARD_PATH);
   }
 
   if (isInstitution) {

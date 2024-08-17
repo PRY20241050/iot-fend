@@ -14,6 +14,7 @@ import {
 } from "@/services/measurements";
 import { useEffect } from "react";
 import { useFilterStore } from "@/store/useFilterStore";
+import { DASHBOARD_PATH } from "@/lib/utils";
 
 export default function History() {
   const { user, isBrickyard } = useAuthStore((state) => ({
@@ -68,7 +69,7 @@ export default function History() {
           showTitle={isBrickyard}
           title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
           btnAction={() => {
-            push("/dashboard");
+            push(DASHBOARD_PATH);
           }}
           btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
           btnLabel="Ver graficos"

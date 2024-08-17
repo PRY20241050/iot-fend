@@ -3,9 +3,11 @@ export const EMISSION_LIMITS_URL = "/emission-limits/";
 export const emissionLimitsByIdUrl = (id: string) => {
   return `${EMISSION_LIMITS_URL}${id}/`;
 };
-export const emissionLimitsByBrickyardIdUrl = (brickyardId: number | string) => {
+export const emissionLimitsByBrickyardIdUrl = (
+  brickyardId: number | string
+) => {
   return `/brickyard/${brickyardId}${EMISSION_LIMITS_URL}`;
-}
+};
 
 // Measurements
 export const MEASUREMENTS_URL = "/measurements/";
@@ -40,4 +42,7 @@ export const MARK_MY_ALERTS_AS_READ_URL = `${MY_ALERTS_URL}mark-as-read/`;
 export const LIMIT_HISTORY_URL = "/limit-history/";
 
 // Brickyards
-export const BRICKYARDS_URL = "/brickyards/"
+export const BRICKYARDS_URL = "/brickyards/";
+export const brickyardByIdUrl = (id: string) => {
+  return `${BRICKYARDS_URL}${id}/`;
+};
