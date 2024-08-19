@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
       <main>
         <Navbar className="fixed" />
-        <div className="pt-16">{children}</div>
+        <div className="pt-[var(--navbar-height)]">{children}</div>
       </main>
     );
   }

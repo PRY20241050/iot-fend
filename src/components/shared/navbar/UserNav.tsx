@@ -78,19 +78,21 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Emisiones</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <Link href={DASHBOARD_PATH}>
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                </Link>
-                <Link href={HISTORIAL_PATH}>
-                  <DropdownMenuItem>Historial</DropdownMenuItem>
-                </Link>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
+          {isBrickyard && (
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Emisiones</DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  <Link href={DASHBOARD_PATH}>
+                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  </Link>
+                  <Link href={HISTORIAL_PATH}>
+                    <DropdownMenuItem>Historial</DropdownMenuItem>
+                  </Link>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+          )}
           <Link href={LIMITE_EMISIONES_PATH}>
             <DropdownMenuItem>Límite de emisiones</DropdownMenuItem>
           </Link>

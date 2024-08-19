@@ -32,6 +32,7 @@
 
     /* Off-set */
     --navbar-height: 4rem;
+    --navbar-height-with-subnav: 99px;
   }
 
   .dark {

@@ -26,6 +26,7 @@ export const CAMBIAR_CONTRASENA_PATH = "/perfil/cambiar-contrasena";
 export const brickyardByIdPath = (id: string) => `/ladrillera/${id}`;
 export const historialBrickyardPath = (id: string) => `/ladrillera/${id}/historial`;
 export const dashboardBrickyardPath = (id: string) => `/ladrillera/${id}/dashboard`;
+export const limiteEmisionesBrickyardPath = (id: string) => `/ladrillera/${id}/limite-emisiones`;
 
 export const LOGIN_PATH = "/auth/iniciar-sesion";
 export const RECUPERAR_CONTRASENA_PATH = "/auth/recuperar-contrasena";

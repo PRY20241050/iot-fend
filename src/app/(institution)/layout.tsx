@@ -2,9 +2,9 @@
 
 import LoadingPage from "@/components/shared/loading-page";
 import { Navbar } from "@/components/shared/navbar";
-import { DASHBOARD_PATH } from "@/lib/utils";
+import { cn, DASHBOARD_PATH } from "@/lib/utils";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { isBrickyard, isInstitution } = useAuthStore((state) => ({
@@ -13,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }));
 
   const { push } = useRouter();
+  const { id } = useParams();
 
   if (isBrickyard) {
     push(DASHBOARD_PATH);
@@ -22,7 +23,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
       <main>
         <Navbar className="fixed" />
-        <div className="pt-16">{children}</div>
+        <div
+          className={cn("pt-[var(--navbar-height)]", {
+            "pt-[var(--navbar-height-with-subnav)]": id,
+          })}
+        >
+          {children}
+        </div>
       </main>
     );
   }
