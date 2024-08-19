@@ -55,6 +55,8 @@ export default function SimpleTable<TData>({
     getFilteredRowModel: getFilteredRowModel(),
   });
 
+  const hasResults = table.getRowModel().rows?.length > 0;
+
   return (
     <div className={cn("pb-4", className)}>
       <Card className="rounded-md border">
@@ -89,7 +91,7 @@ export default function SimpleTable<TData>({
               </TableRow>
             ) : (
               <>
-                {table.getRowModel().rows?.length ? (
+                {hasResults ? (
                   table.getRowModel().rows.map((row: any) => (
                     <TableRow
                       key={row.id}
@@ -123,6 +125,7 @@ export default function SimpleTable<TData>({
       </Card>
       <SimpleTablePagination
         page={page}
+        hidePages={!hasResults}
         paginationInfo={paginationInfo}
         fetchNextPage={fetchNextPage}
         fetchPrevPage={fetchPrevPage}

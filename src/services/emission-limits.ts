@@ -1,11 +1,28 @@
 import { destroy, fetcher, post } from "@/lib/api/api";
-import { PaginationResponse } from "@/types/models";
 import {
   EMISSION_LIMITS_URL,
   emissionLimitsByBrickyardIdUrl,
   emissionLimitsByIdUrl,
+  emissionLimitsByInstitutionIdUrl,
 } from "./consts";
 import { CreateEmissionLimit, EmissionLimits } from "@/types/emission-limits";
+
+export type GetEmissionLimitsParams = {
+  id?: number;
+  brickyard_id?: number;
+  institution_id?: number;
+  is_public?: boolean;
+  is_default?: boolean;
+};
+
+export const getEmissionLimits = async <T = EmissionLimits[]>(
+  params?: GetEmissionLimitsParams
+) => {
+  return await fetcher<T>({
+    url: EMISSION_LIMITS_URL,
+    params,
+  });
+};
 
 export const createEmissionLimit = async (data: CreateEmissionLimit) => {
   return await post<EmissionLimits>({
@@ -20,32 +37,32 @@ export const deleteEmissionLimit = async (id: number) => {
   });
 };
 
-export type GetEmissionLimitsParams = {
+// Get emission limits by brickyard id or institution id
+
+export type GetEmissionLimitsByBoIParams = {
   brickyard_id?: number;
+  brickyard_ids?: number[];
+  institution_id?: number;
   add_institution?: boolean;
+  add_brickyard?: boolean;
   add_management?: boolean;
   is_public?: boolean;
   paginated?: boolean;
 };
 
-export const getEmissionLimitsByBrickyardIdPaginated = async (
-  params: GetEmissionLimitsParams
-) => {
-  const { brickyard_id, ...otherParams } = params;
+export const getEmissionLimitsByBoIId = async <T = EmissionLimits[]>(
+  params: GetEmissionLimitsByBoIParams
+): Promise<T> => {
+  const { brickyard_id, institution_id, ...otherParams } = params;
 
-  return await fetcher<PaginationResponse<EmissionLimits>>({
-    url: brickyard_id ? emissionLimitsByBrickyardIdUrl(brickyard_id) : "",
-    params: otherParams,
-  });
-};
+  const urlBoI = () => {
+    if (brickyard_id) return emissionLimitsByBrickyardIdUrl(brickyard_id);
+    if (institution_id) return emissionLimitsByInstitutionIdUrl(institution_id);
+    return "";
+  };
 
-export const getEmissionLimitsByBrickyardId = async (
-  params: GetEmissionLimitsParams
-) => {
-  const { brickyard_id, ...otherParams } = params;
-
-  return await fetcher<EmissionLimits[]>({
-    url: brickyard_id ? emissionLimitsByBrickyardIdUrl(brickyard_id) : "",
+  return await fetcher<T>({
+    url: urlBoI(),
     params: otherParams,
   });
 };

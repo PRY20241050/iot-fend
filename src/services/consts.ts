@@ -8,6 +8,11 @@ export const emissionLimitsByBrickyardIdUrl = (
 ) => {
   return `/brickyard/${brickyardId}${EMISSION_LIMITS_URL}`;
 };
+export const emissionLimitsByInstitutionIdUrl = (
+  institutionId: number | string
+) => {
+  return `/institution/${institutionId}${EMISSION_LIMITS_URL}`;
+};
 
 // Measurements
 export const MEASUREMENTS_URL = "/measurements/";

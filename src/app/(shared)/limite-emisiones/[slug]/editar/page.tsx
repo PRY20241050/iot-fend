@@ -2,7 +2,7 @@
 
 import { EmissionsLimitAdd } from "@/components/emissions-limit";
 import { LIMITE_EMISIONES_PATH } from "@/lib/utils";
-import { getEmissionLimitsByBrickyardId } from "@/services/emission-limits";
+import { getEmissionLimits } from "@/services/emission-limits";
 import { useAuthStore } from "@/store/useAuthStore";
 import { EmissionLimits } from "@/types/emission-limits";
 import { redirect, useParams } from "next/navigation";
@@ -19,9 +19,10 @@ export default function LimiteEmisionesEditPage() {
     redirect(LIMITE_EMISIONES_PATH);
   }
 
-  const { user, isBrickyard } = useAuthStore((state) => ({
+  const { user, isBrickyard, isInstitution } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
+    isInstitution: state.isInstitution,
   }));
 
   useEffect(() => {
@@ -29,21 +30,23 @@ export default function LimiteEmisionesEditPage() {
       return;
     }
 
-    if (isBrickyard) {
-      getEmissionLimitsByBrickyardId({
+    getEmissionLimits({
+      ...(isBrickyard && {
         brickyard_id: user.brickyard?.id,
+      }),
+      ...(isInstitution && {
+        institution_id: user.institution?.id,
+      }),
+      id: Number(slug),
+    })
+      .then((res) => {
+        if (res.length === 0) redirect(LIMITE_EMISIONES_PATH);
+        setEmissionLimit(res[0]);
       })
-        .then((res) => {
-          setEmissionLimit((prev) =>
-            res.find((limit) => limit.id === Number(slug))
-          );
-        })
-        .catch(() => {
-          console.error("Error fetching emission limit");
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isBrickyard, slug]);
+      .catch(() => {
+        console.error("Error fetching emission limit");
+      });
+  }, [user, isBrickyard, slug, isInstitution]);
 
   return <EmissionsLimitAdd initialData={emissionLimit} />;
 }
