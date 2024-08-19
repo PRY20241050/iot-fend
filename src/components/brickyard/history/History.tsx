@@ -1,9 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import { Filter, Header, SimpleTable } from "@/components/shared";
-import { useRouter } from "next/navigation";
-import { BarChartIcon } from "@radix-ui/react-icons";
+import { Filter, SimpleTable } from "@/components/shared";
 import { columnsHistoryTable } from "./useHistoryTable";
 import { LayoutPrimary } from "@/components/layouts";
 import { usePaginationFetchData } from "@/hooks/usePaginationFetchData";
@@ -14,8 +12,7 @@ import {
 } from "@/services/measurements";
 import { useEffect } from "react";
 import { useFilterStore } from "@/store/useFilterStore";
-import { DASHBOARD_PATH } from "@/lib/utils";
-import { UserTypeContext } from "@/components/shared/context";
+import { GaugeContext, UserTypeContext } from "@/components/shared/context";
 
 interface Props {
   brickyardId?: string;
@@ -38,8 +35,6 @@ export default function History({ brickyardId, institution = false }: Props) {
       emissionLimit: state.emissionLimit,
     }));
 
-  const { push } = useRouter();
-
   const { items, paginationInfo, isLoading, page, fetchData, updateParams } =
     usePaginationFetchData<
       GetMeasurementsWithDeviceParams,
@@ -48,7 +43,7 @@ export default function History({ brickyardId, institution = false }: Props) {
 
   useEffect(() => {
     updateParams({
-      brickyardsIds: user?.brickyard && [user?.brickyard?.id],
+      brickyardsIds: isBrickyard ? [user?.brickyard?.id] : [brickyardId],
       dateFrom: dateFrom as Date,
       dateTo: dateTo as Date,
       device,
@@ -70,32 +65,25 @@ export default function History({ brickyardId, institution = false }: Props) {
 
   return (
     <UserTypeContext.Provider value={{ brickyardId, institution }}>
-      <LayoutPrimary className="flex gap-6">
-        <div className="flex-grow">
-          <Header
-            showTitle={isBrickyard}
-            title={`Ladrillera ${user?.brickyard?.name ?? "Sin nombre"}`}
-            btnAction={() => {
-              push(DASHBOARD_PATH);
-            }}
-            btnIcon={<BarChartIcon className="h-4 w-4 mr-2" />}
-            btnLabel="Ver graficos"
-          />
-          <SimpleTable
-            data={items}
-            isLoading={isLoading}
-            columns={columnsHistoryTable}
-            page={page}
-            paginationInfo={paginationInfo}
-            fetchNextPage={fetchNextPage}
-            fetchPrevPage={fetchPrevPage}
-            // tableRowClass={cn({
-            //   "bg-status-danger/10": !isLoading && emissionLimit,
-            // })}
-          />
-        </div>
-        <Filter />
-      </LayoutPrimary>
+      <GaugeContext.Provider value={{ isGauge: false }}>
+        <LayoutPrimary className="flex gap-6">
+          <div className="flex-grow">
+            <SimpleTable
+              data={items}
+              isLoading={isLoading}
+              columns={columnsHistoryTable}
+              page={page}
+              paginationInfo={paginationInfo}
+              fetchNextPage={fetchNextPage}
+              fetchPrevPage={fetchPrevPage}
+              // tableRowClass={cn({
+              //   "bg-status-danger/10": !isLoading && emissionLimit,
+              // })}
+            />
+          </div>
+          <Filter />
+        </LayoutPrimary>
+      </GaugeContext.Provider>
     </UserTypeContext.Provider>
   );
 }

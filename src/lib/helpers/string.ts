@@ -9,3 +9,8 @@ export function indexToLetter(index: number): string {
 export function booleanToYesNo(value: boolean): string {
   return value ? "Sí" : "No";
 }
+
+export function stringToBoolean(value: string | null): boolean {
+  if (value === null) return false;
+  return value.toLowerCase() === "true";
+}

@@ -40,6 +40,7 @@ export default function EmissionsLimit() {
         paginationInfo={paginationInfo}
         fetchNextPage={fetchNextPage}
         fetchPrevPage={fetchPrevPage}
+        className="my-4"
       />
     </LayoutPrimary>
   );

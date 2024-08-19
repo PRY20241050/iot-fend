@@ -9,13 +9,13 @@ import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function LimiteEmisionesEditPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
 
   const [emissionLimit, setEmissionLimit] = useState<
     EmissionLimits | undefined
   >();
 
-  if (!/^\d+$/.test(id as string)) {
+  if (!/^\d+$/.test(slug as string)) {
     redirect(LIMITE_EMISIONES_PATH);
   }
 
@@ -35,7 +35,7 @@ export default function LimiteEmisionesEditPage() {
       })
         .then((res) => {
           setEmissionLimit((prev) =>
-            res.find((limit) => limit.id === Number(id))
+            res.find((limit) => limit.id === Number(slug))
           );
         })
         .catch(() => {
@@ -43,7 +43,7 @@ export default function LimiteEmisionesEditPage() {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isBrickyard, id]);
+  }, [user, isBrickyard, slug]);
 
   return <EmissionsLimitAdd initialData={emissionLimit} />;
 }

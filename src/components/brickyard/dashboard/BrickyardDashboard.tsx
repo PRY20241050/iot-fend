@@ -3,7 +3,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { Filter, Header } from "@/components/shared";
 import { BarChartIcon, PieChartIcon } from "@radix-ui/react-icons";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LayoutPrimary } from "@/components/layouts";
 import { useState } from "react";
 import { ChartCards } from "./chart-cards";
@@ -13,6 +13,7 @@ import { useRequest } from "@/lib/api/swr";
 import { brickyardByIdUrl } from "@/services/consts";
 import { Brickyard } from "@/types/brickyard";
 import { GaugeContext, UserTypeContext } from "@/components/shared/context";
+import { stringToBoolean } from "@/lib/helpers/string";
 
 interface Props {
   brickyardId?: string;
@@ -58,7 +59,10 @@ export default function BrickyardDashboard({
 }
 
 function useBrickyardDashboard({ brickyardId, institution }: Props) {
-  const [isGauge, setIsGauge] = useState(true);
+  const params = useSearchParams();
+  const [isGauge, setIsGauge] = useState(
+    stringToBoolean(params.get("gauge") ?? "true")
+  );
 
   const { user } = useAuthStore((state) => ({
     user: state.user,

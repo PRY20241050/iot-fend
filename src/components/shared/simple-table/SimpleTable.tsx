@@ -21,6 +21,7 @@ import {
 import { Card } from "@/components/ui/card";
 import SimpleTablePagination from "./SimpleTablePagination";
 import Loader from "@/components/ui/loader";
+import { cn } from "@/lib/utils";
 
 interface Props<TData> {
   columns: ColumnDef<TData>[];
@@ -31,6 +32,7 @@ interface Props<TData> {
   fetchNextPage?: () => void;
   fetchPrevPage?: () => void;
   tableRowClass?: string;
+  className?: string;
 }
 
 export default function SimpleTable<TData>({
@@ -42,6 +44,7 @@ export default function SimpleTable<TData>({
   fetchNextPage,
   fetchPrevPage,
   tableRowClass,
+  className,
 }: Props<TData>) {
   const table = useReactTable({
     data: data,
@@ -53,7 +56,7 @@ export default function SimpleTable<TData>({
   });
 
   return (
-    <div className="py-4">
+    <div className={cn("pb-4", className)}>
       <Card className="rounded-md border">
         <Table>
           <TableHeader>

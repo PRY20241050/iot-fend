@@ -15,11 +15,12 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { GASES, SCALES } from "@/mocks/filter";
 import { useGaugeContext } from "../context/GaugeContext";
+import { HISTORIAL_PATH } from "@/lib/utils";
 
 export default function FilterForm() {
   const { isGauge } = useGaugeContext();
   const pathname = usePathname();
-  const isHistory = pathname === "/historial";
+  const isHistory = pathname.includes(HISTORIAL_PATH);
 
   const {
     form,
