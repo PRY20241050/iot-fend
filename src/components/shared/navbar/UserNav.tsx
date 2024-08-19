@@ -8,11 +8,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getShortUsername } from "@/lib/helpers/string";
@@ -78,16 +74,18 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {isBrickyard && (
-          <DropdownMenuGroup>
-            <Link href={DASHBOARD_PATH}>
-              <DropdownMenuItem>Dashboard</DropdownMenuItem>
-            </Link>
-            <Link href={HISTORIAL_PATH}>
-              <DropdownMenuItem>Historial de emisiones</DropdownMenuItem>
-            </Link>
-          </DropdownMenuGroup>
+          <>
+            <DropdownMenuGroup>
+              <Link href={DASHBOARD_PATH}>
+                <DropdownMenuItem>Dashboard</DropdownMenuItem>
+              </Link>
+              <Link href={HISTORIAL_PATH}>
+                <DropdownMenuItem>Historial de emisiones</DropdownMenuItem>
+              </Link>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+          </>
         )}
-        <DropdownMenuSeparator />
         <Link href={LIMITE_EMISIONES_PATH}>
           <DropdownMenuItem>Límite de emisiones</DropdownMenuItem>
         </Link>
