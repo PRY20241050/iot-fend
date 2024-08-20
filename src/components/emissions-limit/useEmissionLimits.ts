@@ -6,9 +6,13 @@ import {
 import { useAuthStore } from "@/store/useAuthStore";
 import { EmissionLimits } from "@/types/emission-limits";
 import { PaginationResponse } from "@/types/models";
+import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
+
 export default function useEmissionLimits() {
+  const { id } = useParams();
+
   const { user, isBrickyard, isInstitution } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
@@ -23,10 +27,10 @@ export default function useEmissionLimits() {
 
   useEffect(() => {
     updateParams({
-      ...(isBrickyard && {
-        brickyard_id: user?.brickyard?.id,
+      ...((isBrickyard || id) && {
+        brickyard_id: id || user?.brickyard?.id,
       }),
-      ...(isInstitution && {
+      ...((isInstitution && !id) && {
         institution_id: user?.institution?.id,
       }),
       paginated: true,

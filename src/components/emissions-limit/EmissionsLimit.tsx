@@ -2,7 +2,7 @@
 
 import { PlusIcon } from "@radix-ui/react-icons";
 import Header from "../shared/Header";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { SimpleTable } from "../shared/simple-table";
 import { columnsEmissionsLimitTable } from "./useEmissionsLimitTable";
 import { LayoutPrimary } from "../layouts";
@@ -11,6 +11,7 @@ import { CREAR_LIMITE_EMISIONES_PATH } from "@/lib/utils";
 
 export default function EmissionsLimit() {
   const { push } = useRouter();
+  const { id } = useParams();
 
   const {
     items,
@@ -21,11 +22,16 @@ export default function EmissionsLimit() {
     fetchPrevPage,
   } = useEmissionLimits();
 
+  const columns = id
+    ? columnsEmissionsLimitTable.slice(0, -1)
+    : columnsEmissionsLimitTable;
+
   return (
     <LayoutPrimary>
       <Header
         showTitle
         title="Límite de emisiones"
+        hideBtn={!!id}
         btnAction={() => {
           push(CREAR_LIMITE_EMISIONES_PATH);
         }}
@@ -35,7 +41,7 @@ export default function EmissionsLimit() {
       <SimpleTable
         data={items}
         isLoading={isLoading}
-        columns={columnsEmissionsLimitTable}
+        columns={columns}
         page={page}
         paginationInfo={paginationInfo}
         fetchNextPage={fetchNextPage}

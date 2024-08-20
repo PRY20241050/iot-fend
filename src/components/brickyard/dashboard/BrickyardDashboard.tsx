@@ -8,7 +8,6 @@ import { LayoutPrimary } from "@/components/layouts";
 import { useMemo, useState } from "react";
 import { ChartCards } from "./chart-cards";
 import { GaugeCards } from "./gauge-cards";
-import { GaugeLegend } from "./gauge-cards/GaugeCard";
 import { useRequest } from "@/lib/api/swr";
 import { brickyardByIdUrl } from "@/services/consts";
 import { Brickyard } from "@/types/brickyard";

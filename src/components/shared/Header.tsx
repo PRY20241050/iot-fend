@@ -4,7 +4,8 @@ import { Button } from "../ui/button";
 interface Props {
   showTitle?: boolean;
   title?: string;
-  btnAction: () => void;
+  hideBtn?: boolean
+  btnAction?: () => void;
   btnIcon?: JSX.Element;
   btnLabel?: string;
   children?: React.ReactNode;
@@ -13,6 +14,7 @@ interface Props {
 export default function Header({
   showTitle = true,
   title = "",
+  hideBtn = false,
   btnAction,
   btnIcon,
   btnLabel = "",
@@ -26,7 +28,7 @@ export default function Header({
         </TypographyH1>
       )}
       <div className="flex gap-2">
-        {btnAction && (
+        {!hideBtn && (
           <Button onClick={btnAction} className="phone-xl:ml-auto">
             {btnIcon}
             {btnLabel}
