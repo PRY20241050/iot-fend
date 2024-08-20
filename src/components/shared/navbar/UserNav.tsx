@@ -47,7 +47,8 @@ export function UserNav() {
     push(LOGIN_PATH);
   };
 
-  console.log(user);
+  // TODO: delete console.log
+  // console.log(user);
 
   return (
     <DropdownMenu>

@@ -8,7 +8,6 @@ export interface AuthStateValues {
   isAuthenticated: boolean;
   isBrickyard: boolean;
   isInstitution: boolean;
-  userType: "brickyard" | "institution" | null;
 }
 
 export interface AuthStateActions {
@@ -26,7 +25,6 @@ export const authSelector = (state: AuthState): Pick<AuthState, "user"> => ({
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
-  userType: null,
   isInstitution: false,
   isBrickyard: false,
   isAuthenticated: false,
@@ -36,12 +34,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       isAuthenticated: true,
       isBrickyard: user.brickyard !== null,
       isInstitution: user.institution !== null,
-      userType:
-        user.brickyard !== null
-          ? "brickyard"
-          : user.institution !== null
-          ? "institution"
-          : null,
     }),
   /**
    * Verifies if the user is authenticated by checking if the access token is valid
@@ -79,7 +71,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   resetState: () =>
     set({
       isAuthenticated: false,
-      userType: null,
       isBrickyard: false,
       isInstitution: false,
       user: null,

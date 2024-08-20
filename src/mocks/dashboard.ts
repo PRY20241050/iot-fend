@@ -1,4 +1,4 @@
-import { Chart, ChartData, ChartDetail, Gauge } from "@/types/dashboard";
+import { Chart, ChartData, Gauge } from "@/types/dashboard";
 
 export const chartData: ChartData[] = [
   {
@@ -81,57 +81,129 @@ export const chartData: ChartData[] = [
   },
 ];
 
-export const chartDetail: ChartDetail[] = [
-  {
-    id: 1,
-    title: "Mínimo",
-    description: "Concentración (mg/m3)",
-    value: 20.1,
-  },
-  {
-    id: 2,
-    title: "Máximo",
-    description: "Concentración (mg/m3)",
-    value: 120.1,
-  },
-  {
-    id: 3,
-    title: "Promedio",
-    description: "Concentración (mg/m3)",
-    value: 100.1,
-  },
-];
-
 export const charts: Chart[] = [
   {
     id: 1,
+    gas_type: 1,
     title: "Sensor CO",
     data: [...chartData],
-    details: chartDetail,
+    details: {
+      min: 20.1,
+      max: 120.1,
+      avg: 100.1,
+    },
+    max_limit: undefined,
   },
   {
     id: 2,
+    gas_type: 2,
     title: "Sensor NO2",
     data: [...chartData],
-    details: chartDetail,
+    details: {
+      min: 20.1,
+      max: 120.1,
+      avg: 100.1,
+    },
+    max_limit: undefined,
   },
   {
     id: 3,
+    gas_type: 3,
     title: "Sensor SO2",
     data: [...chartData],
-    details: chartDetail,
+    details: {
+      min: 20.1,
+      max: 120.1,
+      avg: 100.1,
+    },
+    max_limit: undefined,
   },
   {
     id: 4,
+    gas_type: 4,
     title: "Sensor PM2.5",
     data: [...chartData],
-    details: chartDetail,
+    details: {
+      min: 20.1,
+      max: 120.1,
+      avg: 100.1,
+    },
+    max_limit: undefined,
   },
   {
     id: 5,
+    gas_type: 5,
     title: "Sensor PM10",
     data: [...chartData],
-    details: chartDetail,
+    details: {
+      min: 20.1,
+      max: 120.1,
+      avg: 100.1,
+    },
+    max_limit: undefined,
+  },
+];
+
+export const initChart: Chart[] = [
+  {
+    id: 1,
+    gas_type: 1,
+    title: "Sensor CO",
+    data: [...chartData],
+    details: {
+      min: null,
+      max: null,
+      avg: null,
+    },
+    max_limit: undefined,
+  },
+  {
+    id: 2,
+    gas_type: 2,
+    title: "Sensor NO2",
+    data: [...chartData],
+    details: {
+      min: null,
+      max: null,
+      avg: null,
+    },
+    max_limit: undefined,
+  },
+  {
+    id: 3,
+    gas_type: 3,
+    title: "Sensor SO2",
+    data: [...chartData],
+    details: {
+      min: null,
+      max: null,
+      avg: null,
+    },
+    max_limit: undefined,
+  },
+  {
+    id: 4,
+    gas_type: 4,
+    title: "Sensor PM2.5",
+    data: [...chartData],
+    details: {
+      min: null,
+      max: null,
+      avg: null,
+    },
+    max_limit: undefined,
+  },
+  {
+    id: 5,
+    gas_type: 5,
+    title: "Sensor PM10",
+    data: [...chartData],
+    details: {
+      min: null,
+      max: null,
+      avg: null,
+    },
+    max_limit: undefined,
   },
 ];
 

@@ -1,11 +1,11 @@
 import { memo } from "react";
 import { GaugeCard } from "./GaugeCard";
-import useGaugeCard from "./useGaugeCard";
+import useGaugeCards from "./useGaugeCards";
 
 const skeletonItems = [...Array.from({ length: 4 }, (_, i) => i)];
 
 const GaugeCardsComponent = () => {
-  const { limitIsLoading, gauges } = useGaugeCard();
+  const { limitIsLoading, gauges } = useGaugeCards();
 
   return (
     <>

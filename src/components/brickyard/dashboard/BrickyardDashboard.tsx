@@ -5,7 +5,7 @@ import { Filter, Header } from "@/components/shared";
 import { BarChartIcon, PieChartIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LayoutPrimary } from "@/components/layouts";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChartCards } from "./chart-cards";
 import { GaugeCards } from "./gauge-cards";
 import { GaugeLegend } from "./gauge-cards/GaugeCard";
@@ -29,9 +29,15 @@ export default function BrickyardDashboard({
     institution,
   });
 
+  const userTypeValue = useMemo(
+    () => ({ brickyardId, institution }),
+    [brickyardId, institution]
+  );
+  const gaugeValue = useMemo(() => ({ isGauge }), [isGauge]);
+
   return (
-    <UserTypeContext.Provider value={{ brickyardId, institution }}>
-      <GaugeContext.Provider value={{ isGauge }}>
+    <UserTypeContext.Provider value={userTypeValue}>
+      <GaugeContext.Provider value={gaugeValue}>
         <LayoutPrimary className="tablet-lg:flex tablet-lg:gap-6">
           <div className="flex-grow">
             <Header

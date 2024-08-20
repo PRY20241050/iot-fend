@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { gauges as initialGauges } from "@/mocks/dashboard";
 import { GAUGE_REVALIDATION_INTERVAL } from "@/lib/utils";
 
-export default function useGaugeCard() {
+export default function useGaugeCards() {
   const [gauges, setGauges] = useState(initialGauges);
 
   const { device, emissionLimit } = useFilterStore((state) => ({

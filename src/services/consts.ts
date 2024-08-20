@@ -16,7 +16,7 @@ export const emissionLimitsByInstitutionIdUrl = (
 
 // Measurements
 export const MEASUREMENTS_URL = "/measurements/";
-export const MEASUREMENTS_PAGINATED_URL = "/measurements/paginated/";
+export const MEASUREMENTS_HISTORY_URL = "/measurements/history/";
 
 // Devices
 export const DEVICES_URL = "/devices/";

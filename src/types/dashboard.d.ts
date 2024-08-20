@@ -2,28 +2,32 @@ import { LimitHistory } from "./limit-history";
 
 export interface Chart {
   id: number;
+  gas_type: number;
   title: string;
-  data: ChartData[];
-  details: ChartDetail[];
-}
-
-export interface ChartDetail {
-  id: number;
-  title: string;
-  description: string;
-  value: number;
+  data?: ChartData[];
+  details?: {
+    min?: number | null;
+    max?: number | null;
+    avg?: number | null;
+  };
+  max_limit?: ChartMaxLimit;
 }
 
 export interface ChartData {
   name: string;
-  uv: number;
-  pv: number;
-  amt: number;
+  [key: string]: number | string;
+}
+
+export interface ChartMaxLimit {
+  value?: number;
+  name?: string;
 }
 
 export interface Gauge {
   id: number;
   title: string;
-  limit: Pick<LimitHistory, "max_limit" | "gas_type"> & { is_default?: boolean };
+  limit: Pick<LimitHistory, "max_limit" | "gas_type"> & {
+    is_default?: boolean;
+  };
   value: number;
 }

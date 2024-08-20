@@ -62,28 +62,24 @@ export default function FilterForm() {
               />
             </>
           )}
-          {(isGauge || isHistory) && (
-            <>
-              <FormSelect
-                form={form}
-                name="device"
-                label="Por dispositivo"
-                placeholder="Seleccionar dispositivo"
-                selectLabel="Dispositivos"
-                options={devices}
-                disabled={devicesIsLoading}
-              />
-              <FormSelect
-                form={form}
-                name="emissionLimit"
-                label="Comparar con límite de emisión"
-                placeholder="Seleccionar límite de emisión"
-                selectLabel="Límites de emisión"
-                options={emissionLimits}
-                disabled={limitsIsLoading}
-              />
-            </>
-          )}
+          <FormSelect
+            form={form}
+            name="device"
+            label="Por dispositivo"
+            placeholder="Seleccionar dispositivo"
+            selectLabel="Dispositivos"
+            options={devices}
+            disabled={devicesIsLoading}
+          />
+          <FormSelect
+            form={form}
+            name="emissionLimit"
+            label="Comparar con límite de emisión"
+            placeholder="Seleccionar límite de emisión"
+            selectLabel="Límites de emisión"
+            options={emissionLimits}
+            disabled={limitsIsLoading}
+          />
           {!isGauge && (
             <FormField
               control={form.control}
