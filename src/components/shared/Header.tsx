@@ -26,11 +26,13 @@ export default function Header({
         </TypographyH1>
       )}
       <div className="flex gap-2">
+        {btnAction && (
+          <Button onClick={btnAction} className="phone-xl:ml-auto">
+            {btnIcon}
+            {btnLabel}
+          </Button>
+        )}
         {children}
-        <Button onClick={btnAction} className="phone-xl:ml-auto">
-          {btnIcon}
-          {btnLabel}
-        </Button>
       </div>
     </div>
   );

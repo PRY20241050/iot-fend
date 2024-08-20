@@ -52,10 +52,7 @@ export default function BrickyardDashboard({
               }
               btnLabel={isGauge ? "Ver histograma" : "Ver medidores"}
             />
-            {isGauge && <GaugeLegend />}
-            <div className="grid phone-xl:grid-cols-2 gap-6 my-4">
-              {isGauge ? <GaugeCards /> : <ChartCards />}
-            </div>
+            {isGauge ? <GaugeCards /> : <ChartCards />}
           </div>
           <Filter />
         </LayoutPrimary>

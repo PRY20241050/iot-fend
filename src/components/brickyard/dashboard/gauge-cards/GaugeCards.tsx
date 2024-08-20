@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { GaugeCard } from "./GaugeCard";
+import { GaugeCard, GaugeLegend } from "./GaugeCard";
 import useGaugeCards from "./useGaugeCards";
 
 const skeletonItems = [...Array.from({ length: 4 }, (_, i) => i)];
@@ -9,11 +9,14 @@ const GaugeCardsComponent = () => {
 
   return (
     <>
-      {limitIsLoading
-        ? skeletonItems.map((_, index) => <GaugeCard.Sk key={index} />)
-        : gauges.map((gauge, index) => (
-            <GaugeCard key={gauge.id} index={index} {...gauge} />
-          ))}
+      <GaugeLegend />
+      <div className="grid phone-xl:grid-cols-2 gap-6 my-4">
+        {limitIsLoading
+          ? skeletonItems.map((_, index) => <GaugeCard.Sk key={index} />)
+          : gauges.map((gauge, index) => (
+              <GaugeCard key={gauge.id} index={index} {...gauge} />
+            ))}
+      </div>
     </>
   );
 };
