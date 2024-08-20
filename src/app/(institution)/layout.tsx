@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }));
 
   const { push } = useRouter();
-  const { id } = useParams();
+  const { brickyardId } = useParams();
 
   if (isBrickyard) {
     push(DASHBOARD_PATH);
@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Navbar className="fixed" />
         <div
           className={cn("pt-[var(--navbar-height)]", {
-            "pt-[var(--navbar-height-with-subnav)]": id,
+            "pt-[var(--navbar-height-with-subnav)]": brickyardId,
           })}
         >
           {children}

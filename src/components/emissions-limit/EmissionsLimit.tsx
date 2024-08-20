@@ -11,7 +11,7 @@ import { CREAR_LIMITE_EMISIONES_PATH } from "@/lib/utils";
 
 export default function EmissionsLimit() {
   const { push } = useRouter();
-  const { id } = useParams();
+  const { brickyardId } = useParams();
 
   const {
     items,
@@ -22,7 +22,7 @@ export default function EmissionsLimit() {
     fetchPrevPage,
   } = useEmissionLimits();
 
-  const columns = id
+  const columns = brickyardId
     ? columnsEmissionsLimitTable.slice(0, -1)
     : columnsEmissionsLimitTable;
 
@@ -31,7 +31,7 @@ export default function EmissionsLimit() {
       <Header
         showTitle
         title="Límite de emisiones"
-        hideBtn={!!id}
+        hideBtn={!!brickyardId}
         btnAction={() => {
           push(CREAR_LIMITE_EMISIONES_PATH);
         }}

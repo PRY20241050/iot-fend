@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function Navbar({ className }: Props) {
-  const { id } = useParams();
+  const { brickyardId } = useParams();
 
   const [scrolled, setScrolled] = useState<boolean>(false);
 
@@ -47,7 +47,7 @@ export default function Navbar({ className }: Props) {
             <UserNav />
           </div>
         </div>
-        {id && <SubNavbar className={cn({"mt-2" :scrolled})} />}
+        {brickyardId && <SubNavbar className={cn({"mt-2" :scrolled})} />}
       </div>
     </div>
   );

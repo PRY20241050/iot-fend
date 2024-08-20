@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 
 export default function useEmissionLimits() {
-  const { id } = useParams();
+  const { brickyardId } = useParams();
 
   const { user, isBrickyard, isInstitution } = useAuthStore((state) => ({
     user: state.user,
@@ -27,10 +27,10 @@ export default function useEmissionLimits() {
 
   useEffect(() => {
     updateParams({
-      ...((isBrickyard || id) && {
-        brickyard_id: id || user?.brickyard?.id,
+      ...((isBrickyard || brickyardId) && {
+        brickyard_id: brickyardId || user?.brickyard?.id,
       }),
-      ...((isInstitution && !id) && {
+      ...((isInstitution && !brickyardId) && {
         institution_id: user?.institution?.id,
       }),
       paginated: true,

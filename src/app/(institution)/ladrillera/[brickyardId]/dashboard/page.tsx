@@ -1,9 +1,9 @@
 import { BrickyardDashboard } from "@/components/brickyard/dashboard";
 
 interface Props {
-  params: { id?: string };
+  params: { brickyardId?: string };
 }
 
 export default function LadrilleraDashboardPage({ params }: Props) {
-  return <BrickyardDashboard brickyardId={params.id} institution />;
+  return <BrickyardDashboard brickyardId={params.brickyardId} institution />;
 }

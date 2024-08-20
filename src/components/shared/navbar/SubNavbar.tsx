@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,16 +17,15 @@ interface Props {
 }
 
 export default function SubNavbar({ className }: Props) {
-  const { back } = useRouter();
   const pathname = usePathname();
-  const { id } = useParams();
+  const { brickyardId } = useParams();
 
   return (
     <div className={cn("w-full", className)}>
       <div className="flex items-center mx-auto">
         <NavigationMenu>
           <NavigationMenuList className="space-x-0">
-            {getSubNavbarItems(String(id)).map((item) => (
+            {getSubNavbarItems(String(brickyardId)).map((item) => (
               <NavigationMenuItem
                 key={item.id}
                 className={cn({

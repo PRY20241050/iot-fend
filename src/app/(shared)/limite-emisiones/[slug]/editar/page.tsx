@@ -26,9 +26,7 @@ export default function LimiteEmisionesEditPage() {
   }));
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
+    if (!user) return;
 
     getEmissionLimits({
       ...(isBrickyard && {
