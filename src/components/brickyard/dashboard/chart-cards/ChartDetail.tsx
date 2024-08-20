@@ -26,7 +26,7 @@ export function DetailChart({
       )}
     >
       <CardTitle className="mb-1">{title}</CardTitle>
-      <TypographyH3>{value}</TypographyH3>
+      <TypographyH3>{value ?? "-"}</TypographyH3>
       <CardDescription className="text-xs">{description}</CardDescription>
     </Card>
   );
