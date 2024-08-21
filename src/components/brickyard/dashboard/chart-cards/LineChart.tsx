@@ -19,14 +19,14 @@ interface Props {
 const FONT_SIZE = 12;
 
 export function LineChart({ data, maxLimit }: Props) {
-  const keys = Object.keys(data?.[0] || {}).filter((key) => key !== "name");
+  const keys = Object.keys(data?.[0] || {}).filter((key) => key !== "date");
 
   return (
     <ResponsiveContainer width="100%" height={250}>
       <Chart width={500} height={300} data={data}>
         <CartesianGrid strokeDasharray="4 4" />
         <XAxis
-          dataKey="name"
+          dataKey="date"
           label={{
             value: "Tiempo",
             position: "insideBottomRight",
@@ -47,7 +47,12 @@ export function LineChart({ data, maxLimit }: Props) {
             position: "insideLeft",
             style: { fontSize: FONT_SIZE },
           }}
-          domain={[0, "dataMax + 1000"]}
+          domain={[
+            0,
+            maxLimit?.value
+              ? maxLimit?.value + maxLimit?.value * 0.3
+              : "dataMax + 1",
+          ]}
           minTickGap={0}
           tickLine={false}
           tick={{ fontSize: FONT_SIZE }}

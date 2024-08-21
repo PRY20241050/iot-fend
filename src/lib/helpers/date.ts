@@ -64,3 +64,39 @@ export function formatDateBackward(
     locale: es,
   });
 }
+
+interface FormatDateToTimeforChartProps {
+  date: Date;
+  timeZone?: string;
+  precision?: "day" | "hour" | "minute" | "second";
+}
+
+export function formatDateToTimeforChart({
+  date,
+  timeZone = "America/Lima",
+  precision = "second",
+}: FormatDateToTimeforChartProps): string {
+  const zonedDate = toZonedTime(date, timeZone);
+  const now = new Date();
+
+  let baseFormat: string;
+
+  if (now.getDate() === zonedDate.getDate()) {
+    baseFormat = "";
+  } else if (now.getFullYear() === zonedDate.getFullYear()) {
+    baseFormat = "d'/'MM";
+  } else {
+    baseFormat = "d'/'MM'/'yyyy";
+  }
+
+  const precisionFormatMap = {
+    hour: "-HH:mm",
+    minute: "-HH:mm",
+    second: "-HH:mm:ss",
+    day: "",
+  };
+
+  const formatString = baseFormat + precisionFormatMap[precision];
+
+  return format(zonedDate, formatString, { locale: es });
+}

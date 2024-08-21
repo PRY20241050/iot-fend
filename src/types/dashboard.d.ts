@@ -1,20 +1,28 @@
 import { LimitHistory } from "./limit-history";
 
-export interface Chart {
-  id: number;
+export interface ChartAPI {
   gas_type: number;
-  title: string;
-  data?: ChartData[];
-  details?: {
-    min?: number | null;
-    max?: number | null;
-    avg?: number | null;
-  };
-  max_limit?: ChartMaxLimit;
+  gas_abbreviation?: string;
+  measurements?: {
+    date: Date;
+    [key: string]: number | string;
+  }[];
+  min?: string | null;
+  max?: string | null;
+  avg?: string | null;
 }
 
+export type Chart = Omit<ChartAPI, "title", "measurements", "min", "max", "avg"> & {
+  title: string;
+  measurements?: ChartData[];
+  max_limit?: ChartMaxLimit;
+  min?: number | null;
+  max?: number | null;
+  avg?: number | null;
+};
+
 export interface ChartData {
-  name: string;
+  date: string;
   [key: string]: number | string;
 }
 

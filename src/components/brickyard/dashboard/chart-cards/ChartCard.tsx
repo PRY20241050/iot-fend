@@ -9,31 +9,31 @@ import { LineChart } from "./LineChart";
 type Props = Chart & { index: number };
 
 export function ChartCard({ index, ...props }: Props) {
-  const { title, data, details, max_limit } = props;
+  const { title, measurements, max, min, avg, max_limit } = props;
 
   return (
     <div>
       <Card className="p-6 w-full">
         <TypographyP className="font-bold pb-2">
-          {indexToLetter(index).toLowerCase()}) {title}
+          {indexToLetter(index).toLowerCase()}) Sensor {title}
         </TypographyP>
-        <LineChart data={data} maxLimit={max_limit} />
+        <LineChart data={measurements} maxLimit={max_limit} />
       </Card>
       <div className="grid phone-sm:grid-cols-3 gap-3 mt-3">
         <DetailChart
           title="Mínimo"
           description="Concentración (mg/m3)"
-          value={details?.min}
+          value={min}
         />
         <DetailChart
           title="Máximo"
           description="Concentración (mg/m3)"
-          value={details?.max}
+          value={max}
         />
         <DetailChart
           title="Promedio"
           description="Concentración (mg/m3)"
-          value={details?.avg}
+          value={avg}
         />
       </div>
     </div>

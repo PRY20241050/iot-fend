@@ -9,8 +9,6 @@ export function ChartCards() {
   const { chartData, gases } = useChartCards();
   const [layout, setLayout] = useState<string>("two");
 
-  console.log(chartData);
-
   return (
     <div className="my-2">
       <div className="flex w-full justify-end items-center">
@@ -41,7 +39,7 @@ export function ChartCards() {
       >
         {chartData.map((chart, index) => {
           if (gases.length === 0 || gases.includes(chart.gas_type))
-            return <ChartCard key={chart.id} index={index} {...chart} />;
+            return <ChartCard key={chart.gas_type} index={index} {...chart} />;
         })}
       </div>
     </div>
