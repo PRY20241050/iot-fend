@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 interface UserTypeContextValue {
-  brickyardId?: string;
+  brickyardId?: string | string[];
   institution: boolean;
 }
 

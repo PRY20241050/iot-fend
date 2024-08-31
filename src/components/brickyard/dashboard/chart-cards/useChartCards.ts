@@ -1,4 +1,3 @@
-import { useUserTypeContext } from "@/components/shared/context/UserTypeContext";
 import { useRequest } from "@/lib/api/swr";
 import { formatDateToTimeforChart } from "@/lib/helpers/date";
 import { initChart } from "@/mocks/dashboard";
@@ -10,6 +9,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useFilterStore } from "@/store/useFilterStore";
 import { Chart, ChartAPI } from "@/types/dashboard";
 import { EmissionLimits } from "@/types/emission-limits";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function useChartCards() {
@@ -18,7 +18,7 @@ export default function useChartCards() {
   const { dateFrom, dateTo, scale, device, emissionLimit, gases } =
     useFilterStore();
 
-  const { brickyardId } = useUserTypeContext();
+  const { brickyardId } = useParams();
 
   const { isBrickyard, user } = useAuthStore((state) => ({
     isBrickyard: state.isBrickyard,
@@ -54,8 +54,6 @@ export default function useChartCards() {
   );
 
   useEffect(() => {
-    if (!emissionLimitData) return;
-
     setChartData((prev) =>
       prev.map((card) => {
         const limit = emissionLimitData?.limit_history.find(
@@ -92,12 +90,11 @@ export default function useChartCards() {
           measurements: measurements
             ?.map((measurement) => ({
               ...measurement,
-              date: formatDateToTimeforChart({
-                date: measurement.date,
-                ...(scale && {
-                  precision: scale as any,
-                })
-              }),
+              date: formatDateToTimeforChart(
+                measurement.date,
+                "America/Lima",
+                scale ? (scale as any) : "second"
+              ),
             }))
             .reverse(),
           min: min ? Number(min).toFixed(2) : undefined,

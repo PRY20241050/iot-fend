@@ -58,7 +58,7 @@ export default function SimpleTable<TData>({
   const hasResults = table.getRowModel().rows?.length > 0;
 
   return (
-    <div className={cn("pb-4", className)}>
+    <div className={cn(className)}>
       <Card className="rounded-md border">
         <Table>
           <TableHeader>

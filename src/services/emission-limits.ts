@@ -8,11 +8,11 @@ import {
 import { CreateEmissionLimit, EmissionLimits } from "@/types/emission-limits";
 
 export type GetEmissionLimitsParams = {
-  id?: number;
+  is_active?: boolean;
+  is_public?: boolean;
   brickyard_id?: number;
   institution_id?: number;
-  is_public?: boolean;
-  is_default?: boolean;
+  id?: number;
 };
 
 export const getEmissionLimits = async <T = EmissionLimits[]>(
@@ -40,14 +40,17 @@ export const deleteEmissionLimit = async (id: number) => {
 // Get emission limits by brickyard id or institution id
 
 export type GetEmissionLimitsByBoIParams = {
-  brickyard_id?: number;
-  brickyard_ids?: number[];
-  institution_id?: number;
-  add_institution?: boolean;
-  add_brickyard?: boolean;
-  add_management?: boolean;
   is_public?: boolean;
+  is_active?: boolean;
   paginated?: boolean;
+  brickyard_id?: number;
+  institution_id?: number;
+  add_management?: boolean;
+  only_public_institutions?: boolean;
+  add_all_institutions?: boolean;
+  only_public_brickyards?: boolean;
+  add_all_brickyards?: boolean;
+  add_brickyard_ids?: number[];
 };
 
 export const getEmissionLimitsByBoIId = async <T = EmissionLimits[]>(

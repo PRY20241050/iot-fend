@@ -8,7 +8,7 @@ export interface EmissionLimits {
   email_alert: boolean;
   app_alert: boolean;
   is_public: boolean;
-  is_default: boolean;
+  is_active: boolean;
   updated_at: DateTime;
   created_at: DateTime;
   brickyard: number | null;

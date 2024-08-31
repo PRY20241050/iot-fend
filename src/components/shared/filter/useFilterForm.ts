@@ -1,6 +1,10 @@
 import { useRequest } from "@/lib/api/swr";
 import { OPTIONAL_STRING } from "@/lib/utils/validators";
-import { DEVICES_URL, emissionLimitsByBrickyardIdUrl } from "@/services/consts";
+import {
+  DEVICES_URL,
+  emissionLimitsByBrickyardIdUrl,
+  emissionLimitsByInstitutionIdUrl,
+} from "@/services/consts";
 import { useAuthStore } from "@/store/useAuthStore";
 import { FilterStoreValues, useFilterStore } from "@/store/useFilterStore";
 import { Device } from "@/types/device";
@@ -8,7 +12,7 @@ import { EmissionLimits } from "@/types/emission-limits";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useUserTypeContext } from "../context/UserTypeContext";
+import { useParams } from "next/navigation";
 
 type FilterFormValues = FilterStoreValues;
 
@@ -44,7 +48,7 @@ const formDefaultValues: FilterFormValues = {
 };
 
 export default function useFilterForm() {
-  const { institution, brickyardId } = useUserTypeContext();
+  const { brickyardId } = useParams();
   const { getFilter, setFilter, resetFilter } = useFilterStore((state) => ({
     getFilter: state.getFilter,
     setFilter: state.setFilter,
@@ -64,7 +68,7 @@ export default function useFilterForm() {
       ? {
           url: DEVICES_URL,
           params: {
-            brickyard_id: institution ? brickyardId : user?.brickyard?.id,
+            brickyard_id: brickyardId ?? user?.brickyard?.id,
           },
         }
       : null
@@ -76,13 +80,20 @@ export default function useFilterForm() {
   >(
     isAuthenticated
       ? {
-          url: emissionLimitsByBrickyardIdUrl(
-            institution ? brickyardId : user?.brickyard.id
-          ),
+          url: brickyardId
+            ? emissionLimitsByInstitutionIdUrl(String(user?.institution?.id))
+            : emissionLimitsByBrickyardIdUrl(user?.brickyard.id),
           params: {
-            ...(!institution && { is_public: true }),
-            add_institution: true,
-            add_management: true,
+            is_active: true,
+            ...(brickyardId
+              ? {
+                  add_brickyard_ids: brickyardId,
+                  only_public_brickyards: true,
+                }
+              : {
+                  add_all_institutions: true,
+                  only_public_institutions: true,
+                }),
           },
         }
       : null

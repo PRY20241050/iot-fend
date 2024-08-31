@@ -7,12 +7,10 @@ import {
 } from "@/services/measurements";
 import { useEffect } from "react";
 import { useFilterStore } from "@/store/useFilterStore";
+import { useParams } from "next/navigation";
 
-interface Props {
-  brickyardId?: string;
-}
-
-export default function useHistory({ brickyardId }: Props) {
+export default function useHistory() {
+  const { brickyardId } = useParams();
   const { user, isBrickyard } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,

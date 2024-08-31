@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { MeasurementWithDevice } from "@/types/measurement";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDateToSpanishString } from "@/lib/helpers/date";
+import { useFilterStore } from "@/store/useFilterStore";
 
 export const columnsHistoryTable: ColumnDef<MeasurementWithDevice>[] = [
   {
@@ -21,11 +23,25 @@ export const columnsHistoryTable: ColumnDef<MeasurementWithDevice>[] = [
   {
     accessorKey: "date",
     header: "Fecha de registro",
-    cell: ({ row }: any) => <div>{formatDateToSpanishString(row.getValue("date"))}</div>,
+    cell: ({ row }: any) => {
+      const { scale } = useFilterStore((state) => ({
+        scale: state.scale,
+      }));
+
+      return (
+        <div>
+          {formatDateToSpanishString(
+            row.getValue("date"),
+            "America/Lima",
+            scale ? (scale as any) : "second"
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "value",
     header: "Concentración (mg/m3)",
     cell: ({ row }: any) => <div>{row.getValue("value")}</div>,
-  }
+  },
 ];

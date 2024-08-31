@@ -65,6 +65,20 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
     ),
   },
   {
+    accessorKey: "is_active",
+    header: "Activo",
+    cell: ({ row }: any) => (
+      <div>{booleanToYesNo(row.getValue("is_active"))}</div>
+    ),
+  },
+  {
+    accessorKey: "is_public",
+    header: "Público",
+    cell: ({ row }: any) => (
+      <div>{booleanToYesNo(row.getValue("is_public"))}</div>
+    ),
+  },
+  {
     id: "actions",
     header: "Acciones",
     cell: ({ row }) => {

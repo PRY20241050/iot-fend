@@ -9,7 +9,6 @@ import { PaginationResponse } from "@/types/models";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
-
 export default function useEmissionLimits() {
   const { brickyardId } = useParams();
 
@@ -30,9 +29,13 @@ export default function useEmissionLimits() {
       ...((isBrickyard || brickyardId) && {
         brickyard_id: brickyardId || user?.brickyard?.id,
       }),
-      ...((isInstitution && !brickyardId) && {
-        institution_id: user?.institution?.id,
+      ...(brickyardId && {
+        is_public: true,
       }),
+      ...(isInstitution &&
+        !brickyardId && {
+          institution_id: user?.institution?.id,
+        }),
       paginated: true,
     });
 

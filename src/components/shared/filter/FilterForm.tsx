@@ -12,15 +12,11 @@ import useFilterForm from "./useFilterForm";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
 import { GASES, SCALES } from "@/mocks/filter";
 import { useGaugeContext } from "../context/GaugeContext";
-import { HISTORIAL_PATH } from "@/lib/utils";
 
 export default function FilterForm() {
   const { isGauge } = useGaugeContext();
-  const pathname = usePathname();
-  const isHistory = pathname.includes(HISTORIAL_PATH);
 
   const {
     form,

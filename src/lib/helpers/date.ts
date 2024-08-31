@@ -10,11 +10,22 @@ import { toZonedTime } from "date-fns-tz";
 
 export function formatDateToSpanishString(
   date: Date,
-  timeZone = "America/Lima"
+  timeZone = "America/Lima",
+  precision: "day" | "hour" | "minute" | "second" = "second"
 ): string {
   const zonedDate = toZonedTime(date, timeZone);
 
-  return format(zonedDate, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", {
+  let formatString = "d 'de' MMMM 'de' yyyy 'a las' HH:mm:ss";
+
+  if (precision === "minute" || precision === "hour") {
+    formatString = "d 'de' MMMM 'de' yyyy 'a las' HH:mm";
+  }
+
+  if (precision === "day") {
+    formatString = "d 'de' MMMM 'de' yyyy";
+  }
+
+  return format(zonedDate, formatString, {
     locale: es,
   });
 }
@@ -65,34 +76,30 @@ export function formatDateBackward(
   });
 }
 
-interface FormatDateToTimeforChartProps {
-  date: Date;
-  timeZone?: string;
-  precision?: "day" | "hour" | "minute" | "second";
-}
-
-export function formatDateToTimeforChart({
-  date,
+export function formatDateToTimeforChart(
+  date: Date,
   timeZone = "America/Lima",
-  precision = "second",
-}: FormatDateToTimeforChartProps): string {
+  precision: "day" | "hour" | "minute" | "second" = "second"
+): string {
   const zonedDate = toZonedTime(date, timeZone);
   const now = new Date();
 
   let baseFormat: string;
 
   if (now.getDate() === zonedDate.getDate()) {
-    baseFormat = "";
+    if (precision === "day") baseFormat = "d'/'MM";
+    else baseFormat = "";
   } else if (now.getFullYear() === zonedDate.getFullYear()) {
     baseFormat = "d'/'MM";
   } else {
+    console.log("else");
     baseFormat = "d'/'MM'/'yyyy";
   }
 
   const precisionFormatMap = {
-    hour: "-HH:mm",
-    minute: "-HH:mm",
-    second: "-HH:mm:ss",
+    hour: " HH:mm",
+    minute: " HH:mm",
+    second: " HH:mm:ss",
     day: "",
   };
 
