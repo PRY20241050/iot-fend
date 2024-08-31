@@ -1,3 +1,5 @@
+import { useToast } from "@/components/ui/use-toast";
+import { DEFAULT_ERROR } from "@/lib/utils";
 import { recoverPassword } from "@/services/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -12,18 +14,21 @@ const formSchema = z.object({
   email: z.string().email({ message: "El correo electrónico no es válido" }),
 });
 
+const formDefaultValues: RecoverPasswordFormValues = {
+  email: "",
+};
+
 interface Props {
   submitted: (value: boolean) => void;
 }
 
 export default function useRecoverPasswordForm({ submitted }: Props) {
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<RecoverPasswordFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
+    defaultValues: formDefaultValues,
     reValidateMode: "onChange",
   });
 
@@ -31,14 +36,20 @@ export default function useRecoverPasswordForm({ submitted }: Props) {
     setIsLoading(true);
 
     recoverPassword(values)
-      .then((res) => {
+      .then(() => {
         form.reset();
         submitted(true);
       })
-      .catch((err) => {
+      .catch(() => {
+        toast({
+          variant: "destructive",
+          title: DEFAULT_ERROR.header,
+          description: DEFAULT_ERROR.emailNotFound,
+        });
+
         form.setError("email", {
           type: "manual",
-          message: "No se encontró una cuenta con este correo electrónico",
+          message: DEFAULT_ERROR.emailNotFound,
         });
       })
       .finally(() => {

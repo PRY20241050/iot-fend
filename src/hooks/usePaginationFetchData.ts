@@ -27,19 +27,29 @@ import { type PaginationResponse } from "@/types/models";
  * @template V - Type of the pagination information.
  */
 
-interface UsePaginationFetchDataReturn<T, U, V extends PaginationResponse<U> = PaginationResponse<U>> {
+interface UsePaginationFetchDataReturn<
+  T,
+  U,
+  V extends PaginationResponse<U> = PaginationResponse<U>
+> {
   items?: U[];
+  setItems: React.Dispatch<React.SetStateAction<U[] | undefined>>;
   paginationInfo?: V;
   isLoading: boolean;
   page: number;
   hasNext: boolean;
   fetchData: (newPage?: number) => void;
+  refetch: () => void;
   updateParams: (newParams: T) => void;
   resetItems: () => void;
   resetAll: () => void;
 }
 
-export function usePaginationFetchData<T, U, V extends PaginationResponse<U> = PaginationResponse<U>>(
+export function usePaginationFetchData<
+  T,
+  U,
+  V extends PaginationResponse<U> = PaginationResponse<U>
+>(
   fetchDataFunction: (params: T) => Promise<V>,
   initialParams: T,
   groupResults = false,
@@ -94,13 +104,20 @@ export function usePaginationFetchData<T, U, V extends PaginationResponse<U> = P
     setPage(1);
   };
 
+  const refetch = () => {
+    resetAll();
+    fetchData();
+  };
+
   return {
     items,
+    setItems,
     paginationInfo,
     isLoading,
     page,
     hasNext,
     resetAll,
+    refetch,
     fetchData,
     updateParams,
     resetItems,

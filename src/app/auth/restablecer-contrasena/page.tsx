@@ -1,24 +1,18 @@
-"use client";
-
 import { RestorePassword } from "@/components/auth/restore-password";
 import { LOGIN_PATH } from "@/lib/utils";
-import { redirect, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
-function RestablecerContrasenaPage() {
-  const searchParams = useSearchParams();
+interface Props {
+  searchParams: {
+    token?: string;
+    uid?: string;
+  };
+}
 
-  if (searchParams.has("token") && searchParams.has("uid")) {
+export default function RestablecerContrasenaPage({ searchParams }: Props) {
+  if (searchParams.token && searchParams.uid) {
     return <RestorePassword />;
   } else {
     redirect(LOGIN_PATH);
   }
-}
-
-export default function RestablecerContrasenaPageWrapper() {
-  return (
-    <Suspense fallback={<div>Cargando...</div>}>
-      <RestablecerContrasenaPage />
-    </Suspense>
-  );
 }

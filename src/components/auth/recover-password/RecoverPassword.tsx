@@ -8,27 +8,31 @@ import { Suspense, useState } from "react";
 export default function RecoverPassword() {
   const [submitted, setSubmitted] = useState(false);
 
+  const successHeader = (
+    <>
+      <CardTitle>¡Listo!</CardTitle>
+      <CardDescription>
+        Hemos enviado un correo electrónico con un enlace para restablecer su
+        contraseña.
+      </CardDescription>
+    </>
+  );
+
+  const recoverPasswordHeader = (
+    <>
+      <CardTitle>Recuperar contraseña</CardTitle>
+      <CardDescription>
+        Le enviaremos un correo electrónico con un enlace para restablecer su
+        contraseña
+      </CardDescription>
+    </>
+  );
+
   return (
     <>
       <CardHeader>
         <TypographyH4 className="text-center mb-3">IoT Monitoring</TypographyH4>
-        {submitted ? (
-          <>
-            <CardTitle>¡Listo!</CardTitle>
-            <CardDescription>
-              Hemos enviado un correo electrónico con un enlace para
-              restablecer su contraseña.
-            </CardDescription>
-          </>
-        ) : (
-          <>
-            <CardTitle>Recuperar contraseña</CardTitle>
-            <CardDescription>
-              Le enviaremos un correo electrónico con un enlace para restablecer
-              su contraseña
-            </CardDescription>
-          </>
-        )}
+        {submitted ? successHeader : recoverPasswordHeader}
       </CardHeader>
       {!submitted && (
         <Suspense>

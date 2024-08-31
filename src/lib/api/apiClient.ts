@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { getAuthTokenFromCookie } from "@/lib/auth";
-import { DEFAULT_MESSAGE, getError, isBrowser } from "@/lib/utils";
+import { DEFAULT_ERROR, getError, isBrowser } from "@/lib/utils";
 
 import { API_URL } from "./consts";
 
@@ -41,7 +41,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const { message } = getError(error, DEFAULT_MESSAGE);
+    const { message } = getError(error, DEFAULT_ERROR.message);
 
     if (isBrowser) {
       const data = error?.config?.data || "";
@@ -49,7 +49,7 @@ apiClient.interceptors.response.use(
         message &&
         (typeof data !== "string" || !data.includes("disableErrorMessage"))
       ) {
-        console.log('Error', message)
+        console.log("Error", message);
       }
     }
     return Promise.reject(error);

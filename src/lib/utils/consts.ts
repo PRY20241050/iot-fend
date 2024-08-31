@@ -1,6 +1,11 @@
 export const BAD_REQUEST = 400;
 
-export const DEFAULT_MESSAGE = "Ocurrió un error, por favor intente nuevamente";
+export const DEFAULT_ERROR = {
+  header: "Ocurrió un error",
+  server: "El servidor no responde.",
+  message: "Ocurrió un error, por favor intente nuevamente",
+  emailNotFound: "No se encontró una cuenta con este correo electrónico",
+}
 
 export const RADIAN = Math.PI / 180;
 
@@ -24,9 +29,12 @@ export const PERFIL_PATH = "/perfil";
 export const CAMBIAR_CONTRASENA_PATH = "/perfil/cambiar-contrasena";
 
 export const brickyardByIdPath = (id: string) => `/ladrillera/${id}`;
-export const historialBrickyardPath = (id: string) => `/ladrillera/${id}/historial`;
-export const dashboardBrickyardPath = (id: string) => `/ladrillera/${id}/dashboard`;
-export const limiteEmisionesBrickyardPath = (id: string) => `/ladrillera/${id}/limite-emisiones`;
+export const historialBrickyardPath = (id: string) =>
+  `/ladrillera/${id}/historial`;
+export const dashboardBrickyardPath = (id: string) =>
+  `/ladrillera/${id}/dashboard`;
+export const limiteEmisionesBrickyardPath = (id: string) =>
+  `/ladrillera/${id}/limite-emisiones`;
 
 export const LOGIN_PATH = "/auth/iniciar-sesion";
 export const RECUPERAR_CONTRASENA_PATH = "/auth/recuperar-contrasena";

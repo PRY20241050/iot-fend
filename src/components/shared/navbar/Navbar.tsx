@@ -38,7 +38,7 @@ export default function Navbar({ className }: Props) {
         <div
           className={cn(
             "flex items-center overflow-hidden transition-all duration-300",
-            scrolled ? "h-0 opacity-0" : "h-[auto] py-3 opacity-100"
+            scrolled && brickyardId ? "h-0 opacity-0" : "h-[auto] py-3 opacity-100"
           )}
         >
           <Logo />
@@ -47,7 +47,7 @@ export default function Navbar({ className }: Props) {
             <UserNav />
           </div>
         </div>
-        {brickyardId && <SubNavbar className={cn({"mt-2" :scrolled})} />}
+        {brickyardId && <SubNavbar className={cn({ "mt-2": scrolled })} />}
       </div>
     </div>
   );

@@ -42,12 +42,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
    */
   verifyIsAuthenticated: async () => {
     const auth = getAuthTokenFromCookie();
-    const { resetState, setUser } = get();
-
-    const logOut = () => {
-      clearAuthTokenFromCookie();
-      resetState();
-    };
+    const { logOut, setUser } = get();
 
     if (!auth) {
       logOut();

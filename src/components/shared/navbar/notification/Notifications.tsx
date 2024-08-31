@@ -61,8 +61,9 @@ export default function Notifications() {
     <Popover>
       <PopoverTrigger asChild>{notificationButton}</PopoverTrigger>
       <PopoverContent
+        id="popover-content"
         align="end"
-        className="p-0 max-h-[60vh] w-80"
+        className="p-0 max-h-[60vh] w-80 overflow-y-scroll"
       >
         {popoverHeader}
         <InfiniteScroll
@@ -74,10 +75,12 @@ export default function Notifications() {
           hasMore={paginationInfo?.next !== null}
           endMessage={
             <div className="text-center text-xs py-2 font-bold">
-              No hay más notificaciones </div>
+              No hay más notificaciones{" "}
+            </div>
           }
-          scrollThreshold={0}
-          className="space-y-2 p-[10px] max-h-[calc(60vh-36px)]"
+          scrollThreshold={0.7}
+          scrollableTarget="popover-content"
+          className="space-y-2 p-[10px]"
         >
           {alertsData?.map((alert) => (
             <NotificationCard key={alert.id} data={alert} />

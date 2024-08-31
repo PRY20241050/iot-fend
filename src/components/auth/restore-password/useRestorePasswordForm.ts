@@ -1,3 +1,5 @@
+import { useToast } from "@/components/ui/use-toast";
+import { DEFAULT_ERROR } from "@/lib/utils";
 import { restorePassword } from "@/services/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
@@ -22,37 +24,45 @@ const formSchema = z
     path: ["confirm_password"],
   });
 
+const formDefaultValues: RestorePasswordFormValues = {
+  password: "",
+  confirm_password: "",
+};
+
 interface Props {
   submitted: (value: boolean) => void;
 }
 
 export default function useRestorePasswordForm({ submitted }: Props) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
+  const { toast } = useToast();
 
   const uid = searchParams.get("uid");
   const token = searchParams.get("token");
 
   const form = useForm<RestorePasswordFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      password: "",
-      confirm_password: "",
-    },
+    defaultValues: formDefaultValues,
     reValidateMode: "onBlur",
   });
 
   function onSubmit(values: RestorePasswordFormValues) {
     setIsLoading(true);
-
     restorePassword(uid, token, {
       new_password: values.password,
     })
-      .then((res) => {
+      .then(() => {
         form.reset();
         submitted(true);
       })
-      .catch((err) => {})
+      .catch((err) => {
+        toast({
+          variant: "destructive",
+          title: DEFAULT_ERROR.header,
+          description: err.response.data.error || DEFAULT_ERROR.server,
+        });
+      })
       .finally(() => {
         setIsLoading(false);
       });

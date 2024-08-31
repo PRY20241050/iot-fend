@@ -47,9 +47,6 @@ export function UserNav() {
     push(LOGIN_PATH);
   };
 
-  // TODO: delete console.log
-  // console.log(user);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

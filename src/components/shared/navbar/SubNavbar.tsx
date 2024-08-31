@@ -41,16 +41,6 @@ export default function SubNavbar({ className }: Props) {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-
-        {/* <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => back()}
-          className="flex justify-center items-center gap-2 px-3"
-        >
-          <ArrowLeftIcon className="h-5 w-5 text-muted-foreground" />
-          <TypographyMuted>Volver</TypographyMuted>
-        </Button> */}
       </div>
     </div>
   );
