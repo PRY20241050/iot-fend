@@ -1,4 +1,5 @@
-import { CO, NO2, PM10, PM25, SO2 } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
+import { CO, DEFAULT_ERROR, NO2, PM10, PM25, SO2 } from "@/lib/utils";
 import {
   OPTIONAL_BOOLEAN,
   OPTIONAL_NUMBER_REGEX,
@@ -28,6 +29,8 @@ const formSchema = z
     no2limit: OPTIONAL_NUMBER_REGEX,
     setcolimit: OPTIONAL_BOOLEAN,
     colimit: OPTIONAL_NUMBER_REGEX,
+    is_active: OPTIONAL_BOOLEAN,
+    is_public: OPTIONAL_BOOLEAN,
     email_alert: OPTIONAL_BOOLEAN,
     app_alert: OPTIONAL_BOOLEAN,
   })
@@ -110,6 +113,25 @@ const formSchema = z
 
 export type EmissionsLimitAddFormValues = z.infer<typeof formSchema>;
 
+const formDefaultValues: EmissionsLimitAddFormValues = {
+  name: "",
+  description: "",
+  setpm10limit: false,
+  pm10limit: undefined,
+  setpm25limit: false,
+  pm25limit: undefined,
+  setso2limit: false,
+  so2limit: undefined,
+  setno2limit: false,
+  no2limit: undefined,
+  setcolimit: false,
+  colimit: undefined,
+  email_alert: false,
+  app_alert: false,
+  is_public: false,
+  is_active: true,
+};
+
 interface Props {
   initialData?: EmissionLimits;
 }
@@ -117,28 +139,14 @@ interface Props {
 export default function useEmissionsLimitAddForm({ initialData }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
+  const { toast } = useToast();
   const { user } = useAuthStore((state) => ({
     user: state.user,
   }));
 
   const form = useForm<EmissionsLimitAddFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      description: "",
-      setpm10limit: false,
-      pm10limit: undefined,
-      setpm25limit: false,
-      pm25limit: undefined,
-      setso2limit: false,
-      so2limit: undefined,
-      setno2limit: false,
-      no2limit: undefined,
-      setcolimit: false,
-      colimit: undefined,
-      email_alert: false,
-      app_alert: false,
-    },
+    defaultValues: formDefaultValues,
     reValidateMode: "onChange",
   });
 
@@ -149,9 +157,12 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       max_limit: limit,
       is_modified: false,
       start_date: new Date(),
-      end_date: new Date("9999-12-31"),
     }).catch(() => {
-      console.error("No se pudo crear el límite de historial");
+      toast({
+        variant: "destructive",
+        title: DEFAULT_ERROR.header,
+        description: "No se pudo crear el límite de emisiones",
+      });
     });
   }
 
@@ -164,8 +175,8 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       description: values.description,
       email_alert: values.email_alert,
       app_alert: values.app_alert,
-      is_public: false,
-      is_default: false,
+      is_public: values.is_public,
+      is_active: values.is_active,
       brickyard: user?.brickyard?.id,
     })
       .then((response) => {
@@ -184,10 +195,17 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
         if (values.setcolimit) {
           handleHistoryLimit(response.id, CO, Number(values.colimit));
         }
+        toast({
+          description: "Límite de emisiones creado con éxito",
+        });
         push("/limite-emisiones");
       })
       .catch(() => {
-        console.error("No se pudo crear el límite de emisiones");
+        toast({
+          variant: "destructive",
+          title: DEFAULT_ERROR.header,
+          description: "No se pudo crear el límite de emisiones",
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -210,17 +228,29 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       name: initialData.name,
       description: initialData.description,
       setpm10limit: !!pm10,
-      pm10limit: String(pm10?.max_limit),
+      pm10limit: pm10?.max_limit
+        ? String(pm10?.max_limit)
+        : formDefaultValues.pm10limit,
       setpm25limit: !!pm25,
-      pm25limit: String(pm25?.max_limit),
+      pm25limit: pm25?.max_limit
+        ? String(pm25?.max_limit)
+        : formDefaultValues.pm25limit,
       setso2limit: !!so2,
-      so2limit: String(so2?.max_limit),
+      so2limit: so2?.max_limit
+        ? String(so2?.max_limit)
+        : formDefaultValues.so2limit,
       setno2limit: !!no2,
-      no2limit: String(no2?.max_limit),
+      no2limit: no2?.max_limit
+        ? String(no2?.max_limit)
+        : formDefaultValues.no2limit,
       setcolimit: !!co,
-      colimit: String(co?.max_limit),
+      colimit: co?.max_limit
+        ? String(co?.max_limit)
+        : formDefaultValues.colimit,
       email_alert: initialData.email_alert,
       app_alert: initialData.app_alert,
+      is_public: initialData.is_public,
+      is_active: initialData.is_active,
     });
   }, [initialData, form]);
 

@@ -16,6 +16,7 @@ import { cn, LIMITE_EMISIONES_PATH } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { EmissionLimits } from "@/types/emission-limits";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface Props {
   initialData?: EmissionLimits;
@@ -25,6 +26,10 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
   const { form, isLoading, onSubmit } = useEmissionsLimitAddForm({
     initialData,
   });
+  const { isBrickyard } = useAuthStore((state) => ({
+    isBrickyard: state.isBrickyard,
+  }));
+
   const { push } = useRouter();
 
   return (
@@ -105,6 +110,25 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
           </div>
           <div>
             <div className="pt-7">
+              <TypographyH4>Estado</TypographyH4>
+            </div>
+            <FormSwitch
+              form={form}
+              name="is_active"
+              label="Está activo"
+              description="Activa o desactiva este límite de emisiones"
+            />
+            <FormSwitch
+              form={form}
+              name="is_public"
+              label="Es público"
+              description={`Si está activo, este límite será visible para ${
+                isBrickyard
+                  ? "las instituciones que administran esta ladrillera"
+                  : "las ladrilleras que administra esta institución"
+              }`}
+            />
+            <div className="pt-7">
               <TypographyH4>Alertas</TypographyH4>
               <TypographyP
                 className={cn(s["form-subtitle"], "text-muted-foreground")}
@@ -130,7 +154,8 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
         <div className="pt-9 flex flex-col-reverse gap-3 phone-lg:flex-row phone-lg:justify-end">
           <Button
             variant="secondary"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               push(LIMITE_EMISIONES_PATH);
             }}
           >

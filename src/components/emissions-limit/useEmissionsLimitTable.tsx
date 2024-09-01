@@ -24,6 +24,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { useToast } from "../ui/use-toast";
+import { DEFAULT_ERROR } from "@/lib/utils";
 
 export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
   {
@@ -82,6 +84,7 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
     id: "actions",
     header: "Acciones",
     cell: ({ row }) => {
+      const { toast } = useToast();
       const router = useRouter();
 
       const handleEdit = () => {
@@ -93,10 +96,16 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
 
         deleteEmissionLimit(row.original.id)
           .then(() => {
-            console.log("Límite de emisiones eliminado correctamente");
+            toast({
+              description: "Límite de emisiones eliminado correctamente",
+            });
           })
           .catch(() => {
-            console.error("Error eliminando el límite de emisiones");
+            toast({
+              variant: "destructive",
+              title: DEFAULT_ERROR.header,
+              description: "Error eliminando el límite de emisiones",
+            });
           })
           .finally(() => {
             setTimeout(() => {
