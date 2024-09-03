@@ -102,6 +102,7 @@ export default function useFilterForm() {
   const devices = deviceData?.map((device) => ({
     value: device.id.toString(),
     label: device.name,
+    status: device.status,
   }));
 
   const emissionLimits = limitsData?.map((limit) => ({

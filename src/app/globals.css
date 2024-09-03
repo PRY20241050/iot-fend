@@ -26,6 +26,7 @@
     --radius: 0.5rem;
 
     /* Status */
+    --status-deactivated: 215.4 16.3% 46.9%;
     --status-normal: 120 100% 50%;
     --status-warning: 60 100% 50%;
     --status-danger: 0 100% 50%;

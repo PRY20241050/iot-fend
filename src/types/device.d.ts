@@ -10,5 +10,5 @@ export interface Device {
   updated_at: DateTime;
   created_at: DateTime;
   brickyard: number;
-  sensors: Sensor[];
+  sensors?: Sensor[];
 }

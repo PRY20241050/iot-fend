@@ -53,6 +53,7 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         status: {
+          deactivated: "hsl(var(--status-deactivated))",
           normal: "hsl(var(--status-normal))",
           warning: "hsl(var(--status-warning))",
           danger: "hsl(var(--status-danger))",

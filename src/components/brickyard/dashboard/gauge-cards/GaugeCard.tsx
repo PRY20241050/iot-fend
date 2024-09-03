@@ -113,7 +113,7 @@ export function StatusLabel({ active = false }: { active?: boolean }) {
   return (
     <TypographyP
       className={cn(
-        "flex items-center justify-end text-muted-foreground",
+        "flex items-center justify-end text-status-deactivated",
         { "text-status-normal": active },
         console.className
       )}

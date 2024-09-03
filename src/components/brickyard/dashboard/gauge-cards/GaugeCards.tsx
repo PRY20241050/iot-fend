@@ -7,8 +7,6 @@ const skeletonItems = [...Array.from({ length: 4 }, (_, i) => i)];
 const GaugeCardsComponent = () => {
   const { limitIsLoading, gauges } = useGaugeCards();
 
-  console.log("gauges", gauges);
-
   return (
     <>
       <GaugeLegend />
