@@ -15,7 +15,8 @@ type GaugeCardProps = Gauge & { index: number };
 export function GaugeCard({ index, ...props }: GaugeCardProps) {
   const { title, limit, value } = props;
 
-  function valueStateColor(value: number) {
+  function valueStateColor(value: number | null) {
+    if (value === null) return "bg-white";
     if (value < limit.max_limit * 0.75) {
       return "bg-status-normal/10";
     } else if (value < limit.max_limit) {
@@ -44,20 +45,7 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
           value={value}
           maxValue={maxValue}
         />
-        <TypographyP
-          className={cn(
-            "flex items-center justify-end text-muted-foreground",
-            console.className
-          )}
-        >
-          <span
-            className={cn(
-              "w-4 h-4 rounded-full inline-block mr-2",
-              "bg-muted-foreground"
-            )}
-          ></span>
-          Sin conexión
-        </TypographyP>
+        <StatusLabel active={value !== null} />
       </Card>
       <div className="grid phone-sm:grid-cols-2 gap-3 mt-3">
         <DetailChart
@@ -118,6 +106,26 @@ export function GaugeLegend() {
         </ul>
       </CardHeader>
     </Card>
+  );
+}
+
+export function StatusLabel({ active = false }: { active?: boolean }) {
+  return (
+    <TypographyP
+      className={cn(
+        "flex items-center justify-end text-muted-foreground",
+        { "text-status-normal": active },
+        console.className
+      )}
+    >
+      <span
+        className={cn(
+          "w-4 h-4 rounded-full inline-block mr-2 bg-muted-foreground",
+          { "bg-status-normal": active }
+        )}
+      ></span>{" "}
+      {active ? "Conectado" : "Sin conexión"}
+    </TypographyP>
   );
 }
 

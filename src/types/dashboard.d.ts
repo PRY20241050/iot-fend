@@ -37,5 +37,5 @@ export interface Gauge {
   limit: Pick<LimitHistory, "max_limit" | "gas_type"> & {
     is_default?: boolean;
   };
-  value: number;
+  value: number | null;
 }

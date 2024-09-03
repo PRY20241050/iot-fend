@@ -10,7 +10,7 @@ type Props = {
   lowValue: number;
   mediumValue: number;
   highValue: number;
-  value: number;
+  value: number | null;
   maxValue: number;
 };
 
@@ -27,12 +27,10 @@ export default function GaugeChart({
     { name: "High", value: highValue, color: "hsl(var(--status-danger))" },
   ];
 
-  const setGraphValue = (value: number) => {
-    if (value < 0) {
-      return 0;
-    } else if (value > maxValue) {
-      return maxValue;
-    }
+  const setGraphValue = (value: number | null) => {
+    if (value === null) return 0;
+    if (value < 0) return 0;
+    else if (value > maxValue) return maxValue;
     return value;
   };
 
@@ -57,7 +55,7 @@ export default function GaugeChart({
         </Pie>
         {needle({
           data,
-          value: setGraphValue(value),
+          value: setGraphValue(value ?? 0),
           cx,
           cy,
           iR,

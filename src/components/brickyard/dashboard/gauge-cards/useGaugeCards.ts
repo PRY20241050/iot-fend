@@ -9,6 +9,7 @@ import { GAUGE_REVALIDATION_INTERVAL } from "@/lib/utils";
 
 export default function useGaugeCards() {
   const [gauges, setGauges] = useState(initialGauges);
+  const [updateCount, setUpdateCount] = useState(0);
 
   const { device, emissionLimit } = useFilterStore((state) => ({
     device: state.device,
@@ -62,8 +63,6 @@ export default function useGaugeCards() {
   useEffect(() => {
     if (!sensorsData) return;
 
-    const gapTime = Date.now() - GAUGE_REVALIDATION_INTERVAL;
-
     setGauges((prevGauges) =>
       prevGauges.map((gauge) => {
         const sensor = sensorsData.find((sensor) => {
@@ -74,21 +73,28 @@ export default function useGaugeCards() {
           const measurementTime = new Date(
             sensor.last_measurement.created_at
           ).getTime();
+          const gapTime = Date.now() - measurementTime;
+
           const value =
-            measurementTime >= gapTime
+            gapTime < GAUGE_REVALIDATION_INTERVAL
               ? Number(sensor.last_measurement.value)
-              : 0;
+              : null;
           return { ...gauge, value };
         }
 
-        return gauge;
+        return {
+          ...gauge,
+          value: null,
+        };
       })
     );
-  }, [sensorsData]);
+  }, [sensorsData, updateCount]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      revalidateSensors();
+      revalidateSensors().finally(() => {
+        setUpdateCount((count) => count + 1);
+      });
     }, GAUGE_REVALIDATION_INTERVAL);
 
     return () => clearInterval(interval);
