@@ -10,7 +10,7 @@ export const DEFAULT_ERROR = {
 export const RADIAN = Math.PI / 180;
 
 // 30 seconds (1000 * 30)
-export const GAUGE_REVALIDATION_INTERVAL = 60000;
+export const GAUGE_REVALIDATION_INTERVAL = 120000;
 
 // Gas types
 export const CO = 1;
