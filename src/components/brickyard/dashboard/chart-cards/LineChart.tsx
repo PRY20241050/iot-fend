@@ -21,9 +21,11 @@ const FONT_SIZE = 12;
 export function LineChart({ data, maxLimit }: Props) {
   const keys = Object.keys(data?.[0] || {}).filter((key) => key !== "date");
 
+  console.log(data)
+
   return (
-    <ResponsiveContainer width="100%" height={250}>
-      <Chart width={500} height={300} data={data}>
+    <ResponsiveContainer width="100%" height={300}>
+      <Chart width={500} height={260} data={data}>
         <CartesianGrid strokeDasharray="4 4" />
         <XAxis
           dataKey="date"
@@ -36,9 +38,11 @@ export function LineChart({ data, maxLimit }: Props) {
           }}
           domain={["dataMin", "dataMax + 100"]}
           minTickGap={0}
+          height={80}
           tickLine={false}
           tickMargin={5}
-          tick={{ fontSize: FONT_SIZE }}
+          angle={-60}
+          tick={{ fontSize: 10, textAnchor: "end" }}
         />
         <YAxis
           label={{
@@ -51,7 +55,7 @@ export function LineChart({ data, maxLimit }: Props) {
             0,
             maxLimit?.value
               ? maxLimit?.value + maxLimit?.value * 0.3
-              : "dataMax + 1",
+              : (dataMax: number) => (dataMax * 1.2),
           ]}
           minTickGap={0}
           tickLine={false}

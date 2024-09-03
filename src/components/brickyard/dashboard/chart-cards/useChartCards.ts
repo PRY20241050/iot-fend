@@ -97,9 +97,9 @@ export default function useChartCards() {
               ),
             }))
             .reverse(),
-          min: min ? Number(min).toFixed(2) : undefined,
-          max: max ? Number(max).toFixed(2) : undefined,
-          avg: avg ? Number(avg).toFixed(2) : undefined,
+          min: min ? Number(min).toFixed(3) : undefined,
+          max: max ? Number(max).toFixed(3) : undefined,
+          avg: avg ? Number(avg).toFixed(3) : undefined,
           max_limit: card.max_limit,
         };
       })
