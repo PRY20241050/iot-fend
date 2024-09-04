@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useParams } from "next/navigation";
+import { REVALIDATION_TIME_IN_SECONDS } from "@/lib/utils";
 
 type FilterFormValues = FilterStoreValues;
 
@@ -69,6 +70,7 @@ export default function useFilterForm() {
           url: DEVICES_URL,
           params: {
             brickyard_id: brickyardId ?? user?.brickyard?.id,
+            revalidation_time_in_seconds: REVALIDATION_TIME_IN_SECONDS,
           },
         }
       : null

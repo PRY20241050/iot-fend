@@ -5,7 +5,7 @@ import { EmissionLimits } from "@/types/emission-limits";
 import { SensorWithLastMeasurement } from "@/types/sensor";
 import { useEffect, useState } from "react";
 import { gauges as initialGauges } from "@/mocks/dashboard";
-import { GAUGE_REVALIDATION_INTERVAL } from "@/lib/utils";
+import { REVALIDATION_INTERVAL_IN_MILISECONDS } from "@/lib/utils";
 
 export default function useGaugeCards() {
   const [gauges, setGauges] = useState(initialGauges);
@@ -76,7 +76,7 @@ export default function useGaugeCards() {
           const gapTime = Date.now() - measurementTime;
 
           const value =
-            gapTime < GAUGE_REVALIDATION_INTERVAL
+            gapTime < REVALIDATION_INTERVAL_IN_MILISECONDS
               ? Number(sensor.last_measurement.value)
               : null;
           return { ...gauge, value };
@@ -95,7 +95,7 @@ export default function useGaugeCards() {
       revalidateSensors().finally(() => {
         setUpdateCount((count) => count + 1);
       });
-    }, GAUGE_REVALIDATION_INTERVAL);
+    }, REVALIDATION_INTERVAL_IN_MILISECONDS);
 
     return () => clearInterval(interval);
   }, [revalidateSensors]);

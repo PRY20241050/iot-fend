@@ -1,3 +1,5 @@
+
+
 export const BAD_REQUEST = 400;
 
 export const DEFAULT_ERROR = {
@@ -9,8 +11,10 @@ export const DEFAULT_ERROR = {
 
 export const RADIAN = Math.PI / 180;
 
-// 30 seconds (1000 * 30)
-export const GAUGE_REVALIDATION_INTERVAL = 120000;
+export const REVALIDATION_TIME_IN_SECONDS = Number(
+  process.env.NEXT_PUBLIC_REVALIDATION_TIME_IN_SECONDS ?? 120
+)
+export const REVALIDATION_INTERVAL_IN_MILISECONDS = 1000 * REVALIDATION_TIME_IN_SECONDS;
 
 // Gas types
 export const CO = 1;
