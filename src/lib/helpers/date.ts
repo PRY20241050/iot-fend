@@ -92,7 +92,6 @@ export function formatDateToTimeforChart(
   } else if (now.getFullYear() === zonedDate.getFullYear()) {
     baseFormat = "d'/'MM";
   } else {
-    console.log("else");
     baseFormat = "d'/'MM'/'yyyy";
   }
 

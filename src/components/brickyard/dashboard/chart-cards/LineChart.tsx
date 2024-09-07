@@ -21,8 +21,6 @@ const FONT_SIZE = 12;
 export function LineChart({ data, maxLimit }: Props) {
   const keys = Object.keys(data?.[0] || {}).filter((key) => key !== "date");
 
-  console.log(data);
-
   return (
     <ResponsiveContainer width="100%" height={300}>
       <Chart width={500} height={260} data={data}>
@@ -54,7 +52,7 @@ export function LineChart({ data, maxLimit }: Props) {
           domain={[
             0,
             maxLimit?.value
-              ? maxLimit?.value + Number(maxLimit?.value * 0.3).toFixed(3)
+              ? maxLimit?.value + maxLimit?.value * 0.32
               : (dataMax: number) => Number(dataMax * 1.2).toFixed(3),
           ]}
           minTickGap={0}

@@ -5,16 +5,35 @@ import {
   getMeasurementsWithDevice,
   GetMeasurementsWithDeviceParams,
 } from "@/services/measurements";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFilterStore } from "@/store/useFilterStore";
-import { useParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import { stringToBoolean } from "@/lib/helpers/string";
 
 export default function useHistory() {
   const { brickyardId } = useParams();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const { replace } = useRouter();
+
   const { user, isBrickyard } = useAuthStore((state) => ({
     user: state.user,
     isBrickyard: state.isBrickyard,
   }));
+
+  const [isHistogram, setIsHistogram] = useState<boolean>(
+    stringToBoolean(params.get("histogram") ?? "false")
+  );
+
+  const toggleHistogram = () => {
+    replace(`${pathname}?histogram=${!isHistogram}`);
+    setIsHistogram((state) => !state);
+  };
 
   const { dateFrom, dateTo, gases, scale, device, emissionLimit } =
     useFilterStore();
@@ -52,7 +71,9 @@ export default function useHistory() {
     paginationInfo,
     isLoading,
     page,
+    isHistogram,
     fetchNextPage,
     fetchPrevPage,
+    toggleHistogram,
   };
 }

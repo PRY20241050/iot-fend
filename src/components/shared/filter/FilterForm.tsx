@@ -13,11 +13,8 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { GASES, SCALES } from "@/mocks/filter";
-import { useGaugeContext } from "../context/GaugeContext";
 
 export default function FilterForm() {
-  const { isGauge } = useGaugeContext();
-
   const {
     form,
     onSubmit,
@@ -26,13 +23,14 @@ export default function FilterForm() {
     devicesIsLoading,
     emissionLimits,
     limitsIsLoading,
+    isHistory,
   } = useFilterForm();
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
-          {!isGauge && (
+          {isHistory && (
             <>
               <FormDatePicker
                 form={form}
@@ -76,7 +74,7 @@ export default function FilterForm() {
             options={emissionLimits}
             disabled={limitsIsLoading}
           />
-          {!isGauge && (
+          {isHistory && (
             <FormField
               control={form.control}
               name="gases"

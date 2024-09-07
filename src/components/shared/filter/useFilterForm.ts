@@ -12,8 +12,8 @@ import { EmissionLimits } from "@/types/emission-limits";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useParams } from "next/navigation";
-import { REVALIDATION_TIME_IN_SECONDS } from "@/lib/utils";
+import { useParams, usePathname } from "next/navigation";
+import { HISTORIAL_PATH, REVALIDATION_TIME_IN_SECONDS } from "@/lib/utils";
 
 type FilterFormValues = FilterStoreValues;
 
@@ -50,6 +50,9 @@ const formDefaultValues: FilterFormValues = {
 
 export default function useFilterForm() {
   const { brickyardId } = useParams();
+  const pathname = usePathname();
+  const isHistory = pathname.includes(HISTORIAL_PATH);
+
   const { getFilter, setFilter, resetFilter } = useFilterStore((state) => ({
     getFilter: state.getFilter,
     setFilter: state.setFilter,
@@ -137,6 +140,7 @@ export default function useFilterForm() {
     form,
     onSubmit,
     resetForm,
+    isHistory,
     devices,
     devicesIsLoading,
     emissionLimits,
