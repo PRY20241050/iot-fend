@@ -22,7 +22,10 @@ export default function SubNavbar({ className }: Props) {
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex items-center mx-auto">
+      <div
+        className="flex items-center mx-auto overflow-auto"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
         <NavigationMenu>
           <NavigationMenuList className="space-x-0">
             {getSubNavbarItems(String(brickyardId)).map((item) => (
