@@ -41,9 +41,9 @@ export default function useChangePasswordForm() {
       })
       .catch((err) => {
         if (err.response?.data) {
-          form.setError("old_password", {
+          form.setError("new_password", {
             type: "manual",
-            message: "La contraseña actual es incorrecta",
+            message: err.response.data.error,
           });
         }
       })
