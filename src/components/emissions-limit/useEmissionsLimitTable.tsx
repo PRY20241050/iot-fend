@@ -67,6 +67,13 @@ export const columnsEmissionsLimitTable: ColumnDef<EmissionLimits>[] = [
     ),
   },
   {
+    accessorKey: "gap_time",
+    header: "Tiempo entre alertas (s)",
+    cell: ({ row }: any) => (
+      <div>{row.getValue("gap_time")} segundos</div>
+    ),
+  },
+  {
     accessorKey: "is_active",
     header: "Activo",
     cell: ({ row }: any) => (

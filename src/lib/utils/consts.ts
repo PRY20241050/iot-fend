@@ -1,6 +1,7 @@
-
-
-export const BAD_REQUEST = 400;
+export const STATUS_CODES = {
+  BAD_REQUEST: 400,
+  SERVER_ERROR: 500,
+}
 
 export const DEFAULT_ERROR = {
   header: "Ocurrió un error",

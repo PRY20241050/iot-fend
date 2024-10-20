@@ -4,7 +4,6 @@ import { getAuthTokenFromCookie } from "@/lib/auth";
 import { DEFAULT_ERROR, getError, isBrowser } from "@/lib/utils";
 
 import { API_URL } from "./consts";
-import { useToast } from "@/components/ui/use-toast";
 
 const baseURL = API_URL;
 
@@ -57,7 +56,7 @@ apiClient.interceptors.response.use(
         message &&
         (typeof data !== "string" || !data.includes("disableErrorMessage"))
       ) {
-        console.log("Error", message);
+        console.log("Error message: ", message);
       }
     }
     return Promise.reject(error);

@@ -1,5 +1,14 @@
 import { useToast } from "@/components/ui/use-toast";
-import { CO, DEFAULT_ERROR, NO2, PM10, PM25, SO2 } from "@/lib/utils";
+import {
+  CO,
+  DEFAULT_ERROR,
+  getError,
+  NO2,
+  PM10,
+  PM25,
+  SO2,
+  STATUS_CODES,
+} from "@/lib/utils";
 import {
   OPTIONAL_BOOLEAN,
   OPTIONAL_INTEGER_REGEX,
@@ -208,12 +217,23 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
 
         push("/limite-emisiones");
       })
-      .catch(() => {
-        toast({
-          variant: "destructive",
-          title: DEFAULT_ERROR.header,
-          description: "No se pudo crear el límite de emisiones",
-        });
+      .catch((e) => {
+        const error = getError(e, "No se pudo crear el límite de emisiones");
+        console.log(error);
+
+        if (error.status == STATUS_CODES.SERVER_ERROR) {
+          toast({
+            variant: "destructive",
+            title: DEFAULT_ERROR.header,
+            description: DEFAULT_ERROR.server,
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: DEFAULT_ERROR.header,
+            description: error.message,
+          });
+        }
       })
       .finally(() => {
         setIsLoading(false);

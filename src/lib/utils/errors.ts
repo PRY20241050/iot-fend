@@ -1,6 +1,6 @@
 import { type AxiosErrorResponse } from '@/types/errors'
 
-import { BAD_REQUEST } from './consts'
+import { DEFAULT_ERROR, STATUS_CODES } from './consts'
 
 /**
  * Get the handling errors from the axios response
@@ -28,14 +28,14 @@ export function getResponseError(error: any, defaultMessage?: string): AxiosErro
 
   if (error?.request) {
     return {
-      status: 0,
-      message: error?.message ?? 'No se pudo establecer conexión con el servidor',
+      status: STATUS_CODES.SERVER_ERROR,
+      message: error?.message ?? DEFAULT_ERROR.server,
       data: null
     }
   }
 
   return {
-    status: BAD_REQUEST,
+    status: STATUS_CODES.BAD_REQUEST,
     message: error?.message ?? defaultMessage,
     data: null
   }
