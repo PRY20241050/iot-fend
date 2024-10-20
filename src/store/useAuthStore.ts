@@ -8,6 +8,7 @@ export interface AuthStateValues {
   isAuthenticated: boolean;
   isBrickyard: boolean;
   isInstitution: boolean;
+  errorWhileAuthentication: boolean;
 }
 
 export interface AuthStateActions {
@@ -28,6 +29,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isInstitution: false,
   isBrickyard: false,
   isAuthenticated: false,
+  errorWhileAuthentication: false,
   setUser: (user: User) =>
     set({
       user,
@@ -54,11 +56,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       refresh: auth.refresh_token,
     };
 
-    const { data } = await getUser(tokens.access);
+    const { data, error } = await getUser(tokens.access);
 
     if (data) {
       setUser?.(data);
       return true;
+    }
+
+    if (error) {
+      set({
+        errorWhileAuthentication: true,
+      });
     }
 
     return false;

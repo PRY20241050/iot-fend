@@ -29,7 +29,7 @@ export function getResponseError(error: any, defaultMessage?: string): AxiosErro
   if (error?.request) {
     return {
       status: STATUS_CODES.SERVER_ERROR,
-      message: error?.message ?? DEFAULT_ERROR.server,
+      message: DEFAULT_ERROR.server,
       data: null
     }
   }

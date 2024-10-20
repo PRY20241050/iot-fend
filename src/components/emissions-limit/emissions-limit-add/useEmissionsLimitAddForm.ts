@@ -1,4 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
+import { useShowToastWithError } from "@/hooks/core/useShowToastWithError";
 import {
   CO,
   DEFAULT_ERROR,
@@ -219,21 +220,12 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       })
       .catch((e) => {
         const error = getError(e, "No se pudo crear el límite de emisiones");
-        console.log(error);
 
-        if (error.status == STATUS_CODES.SERVER_ERROR) {
-          toast({
-            variant: "destructive",
-            title: DEFAULT_ERROR.header,
-            description: DEFAULT_ERROR.server,
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            title: DEFAULT_ERROR.header,
-            description: error.message,
-          });
-        }
+        toast({
+          variant: "destructive",
+          title: DEFAULT_ERROR.header,
+          description: error.message,
+        });
       })
       .finally(() => {
         setIsLoading(false);

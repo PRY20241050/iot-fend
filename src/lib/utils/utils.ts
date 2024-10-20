@@ -1,6 +1,7 @@
 import { ErrorResponse } from "@/types/errors"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { DEFAULT_ERROR } from "./consts"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -34,7 +35,7 @@ export function getError(error: any, defaultMessage?: string): ErrorResponse {
   if (error?.request) {
     // The request was made but no response was received
     return {
-      message: error?.message ?? 'No se pudo establecer conexión con el servidor'
+      message: DEFAULT_ERROR.server,
     }
   }
 
