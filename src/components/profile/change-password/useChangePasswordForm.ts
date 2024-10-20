@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { changePassword } from "@/services/auth";
+import { useToast } from "@/components/ui/use-toast";
 
 export interface ChangePasswordFormValues {
   old_password: string;
@@ -20,6 +21,7 @@ const formSchema = z.object({
 
 export default function useChangePasswordForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast()
 
   const form = useForm<ChangePasswordFormValues>({
     resolver: zodResolver(formSchema),
@@ -36,12 +38,17 @@ export default function useChangePasswordForm() {
       old_password: values.old_password,
       new_password: values.new_password,
     })
-      .then((res) => {
+      .then((res: any) => {
         form.reset();
+        toast({
+          variant: "default",
+          description: "Cambio de contraseña exitoso"
+        })
       })
       .catch((err) => {
+
         if (err.response?.data) {
-          form.setError("new_password", {
+          form.setError("old_password", {
             type: "manual",
             message: err.response.data.error,
           });

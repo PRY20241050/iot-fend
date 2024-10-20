@@ -8,6 +8,7 @@ import { signInWithEmailAndPassword } from "@/services/auth";
 import { getUser } from "@/services/user";
 import { useAuthStore } from "@/store/useAuthStore";
 import { User } from "@/types/auth";
+import { useToast } from "@/components/ui/use-toast";
 
 export interface LoginFormValues {
   username: string;
@@ -26,6 +27,7 @@ export default function useLoginForm() {
   const { setUser } = useAuthStore((state) => ({
     setUser: state.setUser,
   }));
+  const { toast } = useToast();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -38,7 +40,6 @@ export default function useLoginForm() {
 
   const onSubmit = (values: LoginFormValues) => {
     setIsLoading(true);
-
     signInWithEmailAndPassword(values)
       .then((res) => {
         form.reset();
@@ -53,6 +54,11 @@ export default function useLoginForm() {
         } else {
           router.refresh();
         }
+
+        toast({
+          variant: "default",
+          description: "Bienvenido de nuevo",
+        });
       })
       .catch((err) => {
         if (err.response?.data && err.response.status === 401) {

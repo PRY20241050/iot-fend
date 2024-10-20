@@ -4,6 +4,7 @@ import { getAuthTokenFromCookie } from "@/lib/auth";
 import { DEFAULT_ERROR, getError, isBrowser } from "@/lib/utils";
 
 import { API_URL } from "./consts";
+import { useToast } from "@/components/ui/use-toast";
 
 const baseURL = API_URL;
 
@@ -33,6 +34,7 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     // Do something with request error
+    console.log("Error", error);
     return null;
   }
 );
@@ -42,6 +44,12 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { message } = getError(error, DEFAULT_ERROR.message);
+    // const { toast } = useToast();
+
+    // toast({
+    //   variant: "default",
+    //   description: DEFAULT_ERROR.server,
+    // });
 
     if (isBrowser) {
       const data = error?.config?.data || "";

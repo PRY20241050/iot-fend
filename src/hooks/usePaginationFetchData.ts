@@ -76,10 +76,7 @@ export function usePaginationFetchData<
           );
         } else setItems(data.results);
       })
-      .catch(() => {
-        if (showDefaultError)
-          console.error("Hubo un error al cargar los resultados");
-      })
+      .catch(() => {})
       .finally(() => {
         setIsLoading(false);
       });

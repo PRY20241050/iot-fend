@@ -2,6 +2,7 @@ import apiClient from "@/lib/api/apiClient";
 import { getResponseError } from "@/lib/utils/errors";
 import { User } from "@/types/auth";
 import { PROFILE_URL } from "./consts";
+// import { useToast } from "@/components/ui/use-toast";
 
 /**
  * Get user profile provided an access token, use this from the server side
@@ -18,9 +19,11 @@ export const getUser = async (
 
     const user = await apiClient.get<User>(PROFILE_URL).then((res) => res.data);
 
-    return { data: user };
+    return { data: user as User };
   } catch (error: any) {
+    // const { toast } = useToast();
     const { message, status } = getResponseError(error);
+    console.log(error)
 
     return { error: new Error(message), status };
   }
