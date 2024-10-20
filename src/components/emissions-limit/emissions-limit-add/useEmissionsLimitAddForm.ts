@@ -2,6 +2,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { CO, DEFAULT_ERROR, NO2, PM10, PM25, SO2 } from "@/lib/utils";
 import {
   OPTIONAL_BOOLEAN,
+  OPTIONAL_INTEGER_REGEX,
   OPTIONAL_NUMBER_REGEX,
   OPTIONAL_STRING,
 } from "@/lib/utils/validators";
@@ -33,7 +34,7 @@ const formSchema = z
     is_public: OPTIONAL_BOOLEAN,
     email_alert: OPTIONAL_BOOLEAN,
     app_alert: OPTIONAL_BOOLEAN,
-    gap_time: OPTIONAL_NUMBER_REGEX,
+    gap_time: OPTIONAL_INTEGER_REGEX,
   })
   .refine(
     (data) => {
@@ -181,6 +182,7 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       app_alert: values.app_alert,
       is_public: values.is_public,
       is_active: values.is_active,
+      gap_time: values.gap_time,
       brickyard: user?.brickyard?.id,
     })
       .then((response) => {
