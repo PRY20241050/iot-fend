@@ -7,6 +7,7 @@ export interface EmissionLimits {
   description: string;
   email_alert: boolean;
   app_alert: boolean;
+  gap_time: number | undefined;
   is_public: boolean;
   is_active: boolean;
   updated_at: DateTime;

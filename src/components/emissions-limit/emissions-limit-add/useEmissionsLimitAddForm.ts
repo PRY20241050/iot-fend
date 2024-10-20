@@ -33,6 +33,7 @@ const formSchema = z
     is_public: OPTIONAL_BOOLEAN,
     email_alert: OPTIONAL_BOOLEAN,
     app_alert: OPTIONAL_BOOLEAN,
+    gap_time: OPTIONAL_NUMBER_REGEX,
   })
   .refine(
     (data) => {
@@ -128,6 +129,7 @@ const formDefaultValues: EmissionsLimitAddFormValues = {
   colimit: undefined,
   email_alert: false,
   app_alert: false,
+  gap_time: undefined,
   is_public: false,
   is_active: true,
 };
@@ -163,6 +165,8 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
         title: DEFAULT_ERROR.header,
         description: "No se pudo crear el límite de emisiones",
       });
+
+      push("/limite-emisiones");
     });
   }
 
@@ -195,9 +199,11 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
         if (values.setcolimit) {
           handleHistoryLimit(response.id, CO, Number(values.colimit));
         }
+
         toast({
           description: "Límite de emisiones creado con éxito",
         });
+
         push("/limite-emisiones");
       })
       .catch(() => {
@@ -249,6 +255,7 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
         : formDefaultValues.colimit,
       email_alert: initialData.email_alert,
       app_alert: initialData.app_alert,
+      gap_time: initialData.gap_time ? String(initialData.gap_time) : undefined,
       is_public: initialData.is_public,
       is_active: initialData.is_active,
     });

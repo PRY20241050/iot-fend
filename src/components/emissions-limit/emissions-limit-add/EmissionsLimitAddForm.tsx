@@ -35,12 +35,12 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="tablet-lg:flex tablet-lg:gap-10">
+        <div className="tablet-lg:grid tablet-lg:grid-cols-2 tablet-lg:gap-x-10">
           <div>
             <FormInput
               form={form}
               name="name"
-              label="Nombre"
+              label="Nombre (*)"
               placeholder="Ejm: Trabajadores de la ladrillera"
               description='Proporciona un nombre del propósito de este nuevo límite.
                 Ejemplo: "Trabajadores de la ladrillera" o "Horno
@@ -148,6 +148,16 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
               name="app_alert"
               label="En aplicación"
               description="Le notificaremos a través de la aplicación"
+            />
+            <FormInput
+              form={form}
+              name="gap_time"
+              label="Tiempo requerido antes de la alerta"
+              type="number"
+              placeholder="Ejm: 100"
+              description='Este es el tiempo en segundos que debe pasar antes de enviarse una nueva alerta por exceder un LMP.
+              Por defecto, una alerta se genera por cada vez que se sobrepasa un LMP, esta opción limita esto.'
+              className="mt-5"
             />
           </div>
         </div>
