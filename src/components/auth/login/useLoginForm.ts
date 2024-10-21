@@ -45,18 +45,20 @@ export default function useLoginForm() {
         form.reset();
         setAuthTokenToCookie(res);
 
-        getUser(res.access).then((res) => {
-          setUser(res.data as User);
-          const userType =
-            res.data?.brickyard !== null ? "brickyard" : "institution";
-          setUserTypeToCookie({ userType });
-
-          if (searchParams.has("next")) {
-            router.push(searchParams.get("next") as unknown as string);
-          } else {
-            router.refresh();
-          }
-        });
+        getUser(res.access)
+          .then((res) => {
+            setUser(res.data as User);
+            const userType =
+              res.data?.brickyard !== null ? "brickyard" : "institution";
+            setUserTypeToCookie({ userType });
+          })
+          .then(() => {
+            if (searchParams.has("next")) {
+              router.push(searchParams.get("next") as unknown as string);
+            } else {
+              router.refresh();
+            }
+          });
 
         toast({
           variant: "default",

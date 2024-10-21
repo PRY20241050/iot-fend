@@ -18,15 +18,29 @@ export function middleware(req: NextRequest) {
       }
     }
     if (userType?.value === "institution") {
-      if (url.pathname.startsWith(DASHBOARD_PATH) || url.pathname === "/") {
+      if (
+        url.pathname.startsWith(DASHBOARD_PATH) ||
+        url.pathname === "/" ||
+        url.pathname.startsWith("/auth")
+      ) {
         url.pathname = HOME_PATH;
         return NextResponse.redirect(url);
       }
     } else if (userType?.value === "brickyard") {
-      if (url.pathname.startsWith(HOME_PATH) || url.pathname === "/") {
+      if (
+        url.pathname.startsWith(HOME_PATH) ||
+        url.pathname === "/" ||
+        url.pathname.startsWith("/auth")
+      ) {
         url.pathname = DASHBOARD_PATH;
         return NextResponse.redirect(url);
       }
+    } else {
+      if (url.pathname === "/" || url.pathname.startsWith("/auth")) {
+        url.pathname = DASHBOARD_PATH;
+        return NextResponse.redirect(url);
+      }
+      return NextResponse.next();
     }
   } else {
     if (!url.pathname.startsWith("/auth")) {
