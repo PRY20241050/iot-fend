@@ -153,8 +153,10 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
   const { toast } = useToast();
-  const { user } = useAuthStore((state) => ({
+  const { user, isBrickyard, isInstitution } = useAuthStore((state) => ({
     user: state.user,
+    isBrickyard: state.isBrickyard,
+    isInstitution: state.isInstitution,
   }));
 
   const form = useForm<EmissionsLimitAddFormValues>({
@@ -193,7 +195,11 @@ export default function useEmissionsLimitAddForm({ initialData }: Props) {
       is_public: values.is_public,
       is_active: values.is_active,
       gap_time: values.gap_time,
-      brickyard: user?.brickyard?.id,
+      ...(isBrickyard
+        ? { brickyard: user?.brickyard?.id }
+        : {
+            institution: user?.institution?.id,
+          }),
     })
       .then((response) => {
         if (values.setpm10limit) {

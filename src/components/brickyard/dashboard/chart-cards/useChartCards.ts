@@ -34,9 +34,11 @@ export default function useChartCards() {
         : null
     );
 
-  const { data: chartAPIData, isLoading: chartAPIDataIsLoading } = useRequest<
-    ChartAPI[]
-  >(
+  const {
+    data: chartAPIData,
+    isLoading: chartAPIDataIsLoading,
+    error: chartAPIError,
+  } = useRequest<ChartAPI[]>(
     isBrickyard || brickyardId
       ? {
           url: MEASUREMENTS_HISTORY_GROUPED_BY_GAS_URL,
@@ -74,7 +76,24 @@ export default function useChartCards() {
   }, [emissionLimitData]);
 
   useEffect(() => {
-    if (!chartAPIData) return;
+    if (!chartAPIData) {
+      if (chartAPIError) {
+        setChartData((prev) =>
+          prev.map((card) => {
+            return {
+              gas_type: card.gas_type,
+              title: card.title,
+              measurements: undefined,
+              min: undefined,
+              max: undefined,
+              avg: undefined,
+              max_limit: card.max_limit,
+            };
+          })
+        );
+      }
+      return;
+    }
 
     setChartData((prev) =>
       prev.map((card) => {
@@ -104,7 +123,7 @@ export default function useChartCards() {
         };
       })
     );
-  }, [chartAPIData, scale]);
+  }, [chartAPIData, scale, chartAPIError]);
 
   return {
     chartData,

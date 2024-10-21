@@ -76,7 +76,9 @@ export function usePaginationFetchData<
           );
         } else setItems(data.results);
       })
-      .catch(() => {})
+      .catch(() => {
+        resetItems();
+      })
       .finally(() => {
         setIsLoading(false);
       });

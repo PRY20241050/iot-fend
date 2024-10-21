@@ -16,7 +16,11 @@ export default function BrickyardDashboard() {
     <LayoutPrimary className="tablet-lg:flex tablet-lg:gap-6">
       <div className="flex-grow">
         <Header
-          title={brickyardName && `Ladrillera ${brickyardName}`}
+          title={
+            brickyardName && brickyardName.toLowerCase().includes("ladrillera")
+              ? brickyardName
+              : `Ladrillera ${brickyardName}`
+          }
           hideBtn
         />
         <GaugeCards />
