@@ -1,9 +1,10 @@
 import axios from "axios";
 
 import { getAuthTokenFromCookie } from "@/lib/auth";
-import { DEFAULT_ERROR, getError, isBrowser } from "@/lib/utils";
+import { DEFAULT_ERROR, getError, isBrowser, STATUS_CODES } from "@/lib/utils";
 
 import { API_URL } from "./consts";
+import { toast } from "@/components/ui/use-toast";
 
 const baseURL = API_URL;
 
@@ -32,7 +33,6 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    // Do something with request error
     console.log("Error", error);
     return null;
   }
@@ -42,13 +42,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const { message } = getError(error, DEFAULT_ERROR.message);
-    // const { toast } = useToast();
-
-    // toast({
-    //   variant: "default",
-    //   description: DEFAULT_ERROR.server,
-    // });
+    const { message, status } = getError(error);
 
     if (isBrowser) {
       const data = error?.config?.data || "";
@@ -56,7 +50,14 @@ apiClient.interceptors.response.use(
         message &&
         (typeof data !== "string" || !data.includes("disableErrorMessage"))
       ) {
-        console.log("Error message: ", message);
+        if (status !== STATUS_CODES.SERVER_ERROR && data.includes("onlyServer"))
+          return;
+
+        toast({
+          variant: "destructive",
+          title: DEFAULT_ERROR.header,
+          description: message,
+        });
       }
     }
     return Promise.reject(error);

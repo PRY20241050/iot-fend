@@ -15,7 +15,7 @@ export const signInWithEmailAndPassword = async (
 ): Promise<Token> => {
   return post<Token>({
     url: LOGIN_URL,
-    params,
+    params
   });
 };
 

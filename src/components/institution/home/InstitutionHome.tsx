@@ -5,8 +5,6 @@ import { BrickyardCard } from "./brickyard-card";
 import { useRequest } from "@/lib/api/swr";
 import { BRICKYARDS_URL } from "@/services/consts";
 import { Brickyard } from "@/types/brickyard";
-import { useShowToastWithErrorOneTime } from "@/hooks/core/useShowToastWithError";
-import { useEffect } from "react";
 
 const skeletonItems = [...Array.from({ length: 4 }, (_, i) => i)];
 
@@ -14,22 +12,10 @@ export default function InstitutionHome() {
   const { user } = useAuthStore((state) => ({
     user: state.user,
   }));
-  const { changeError } = useShowToastWithErrorOneTime();
   const { institution } = user ?? {};
-  const {
-    data: brickyards = [],
-    isLoading,
-    error,
-  } = useRequest<Brickyard[]>({
+  const { data: brickyards = [], isLoading } = useRequest<Brickyard[]>({
     url: BRICKYARDS_URL,
   });
-
-  useEffect(() => {
-    if (!error) return;
-
-    changeError(error);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   return (
     <LayoutPrimary>

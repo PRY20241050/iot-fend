@@ -9,6 +9,7 @@ import { type AuthToken, type Token } from "@/types/auth";
 
 export const ACCESS_TOKEN_KEY = "iot_access_token";
 export const REFRESH_TOKEN_KEY = "iot_refresh_token";
+export const USER_TYPE_KEY = "iot_user_type"
 
 export const setAuthTokenToCookie = ({ access, refresh }: Token): void => {
   const accessExpirationTime = Number(
@@ -38,6 +39,22 @@ export const setAuthTokenToCookie = ({ access, refresh }: Token): void => {
   Cookies.set(REFRESH_TOKEN_KEY, refresh, {
     ...options,
     expires: refreshExpirationDate,
+  });
+};
+
+export const setUserTypeToCookie = ({
+  userType,
+}: {
+  userType: string;
+}): void => {
+  const options: Cookies.CookieAttributes = {
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  };
+
+  Cookies.set(USER_TYPE_KEY, userType, {
+    ...options,
   });
 };
 
@@ -79,4 +96,5 @@ export const ssrGetAuthTokenFromCookie = ({
 export const clearAuthTokenFromCookie = (): void => {
   Cookies.remove(ACCESS_TOKEN_KEY);
   Cookies.remove(REFRESH_TOKEN_KEY);
+  Cookies.remove(USER_TYPE_KEY);
 };

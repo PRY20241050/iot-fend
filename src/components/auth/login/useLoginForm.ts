@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
-import { setAuthTokenToCookie } from "@/lib/auth";
+import { setAuthTokenToCookie, setUserTypeToCookie } from "@/lib/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signInWithEmailAndPassword } from "@/services/auth";
 import { getUser } from "@/services/user";
@@ -47,13 +47,16 @@ export default function useLoginForm() {
 
         getUser(res.access).then((res) => {
           setUser(res.data as User);
-        });
+          const userType =
+            res.data?.brickyard !== null ? "brickyard" : "institution";
+          setUserTypeToCookie({ userType });
 
-        if (searchParams.has("next")) {
-          router.push(searchParams.get("next") as unknown as string);
-        } else {
-          router.refresh();
-        }
+          if (searchParams.has("next")) {
+            router.push(searchParams.get("next") as unknown as string);
+          } else {
+            router.refresh();
+          }
+        });
 
         toast({
           variant: "default",
