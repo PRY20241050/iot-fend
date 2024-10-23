@@ -13,4 +13,8 @@ export interface LimitHistory {
 export type CreateLimitHistory = Omit<
   LimitHistory,
   "id" | "updated_at" | "created_at"
->
+>;
+
+export type EditLimitHistory = Partial<
+  Omit<LimitHistory, "id" | "updated_at" | "created_at">
+>;

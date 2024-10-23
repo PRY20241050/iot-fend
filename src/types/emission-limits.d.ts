@@ -27,3 +27,11 @@ export type CreateEmissionLimit = Omit<
   institution?: number;
   management?: number;
 };
+
+export type EditEmissionLimit = Partial<
+  Omit<EmissionLimits, "id" | "updated_at" | "created_at" | "limit_history">
+> & {
+  brickyard?: number | null;
+  institution?: number | null;
+  management?: number | null;
+};

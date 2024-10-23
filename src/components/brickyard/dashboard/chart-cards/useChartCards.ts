@@ -78,19 +78,7 @@ export default function useChartCards() {
   useEffect(() => {
     if (!chartAPIData) {
       if (chartAPIError) {
-        setChartData((prev) =>
-          prev.map((card) => {
-            return {
-              gas_type: card.gas_type,
-              title: card.title,
-              measurements: undefined,
-              min: undefined,
-              max: undefined,
-              avg: undefined,
-              max_limit: card.max_limit,
-            };
-          })
-        );
+        setChartData((prev) => initChart);
       }
       return;
     }

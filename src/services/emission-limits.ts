@@ -1,11 +1,11 @@
-import { destroy, fetcher, post } from "@/lib/api/api";
+import { destroy, fetcher, patch, post } from "@/lib/api/api";
 import {
   EMISSION_LIMITS_URL,
   emissionLimitsByBrickyardIdUrl,
   emissionLimitsByIdUrl,
   emissionLimitsByInstitutionIdUrl,
 } from "./consts";
-import { CreateEmissionLimit, EmissionLimits } from "@/types/emission-limits";
+import { CreateEmissionLimit, EditEmissionLimit, EmissionLimits } from "@/types/emission-limits";
 
 export type GetEmissionLimitsParams = {
   is_active?: boolean;
@@ -27,6 +27,13 @@ export const getEmissionLimits = async <T = EmissionLimits[]>(
 export const createEmissionLimit = async (data: CreateEmissionLimit) => {
   return await post<EmissionLimits>({
     url: EMISSION_LIMITS_URL,
+    params: data,
+  });
+};
+
+export const editEmissionLimit = async (data: EditEmissionLimit, id: number) => {
+  return await patch<EmissionLimits>({
+    url: emissionLimitsByIdUrl(id.toString()),
     params: data,
   });
 };

@@ -9,7 +9,11 @@ import {
   FormButton,
 } from "@/components/ui/form";
 import useEmissionsLimitAddForm from "./useEmissionsLimitAddForm";
-import { TypographyH4, TypographyP } from "@/components/ui/typography";
+import {
+  TypographyH4,
+  TypographyP,
+  TypographySmall,
+} from "@/components/ui/typography";
 
 import s from "./EmissionsLimitAdd.module.scss";
 import { cn, LIMITE_EMISIONES_PATH } from "@/lib/utils";
@@ -59,7 +63,11 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
               <TypographyP
                 className={cn(s["form-subtitle"], "text-muted-foreground")}
               >
-                Seleccione los gases que desea monitorear y establecer límites
+                Seleccione los gases que desea monitorear y establecer límites.
+                <br />
+                <TypographySmall>
+                  Al menos debe seleccionar uno. (*)
+                </TypographySmall>
               </TypographyP>
             </div>
             <FormCheckboxInput
@@ -155,8 +163,8 @@ export default function EmissionsLimitAddForm({ initialData }: Props) {
               label="Tiempo requerido antes de la alerta"
               type="number"
               placeholder="Ejm: 100"
-              description='Este es el tiempo en segundos que debe pasar antes de enviarse una nueva alerta por exceder un LMP.
-              Por defecto, una alerta se genera por cada vez que se sobrepasa un LMP, esta opción limita esto.'
+              description="Este es el tiempo en segundos que debe pasar antes de enviarse una nueva alerta por exceder un LMP.
+              Por defecto, una alerta se genera por cada vez que se sobrepasa un LMP, esta opción limita esto."
               className="mt-5"
             />
           </div>

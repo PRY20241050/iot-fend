@@ -21,7 +21,7 @@ export async function fetcher<T>({
 export async function post<T>({
   url,
   headers = {},
-  params = {}
+  params = {},
 }: FetcherOptions): Promise<T> {
   if (isEmptyValue(url)) {
     throw new Error("The url parameter is required");
@@ -29,6 +29,20 @@ export async function post<T>({
 
   return await apiClient
     .post<T>(url, params, { headers })
+    .then((res) => res.data);
+}
+
+export async function patch<T>({
+  url,
+  headers = {},
+  params = {},
+}: FetcherOptions): Promise<T> {
+  if (isEmptyValue(url)) {
+    throw new Error("The url parameter is required");
+  }
+
+  return await apiClient
+    .patch<T>(url, params, { headers })
     .then((res) => res.data);
 }
 
