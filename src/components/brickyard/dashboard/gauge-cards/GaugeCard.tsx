@@ -45,18 +45,18 @@ export function GaugeCard({ index, ...props }: GaugeCardProps) {
           value={value}
           maxValue={maxValue}
         />
-        <StatusLabel active={value !== null} />
+        <StatusLabel active />
       </Card>
       <div className="grid phone-sm:grid-cols-2 gap-3 mt-3">
         <DetailChart
-          description="Concentración (mg/m3)"
-          title="Actual"
+          description="Concentration (µg/m3)"
+          title="Current"
           value={value}
           className={valueStateColor(value)}
         />
         <DetailChart
-          description="Concentración (mg/m3)"
-          title="Máximo permitido"
+          description="Concentration (µg/m3)"
+          title="Maximum Allowed"
           disabled={limit.is_default}
           value={Number(limit.max_limit)}
         />
@@ -69,25 +69,25 @@ export function GaugeLegend() {
   const GAUGE_LEGENDS = [
     {
       color: "bg-status-normal",
-      title: "Seguro",
-      description: "Por debajo del 80% del límite máximo permitido",
+      title: "Safe",
+      description: "Below 80% of the maximum allowed limit",
     },
     {
       color: "bg-status-warning",
-      title: "Advertencia",
-      description: "20% antes del límite máximo permitido",
+      title: "Warning",
+      description: "20% below the maximum allowed limit",
     },
     {
       color: "bg-status-danger",
-      title: "Peligro",
-      description: "Sobre el límite máximo permitido",
+      title: "Danger",
+      description: "Above the maximum allowed limit",
     },
-  ];
+  ];  
 
   return (
     <Card className="mt-4">
       <CardHeader>
-        <CardTitle>Leyenda</CardTitle>
+        <CardTitle>Legend</CardTitle>
         <ul className="pt-3 phone-md:flex phone-md:gap-4 phone-md:flex-wrap tablet-lg:gap-6 space-y-1">
           {GAUGE_LEGENDS.map((legend, index) => (
             <li key={index} className="flex items-center">
@@ -124,7 +124,7 @@ export function StatusLabel({ active = false }: { active?: boolean }) {
           { "bg-status-normal": active }
         )}
       ></span>{" "}
-      {active ? "Conectado" : "Sin conexión"}
+      {active ? "Active" : "Offline"}
     </TypographyP>
   );
 }

@@ -17,6 +17,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const { push } = useRouter();
 
+  return (
+    <main>
+      <Navbar className="fixed" />
+      <div className="pt-[var(--navbar-height)]">{children}</div>
+    </main>
+  );
+
   if (isBrickyard || errorWhileAuthentication) {
     return (
       <main>

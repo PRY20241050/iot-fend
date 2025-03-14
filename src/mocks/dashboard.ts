@@ -49,52 +49,52 @@ export const initChart: Chart[] = [
 ];
 
 export const gauges: Gauge[] = [
-  {
-    id: 1,
-    title: "Sensor CO",
-    value: null,
-    limit: {
-      is_default: true,
-      max_limit: 100,
-      gas_type: 1,
-    },
-  },
-  {
-    id: 2,
-    title: "Sensor NO2",
-    value: null,
-    limit: {
-      is_default: true,
-      max_limit: 320,
-      gas_type: 2,
-    },
-  },
-  {
-    id: 3,
-    title: "Sensor SO2",
-    value: null,
-    limit: {
-      is_default: true,
-      max_limit: 0.25,
-      gas_type: 3,
-    },
-  },
+  // {
+  //   id: 1,
+  //   title: "Sensor CO",
+  //   value: null,
+  //   limit: {
+  //     is_default: true,
+  //     max_limit: 100,
+  //     gas_type: 1,
+  //   },
+  // },
+  // {
+  //   id: 2,
+  //   title: "Sensor NO2",
+  //   value: null,
+  //   limit: {
+  //     is_default: true,
+  //     max_limit: 320,
+  //     gas_type: 2,
+  //   },
+  // },
+  // {
+  //   id: 3,
+  //   title: "Sensor SO2",
+  //   value: null,
+  //   limit: {
+  //     is_default: true,
+  //     max_limit: 0.25,
+  //     gas_type: 3,
+  //   },
+  // },
   {
     id: 4,
-    title: "Sensor PM2.5",
-    value: null,
+    title: "PM2.5 Sensor",
+    value: 52.3,
     limit: {
-      is_default: true,
-      max_limit: 150,
+      is_default: false,
+      max_limit: 75,
       gas_type: 4,
     },
   },
   {
     id: 5,
-    title: "Sensor PM10",
-    value: null,
+    title: "PM10 Sensor",
+    value: 59.4,
     limit: {
-      is_default: true,
+      is_default: false,
       max_limit: 150,
       gas_type: 4,
     },

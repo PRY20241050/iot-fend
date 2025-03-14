@@ -19,7 +19,7 @@ export default function BrickyardDashboard() {
           title={
             brickyardName && brickyardName.toLowerCase().includes("ladrillera")
               ? brickyardName
-              : `Ladrillera ${brickyardName}`
+              : `Union Brickyard`
           }
           hideBtn
         />

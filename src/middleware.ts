@@ -10,45 +10,45 @@ export function middleware(req: NextRequest) {
   const iotAccessToken = req.cookies.get(ACCESS_TOKEN_KEY);
   const userType = req.cookies.get(USER_TYPE_KEY);
 
-  if (iotAccessToken) {
-    if (next) {
-      if (next !== url.pathname) {
-        url.pathname = next;
-        return NextResponse.redirect(url);
-      }
-    }
-    if (userType?.value === "institution") {
-      if (
-        url.pathname.startsWith(DASHBOARD_PATH) ||
-        url.pathname === "/" ||
-        url.pathname.startsWith("/auth")
-      ) {
-        url.pathname = HOME_PATH;
-        return NextResponse.redirect(url);
-      }
-    } else if (userType?.value === "brickyard") {
-      if (
-        url.pathname.startsWith(HOME_PATH) ||
-        url.pathname === "/" ||
-        url.pathname.startsWith("/auth")
-      ) {
-        url.pathname = DASHBOARD_PATH;
-        return NextResponse.redirect(url);
-      }
-    } else {
-      if (url.pathname === "/" || url.pathname.startsWith("/auth")) {
-        url.pathname = DASHBOARD_PATH;
-        return NextResponse.redirect(url);
-      }
-      return NextResponse.next();
-    }
-  } else {
-    if (!url.pathname.startsWith("/auth")) {
-      url.pathname = LOGIN_PATH;
-      return NextResponse.redirect(url);
-    }
-    return NextResponse.next();
-  }
+  // if (iotAccessToken) {
+  //   if (next) {
+  //     if (next !== url.pathname) {
+  //       url.pathname = next;
+  //       return NextResponse.redirect(url);
+  //     }
+  //   }
+  //   if (userType?.value === "institution") {
+  //     if (
+  //       url.pathname.startsWith(DASHBOARD_PATH) ||
+  //       url.pathname === "/" ||
+  //       url.pathname.startsWith("/auth")
+  //     ) {
+  //       url.pathname = HOME_PATH;
+  //       return NextResponse.redirect(url);
+  //     }
+  //   } else if (userType?.value === "brickyard") {
+  //     if (
+  //       url.pathname.startsWith(HOME_PATH) ||
+  //       url.pathname === "/" ||
+  //       url.pathname.startsWith("/auth")
+  //     ) {
+  //       url.pathname = DASHBOARD_PATH;
+  //       return NextResponse.redirect(url);
+  //     }
+  //   } else {
+  //     if (url.pathname === "/" || url.pathname.startsWith("/auth")) {
+  //       url.pathname = DASHBOARD_PATH;
+  //       return NextResponse.redirect(url);
+  //     }
+  //     return NextResponse.next();
+  //   }
+  // } else {
+  //   if (!url.pathname.startsWith("/auth")) {
+  //     url.pathname = LOGIN_PATH;
+  //     return NextResponse.redirect(url);
+  //   }
+  //   return NextResponse.next();
+  // }
 
   // Permitir la continuación de la solicitud si no se redirige
   return NextResponse.next();
